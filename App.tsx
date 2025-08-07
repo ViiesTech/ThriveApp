@@ -1,28 +1,22 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+/* eslint-disable react-native/no-inline-styles */
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Routes from './src/routes/Routes';
+import { Platform, SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-
-function App() {
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={{
+      flex: 1,
+      paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    }}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
-    </View>
+      <NavigationContainer>
+        <Routes />
+      </NavigationContainer>
+    </SafeAreaView>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+};
 
 export default App;
