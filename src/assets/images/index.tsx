@@ -4,4 +4,6 @@ export const AppImages = {
     on_boarding2: require('./OnBoarding2.png'),
     on_boarding3: require('./OnBoarding3.png'),
     on_boarding4: require('./OnBoarding4.png'),
+    banner1: require('./banner1.png'),
+    banner2: require('./banner2.png'),
 };

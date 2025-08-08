@@ -1,4 +1,5 @@
 import { Dimensions } from "react-native";
+import { AppImages } from "../assets/images";
 
 const percentageCalculation = (max: number, val: number) => max * (val / 100);
 
@@ -45,6 +46,17 @@ export const AppColors = {
     darkBlue: '#33434F',
     darkYellow: '#E55B13',
     lowGreen: '#587B58',
+    lightGreen: '#5EC246',
     inputBg: '#fafafa',
     inputBlur: '#f2f1fe',
 };
+
+export const banner = [
+    {id: 1, img: AppImages.banner1},
+    {id: 2, img: AppImages.banner2},
+]
+
+export const services = [
+    {id: 1, img: AppImages.banner1},
+    {id: 2, img: AppImages.banner2},
+]

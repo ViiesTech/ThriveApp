@@ -13,7 +13,7 @@ const Stack = createStackNavigator();
 const Auth = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Login"
+      initialRouteName="Splash"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Splash" component={Splash} />
