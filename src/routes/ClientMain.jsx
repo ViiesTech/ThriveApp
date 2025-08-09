@@ -3,12 +3,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AppColors, responsiveFontSize, responsiveHeight } from '../utils';
+import { AppColors, responsiveHeight } from '../utils';
 import Home from '../screens/ClientMain/Home/Home';
 import NearBy from '../screens/ClientMain/Nearby/Nearby';
 import Icon from 'react-native-vector-icons/Entypo';
 import { View } from 'react-native';
 import LineBreak from '../components/LineBreak';
+import SpecialistProfile from '../screens/ClientMain/Home/SpecialistProfile';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -20,7 +21,7 @@ const ClientMain = () => {
       initialRouteName="Main"
     >
       <Stack.Screen name="Main" component={MyTabs} />
-      {/* <Stack.Screen name="ChildrenCommunity" component={ChildrenCommunity} /> */}
+      <Stack.Screen name="SpecialistProfile" component={SpecialistProfile} />
     </Stack.Navigator>
   );
 };

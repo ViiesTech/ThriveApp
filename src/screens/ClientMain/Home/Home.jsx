@@ -5,6 +5,9 @@ import Container from '../../../components/Container';
 import AuthHeader from '../../../components/AuthHeader';
 import {
   AppColors,
+  featuredSpecialists,
+  mostSearchInterest,
+  nearbyItems,
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
@@ -12,8 +15,16 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import Banner from '../../../components/Banner';
 import AppText from '../../../components/AppTextComps/AppText';
+import LineBreak from '../../../components/LineBreak';
+import Services from '../../../components/Services';
+import YouFollow from '../../../components/YouFollow';
+import FeaturedSpecialists from '../../../components/FeaturedSpecialists';
+import MostSearchInterest from '../../../components/MostSearchInterest';
+import NearbyOffers from '../../../components/NearbyOffers';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
+  const nav = useNavigation();
   return (
     <Container>
       <View
@@ -66,14 +77,125 @@ const Home = () => {
 
       <Banner />
 
-      <View style={{paddingHorizontal: responsiveWidth(4)}}>
+      <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <AppText
           title={'What do you want to do?'}
           textColor={AppColors.BLACK}
           textSize={2}
           textFontWeight
         />
+
+        <LineBreak space={3} />
+
+        <Services />
       </View>
+
+      <LineBreak space={2} />
+
+      <View>
+        <View style={{ paddingHorizontal: responsiveWidth(4) }}>
+          <AppText
+            title={'Specialists you follow'}
+            textColor={AppColors.BLACK}
+            textSize={2}
+            textFontWeight
+          />
+        </View>
+
+        <LineBreak space={3} />
+
+        <YouFollow />
+      </View>
+      <LineBreak space={2} />
+
+      <View>
+        <View
+          style={{
+            paddingHorizontal: responsiveWidth(4),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <AppText
+            title={'Featured Specialists'}
+            textColor={AppColors.BLACK}
+            textSize={2}
+            textFontWeight
+          />
+
+          <TouchableOpacity>
+            <AppText
+              title={'View all'}
+              textColor={AppColors.ThemeBlue}
+              textSize={2}
+              textFontWeight
+            />
+          </TouchableOpacity>
+        </View>
+
+        <LineBreak space={2} />
+
+        <FeaturedSpecialists
+          data={featuredSpecialists}
+          onCardPress={() => nav.navigate('SpecialistProfile')}
+        />
+      </View>
+      <LineBreak space={3} />
+
+      <View>
+        <View
+          style={{
+            paddingHorizontal: responsiveWidth(4),
+          }}
+        >
+          <AppText
+            title={'Most Search Interest'}
+            textColor={AppColors.BLACK}
+            textSize={2}
+            textFontWeight
+          />
+        </View>
+
+        <LineBreak space={3} />
+
+        <MostSearchInterest data={mostSearchInterest} />
+      </View>
+
+      <LineBreak space={3} />
+
+      <View>
+        <View
+          style={{
+            paddingHorizontal: responsiveWidth(4),
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <AppText
+            title={'Nearby Offers'}
+            textColor={AppColors.BLACK}
+            textSize={2}
+            textFontWeight
+          />
+
+          <TouchableOpacity>
+            <AppText
+              title={'View all'}
+              textColor={AppColors.ThemeBlue}
+              textSize={2}
+              textFontWeight
+            />
+          </TouchableOpacity>
+        </View>
+
+        <View>
+          <NearbyOffers data={nearbyItems} />
+        </View>
+      </View>
+
+      <LineBreak space={4} />
     </Container>
   );
 };

@@ -1,16 +1,15 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {responsiveFontSize} from '../../utils/Responsive_Dimensions';
-import AppColors from '../../utils/AppColors';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { AppColors, responsiveFontSize } from '../../utils';
 
 const BackIcon = ({onBackPress, iconColor}: any) => {
   return (
     <TouchableOpacity onPress={onBackPress}>
-      <Ionicons
-        name={'arrow-back'}
-        size={responsiveFontSize(3)}
-        color={iconColor ? iconColor : AppColors.BLACK}
+      <FontAwesome
+        name={'angle-left'}
+        size={responsiveFontSize(4)}
+        color={iconColor ? iconColor : AppColors.ThemeBlue}
       />
     </TouchableOpacity>
   );
