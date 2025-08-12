@@ -16,4 +16,6 @@ export const AppImages = {
     nearby: require('./nearby.png'),
     nearby2: require('./nearby2.png'),
     service: require('./services.png'),
+    massage: require('./massage.png'),
+    map: require('./map.png'),
 };

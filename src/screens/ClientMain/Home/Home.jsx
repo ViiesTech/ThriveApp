@@ -22,6 +22,7 @@ import FeaturedSpecialists from '../../../components/FeaturedSpecialists';
 import MostSearchInterest from '../../../components/MostSearchInterest';
 import NearbyOffers from '../../../components/NearbyOffers';
 import { useNavigation } from '@react-navigation/native';
+import EnableLocationModal from '../../../components/EnableLocationModal';
 
 const Home = () => {
   const nav = useNavigation();
@@ -74,6 +75,14 @@ const Home = () => {
           }
         />
       </View>
+
+      {/* <EnableLocationModal
+        visible={true}
+        title={'Enable Your Location'}
+        subtitle={
+          'Please enable to use your location to show nearby services on the map'
+        }
+      /> */}
 
       <Banner />
 

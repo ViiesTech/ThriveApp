@@ -9,7 +9,6 @@ import AppText from '../../../components/AppTextComps/AppText';
 import {
   AppColors,
   mostSearchInterestSerivces,
-  nearbyItems,
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
@@ -18,7 +17,7 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MostSearchInterest from '../../../components/MostSearchInterest';
-import NearbyOffers from '../../../components/NearbyOffers';
+import AppButton from '../../../components/AppButton';
 
 const SpecialistProfile = () => {
   return (
@@ -179,6 +178,18 @@ const SpecialistProfile = () => {
 
       <View>
         <NearbyOffers data={SpecialistProfileServices} services={'services'} />
+      </View>
+
+      <LineBreak space={4} />
+
+      <View style={{paddingHorizontal: responsiveWidth(4)}}>
+         <AppButton
+          title="Book Now"
+          textColor={AppColors.WHITE}
+          btnBackgroundColor={AppColors.ThemeBlue}
+          handlePress={() => nav.navigate('Main')}
+          textFontWeight={false}
+        />
       </View>
 
       <LineBreak space={4} />

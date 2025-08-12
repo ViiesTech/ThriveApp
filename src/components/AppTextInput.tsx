@@ -34,6 +34,7 @@ type props = {
   lineHeight?: any;
   borderRadius?: any;
   inputContainerPaddingHorizontal?: any;
+  elevation?: any;
 };
 const AppTextInput = ({
   logo,
@@ -60,6 +61,7 @@ const AppTextInput = ({
   lineHeight,
   borderRadius,
   inputContainerPaddingHorizontal,
+  elevation,
 }: props) => {
   return (
     <View
@@ -81,6 +83,7 @@ const AppTextInput = ({
         borderColor: isFocused
           ? AppColors.ThemeBlue
           : borderColor || AppColors.WHITE,
+          elevation: elevation,
       }}>
       {logo}
 

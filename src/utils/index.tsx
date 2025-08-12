@@ -104,3 +104,22 @@ export const SpecialistProfileServices = [
     { id: 1, img: AppImages.service, serviceName: 'Chair Message', price: '$50', time: '2 hour', desc: 'A blunt cut bob is a shorter hairstyle that...', offTag: '-58%', },
     { id: 2, img: AppImages.service, serviceName: 'Chair Message', price: '$50', time: '2 hour', desc: 'A blunt cut bob is a shorter hairstyle that...', offTag: '-58%', },
 ]
+
+export const categories = [
+    { id: 1, icon: AppIcons.search1, title: 'Massage' },
+    { id: 2, icon: AppIcons.search2, title: 'Therapy' },
+    { id: 3, icon: AppIcons.search2, title: 'Skin Care' },
+    { id: 4, icon: AppIcons.search3, title: 'Coloring' },
+]
+
+export const recentSearch = [
+    { id: 1, title: 'Hair service' },
+    { id: 2, title: 'Nail' },
+    { id: 3, title: 'Wax' },
+]
+
+export const datesItem = [
+    { id: 1, day: 'Wed', date: '9' },
+    { id: 2, day: 'Thu', date: '10' },
+    { id: 3, day: 'Fri', date: '21' },
+]

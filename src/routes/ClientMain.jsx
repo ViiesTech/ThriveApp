@@ -7,9 +7,12 @@ import { AppColors, responsiveHeight } from '../utils';
 import Home from '../screens/ClientMain/Home/Home';
 import NearBy from '../screens/ClientMain/Nearby/Nearby';
 import Icon from 'react-native-vector-icons/Entypo';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { View } from 'react-native';
 import LineBreak from '../components/LineBreak';
 import SpecialistProfile from '../screens/ClientMain/Home/SpecialistProfile';
+import MassageCategories from '../screens/ClientMain/Home/MassageCategories';
+import Search from '../screens/ClientMain/Nearby/Search';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -22,6 +25,8 @@ const ClientMain = () => {
     >
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="SpecialistProfile" component={SpecialistProfile} />
+      <Stack.Screen name="MassageCategories" component={MassageCategories} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 };
@@ -73,7 +78,11 @@ function MyTabs() {
           tabBarIcon: ({ focused }) =>
             focused ? (
               <View style={{ alignItems: 'center' }}>
-                <Icon size={25} name={'book'} color={AppColors.ThemeBlue} />
+                <Ionicons
+                  size={25}
+                  name={'compass'}
+                  color={AppColors.ThemeBlue}
+                />
                 <LineBreak space={0.5} />
                 <View
                   style={{
@@ -85,7 +94,7 @@ function MyTabs() {
                 />
               </View>
             ) : (
-              <Icon size={25} name={'book'} color={AppColors.GRAY} />
+              <Ionicons size={25} name={'compass'} color={AppColors.GRAY} />
             ),
         }}
       />

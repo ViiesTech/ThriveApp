@@ -19,6 +19,7 @@
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-confirmation-code-field": "^8.0.1",
     "react-native-gesture-handler": "^2.28.0",
+    "react-native-raw-bottom-sheet": "^3.0.0",
     "react-native-safe-area-context": "^5.5.2",
     "react-native-screens": "^4.13.1",
     "react-native-star-rating-widget": "^1.9.2",

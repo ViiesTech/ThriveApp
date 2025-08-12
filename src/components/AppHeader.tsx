@@ -26,19 +26,18 @@ const AppHeader = ({ onBackPress, heading, rightIcon, middleIcon, backIconColor 
     <View
       style={{
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
-        gap: 20,
-        paddingTop: responsiveHeight(2),
+        paddingVertical: responsiveHeight(2),
         paddingHorizontal: responsiveWidth(4),
-      }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 20,
-        }}>
+      }}
+    >
+      {/* Left icon */}
+      <View style={{ width: responsiveWidth(10), alignItems: 'flex-start' }}>
         {onBackPress && <BackIcon onBackPress={backHandler} iconColor={backIconColor} />}
+      </View>
+
+      {/* Center text */}
+      <View style={{ flex: 1, alignItems: 'center' }}>
         {middleIcon ? (
           middleIcon
         ) : (
@@ -50,7 +49,11 @@ const AppHeader = ({ onBackPress, heading, rightIcon, middleIcon, backIconColor 
           />
         )}
       </View>
-      {rightIcon}
+
+      {/* Right icon */}
+      <View style={{ width: responsiveWidth(10), alignItems: 'flex-end' }}>
+        {rightIcon}
+      </View>
     </View>
   );
 };

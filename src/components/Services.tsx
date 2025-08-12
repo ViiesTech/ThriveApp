@@ -5,8 +5,10 @@ import { AppColors, services } from '../utils'
 import LineBreak from './LineBreak'
 import AppText from './AppTextComps/AppText'
 import SVGXml from './SVGXML'
+import { useNavigation } from '@react-navigation/native'
 
 const Services = () => {
+    const nav = useNavigation();
     return (
         <ScrollView
             style={{ flex: 1 }}
@@ -18,7 +20,7 @@ const Services = () => {
                 ItemSeparatorComponent={<LineBreak space={2} />}
                 numColumns={4}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={{ alignItems: 'center' }}>
+                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => nav.navigate('MassageCategories')}>
                         <View
                             style={{
                                 backgroundColor: AppColors.lightestBlue,

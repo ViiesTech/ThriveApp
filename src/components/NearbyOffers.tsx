@@ -12,9 +12,10 @@ import Feather from 'react-native-vector-icons/Feather';
 type Prop = {
     data?: any;
     services?: any;
+    showVertical?: any;
 }
 
-const NearbyOffers = ({ data, services }: Prop) => {
+const NearbyOffers = ({ data, services, showVertical }: Prop) => {
 
     const renderContent = (item: any) => {
         if (services) {
@@ -43,16 +44,17 @@ const NearbyOffers = ({ data, services }: Prop) => {
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+                    <View style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}>
                         <AppText
                             title={item.price}
                             textColor={AppColors.ThemeBlue}
                             textSize={1.6}
                             textFontWeight
                         />
+                        <View style={{ width: responsiveHeight(0.5), height: responsiveHeight(0.5), borderRadius: 100, backgroundColor: AppColors.LIGHTGRAY }} />
                         <AppText
                             title={item.time}
-                            textColor={AppColors.BLACK}
+                            textColor={AppColors.GRAY}
                             textSize={1.6}
                         />
                     </View>
@@ -74,13 +76,15 @@ const NearbyOffers = ({ data, services }: Prop) => {
                                 borderRadius: 100,
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                backgroundColor: AppColors.ThemeBlue,
+                                backgroundColor: item.id === 1 ? 'transparent' : AppColors.ThemeBlue,
+                                borderWidth: item.id === 1 ? 2 : 0,
+                                borderColor: AppColors.RED_COLOR
                             }}
                         >
                             <Feather
                                 size={responsiveFontSize(2.4)}
-                                name={'plus'}
-                                color={AppColors.WHITE}
+                                name={item.id === 1 ? 'minus' : 'plus'}
+                                color={item.id === 1 ? AppColors.RED_COLOR : AppColors.WHITE}
                             />
                         </TouchableOpacity>
                     </View>
@@ -162,7 +166,7 @@ const NearbyOffers = ({ data, services }: Prop) => {
         <View>
             <FlatList
                 data={data}
-                horizontal={services ? false : true}
+                horizontal={services || showVertical ? false : true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                     gap: 10,
@@ -178,7 +182,7 @@ const NearbyOffers = ({ data, services }: Prop) => {
                         borderTopRightRadius: 10,
                         borderBottomRightRadius: 10,
                         elevation: 3,
-                        marginVertical: services ? 0 : responsiveHeight(2),
+                        marginVertical: services || showVertical ? 0 : responsiveHeight(2),
                         alignItems: 'center',
                         gap: 7
                     }}>
