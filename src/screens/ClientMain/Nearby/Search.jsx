@@ -22,6 +22,7 @@ import FilterModal from '../../../components/FilterModal';
 
 const Search = () => {
   const refRBSheet = useRef();
+
   return (
     <Container>
       <AppHeader

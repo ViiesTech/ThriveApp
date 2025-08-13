@@ -2,19 +2,24 @@
 import React from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import LineBreak from './LineBreak';
-import { AppColors, datesItem, responsiveFontSize, responsiveHeight, responsiveWidth } from '../utils';
+import { AppColors, categories, datesItem, responsiveFontSize, responsiveHeight, responsiveWidth } from '../utils';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import AppText from './AppTextComps/AppText';
 import Feather from 'react-native-vector-icons/Feather';
+import Categories from './Categories';
+import AppButton from './AppButton';
+import DistanceRangeSlider from './DistanceRangeSlider';
+import DateSelector from './DateSelector';
 
-const FilterModal = ({ refRBSheet, }: any) => {
+const FilterModal = ({ refRBSheet }: any) => {
     return (
         <RBSheet
             ref={refRBSheet}
             openDuration={300}
-            height={responsiveHeight(90)}
+            height={responsiveHeight(75)}
             useNativeDriver={false} // 🚀 must be false if draggable = true
             draggable={true}
+            closeOnPressMask
             // dragOnContent={true} // optional: allow dragging anywhere in content
             customStyles={{
                 wrapper: {
@@ -35,7 +40,7 @@ const FilterModal = ({ refRBSheet, }: any) => {
 
             <View style={{ paddingHorizontal: responsiveWidth(4) }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => refRBSheet.current?.close()}>
                         <AppText
                             title={'Cancel'}
                             textColor={AppColors.ThemeBlue}
@@ -51,7 +56,7 @@ const FilterModal = ({ refRBSheet, }: any) => {
                         textFontWeight
                     />
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => refRBSheet.current?.close()}>
                         <AppText
                             title={'Reset'}
                             textColor={AppColors.RED_COLOR}
@@ -96,32 +101,37 @@ const FilterModal = ({ refRBSheet, }: any) => {
                 </View>
             </View>
 
-            <LineBreak space={2} />
+            <LineBreak space={3} />
 
-            <View>
-                <FlatList
-                    data={datesItem}
-                    horizontal
-                    contentContainerStyle={{ gap: 10, paddingHorizontal: responsiveWidth(5) }}
-                    renderItem={({ item }) => (
-                        <View style={{ backgroundColor: AppColors.lowGreen, alignItems: 'center' }}>
-                            <AppText
-                                title={item.day}
-                                textColor={AppColors.BLACK}
-                                textSize={1.8}
-                                textFontWeight
-                            />
-                            <AppText
-                                title={item.date}
-                                textColor={AppColors.BLACK}
-                                textSize={1.8}
-                                textFontWeight
-                            />
-                        </View>
-                    )}
+            <DateSelector />
+            <LineBreak space={3} />
+
+            <View style={{ paddingHorizontal: responsiveWidth(4) }}>
+                <AppText
+                    title={'Service'}
+                    textColor={AppColors.BLACK}
+                    textSize={1.8}
+                    textFontWeight
+                />
+                <LineBreak space={2} />
+
+                <View>
+                    <Categories data={categories} search={'search'} />
+                </View>
+                <LineBreak space={2} />
+
+                <DistanceRangeSlider />
+
+                <LineBreak space={10} />
+
+                <AppButton
+                    title="Show Result"
+                    textColor={AppColors.WHITE}
+                    btnBackgroundColor={AppColors.ThemeBlue}
+                    handlePress={() => { }}
+                    textFontWeight={false}
                 />
             </View>
-
         </RBSheet>
     )
 }

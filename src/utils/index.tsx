@@ -122,4 +122,63 @@ export const datesItem = [
     { id: 1, day: 'Wed', date: '9' },
     { id: 2, day: 'Thu', date: '10' },
     { id: 3, day: 'Fri', date: '21' },
+    { id: 4, day: 'Sat', date: '21' },
+    { id: 5, day: 'Sun', date: '21' },
+    { id: 6, day: 'Mon', date: '21' },
+]
+
+export const appointmentsTab = [
+    { id: 1, title: 'Completed Appointments' },
+    { id: 2, title: 'Upcoming Appointments' },
+    { id: 3, title: 'Ongoing Appointments' },
+]
+
+export const completedAppointments = [
+    { id: 1, title: 'Appointment #1234', status: 'Completed', image: AppImages.follower1, name: 'Richard', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
+    { id: 2, title: 'Appointment #1234', status: 'Completed', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', date: '29 Jun 2025' },
+    { id: 3, title: 'Appointment #1234', status: 'Completed', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', date: '01 July 2025' },
+]
+
+export const upcomingAppointments = [
+    { id: 1, title: 'Appointment #1234', status: 'Upcoming', image: AppImages.follower1, name: 'Richard', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
+    { id: 2, title: 'Appointment #1234', status: 'Upcoming', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', date: '29 Jun 2025' },
+    { id: 3, title: 'Appointment #1234', status: 'Upcoming', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', date: '01 July 2025' },
+]
+
+export const ongoingAppointments = [
+    { id: 1, title: 'Appointment #1234', appointmentStatus: 'EN Route', status: 'Ongoing', image: AppImages.follower1, name: 'Richard', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
+    { id: 2, title: 'Appointment #1234', appointmentStatus: 'Arrive', status: 'Ongoing', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', date: '29 Jun 2025' },
+    { id: 3, title: 'Appointment #1234', appointmentStatus: 'EN Route', status: 'Ongoing', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', date: '01 July 2025' },
+]
+
+export const galleryImages = [
+    { id: 1, image: AppImages.service },
+    { id: 2, image: AppImages.service },
+    { id: 3, image: AppImages.service },
+]
+
+export const ourSpecialists = [
+    { id: 1, img: AppImages.follower1, name: 'Ronald' },
+    { id: 2, img: AppImages.follower2, name: 'Ronald' },
+    { id: 3, img: AppImages.follower3, name: 'Ronald' },
+    { id: 4, img: AppImages.follower4, name: 'Ronald' },
+    { id: 5, img: AppImages.follower5, name: 'Ronald' },
+]
+
+export const reviews = [
+    { id: 1, image: AppImages.follower1, name: 'Jennie Whang', time: '2 days ago', desc: 'The place was clean, great serivce, stall are friendly. I will certainly recommend to my friends and visit again! ;)', rating: AppImages.rating },
+    { id: 1, image: AppImages.follower1, name: 'Jennie Whang', time: '2 days ago', desc: 'The place was clean, great serivce, stall are friendly. I will certainly recommend to my friends and visit again! ;)', rating: AppImages.rating },
+]
+
+export const timesItems = [
+    { id: 1, time: '08:00 AM', },
+    { id: 2, time: '08:00 AM', },
+    { id: 3, time: '08:00 AM', },
+    { id: 4, time: '08:00 AM', },
+    { id: 5, time: '08:00 AM', },
+    { id: 6, time: '08:00 AM', },
+]
+
+export const shopDetail = [
+    { id: 1, title: 'Therapy . Skin Care . 2+', rating: '4.7', number: '2.7k', label: '-58% ', tex: '(6 pax available)', status: 'Available', image: AppImages.follower1, name: 'Ronald', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
 ]

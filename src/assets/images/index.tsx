@@ -18,4 +18,8 @@ export const AppImages = {
     service: require('./services.png'),
     massage: require('./massage.png'),
     map: require('./map.png'),
+    star: require('./star.png'),
+    service_bg: require('./service_bg.png'),
+    rating: require('./rating.png'),
+    shop_bg: require('./shop_bg.png'),
 };

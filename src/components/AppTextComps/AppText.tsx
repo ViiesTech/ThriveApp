@@ -22,6 +22,8 @@ type textProps = {
   paddingBottom?:any;
   textTransform?:any;
   children?: React.ReactNode;
+  textDecorationLine?:any;
+  paddingHorizontal?:any;
 };
 
 const AppText = ({
@@ -38,6 +40,8 @@ const AppText = ({
   paddingBottom,
   textTransform,
   children,
+  textDecorationLine,
+  paddingHorizontal,
 }: textProps) => {
   return (
     <Text
@@ -56,6 +60,8 @@ const AppText = ({
         borderBottomColor: borderBottomColor ? borderBottomColor : null,
         textTransform: textTransform ? textTransform : null,
         paddingBottom: paddingBottom ? responsiveHeight(paddingBottom) : null,
+        textDecorationLine: textDecorationLine,
+        paddingHorizontal: responsiveWidth(paddingHorizontal),
       }}>
       {title}
       {children}

@@ -13,6 +13,11 @@ import LineBreak from '../components/LineBreak';
 import SpecialistProfile from '../screens/ClientMain/Home/SpecialistProfile';
 import MassageCategories from '../screens/ClientMain/Home/MassageCategories';
 import Search from '../screens/ClientMain/Nearby/Search';
+import Appointments from '../screens/ClientMain/Appointments/Appointments';
+import ServiceFeedback from '../screens/ClientMain/Appointments/ServiceFeedback';
+import ServiceGallery from '../screens/ClientMain/Appointments/ServiceGallery';
+import BookService from '../screens/ClientMain/Appointments/BookService';
+import ShopDetails from '../screens/ClientMain/Appointments/ShopDetails';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -27,6 +32,10 @@ const ClientMain = () => {
       <Stack.Screen name="SpecialistProfile" component={SpecialistProfile} />
       <Stack.Screen name="MassageCategories" component={MassageCategories} />
       <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="ServiceFeedback" component={ServiceFeedback} />
+      <Stack.Screen name="ServiceGallery" component={ServiceGallery} />
+      <Stack.Screen name="BookService" component={BookService} />
+      <Stack.Screen name="ShopDetails" component={ShopDetails} />
     </Stack.Navigator>
   );
 };
@@ -98,19 +107,34 @@ function MyTabs() {
             ),
         }}
       />
-      {/* <Tab.Screen
-        name={ROUTES.MESSAGE}
-        component={Message}
+      <Tab.Screen
+        name={'Appointments'}
+        component={Appointments}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Icon size={25} name={'message1'} color={colors.primary} />
+              <View style={{ alignItems: 'center' }}>
+                <Ionicons
+                  size={20}
+                  name={'calendar'}
+                  color={AppColors.ThemeBlue}
+                />
+                <LineBreak space={0.5} />
+                <View
+                  style={{
+                    width: responsiveHeight(0.7),
+                    height: responsiveHeight(0.7),
+                    borderRadius: 100,
+                    backgroundColor: AppColors.lightGreen,
+                  }}
+                />
+              </View>
             ) : (
-              <Icon size={25} name={'message1'} color={colors.textColor} />
+              <Ionicons size={20} name={'calendar'} color={AppColors.GRAY} />
             ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name={ROUTES.ACCOUNT}
         component={Account}
         options={{

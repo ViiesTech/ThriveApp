@@ -13,9 +13,10 @@ type Prop = {
     data?: any;
     services?: any;
     showVertical?: any;
+    paddingHorizontal?:any;
 }
 
-const NearbyOffers = ({ data, services, showVertical }: Prop) => {
+const NearbyOffers = ({ data, services, showVertical, paddingHorizontal }: Prop) => {
 
     const renderContent = (item: any) => {
         if (services) {
@@ -170,7 +171,7 @@ const NearbyOffers = ({ data, services, showVertical }: Prop) => {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                     gap: 10,
-                    paddingHorizontal: responsiveWidth(4),
+                    paddingHorizontal: paddingHorizontal ? paddingHorizontal : responsiveWidth(4),
                     marginBottom: services ? responsiveHeight(1) : 0
                 }}
                 renderItem={({ item }) => (

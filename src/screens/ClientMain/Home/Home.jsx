@@ -11,6 +11,7 @@ import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
+  specialistsYouFollow,
 } from '../../../utils';
 import Feather from 'react-native-vector-icons/Feather';
 import Banner from '../../../components/Banner';
@@ -96,7 +97,9 @@ const Home = () => {
 
         <LineBreak space={3} />
 
-        <Services />
+        <View>
+          <Services />
+        </View>
       </View>
 
       <LineBreak space={2} />
@@ -111,9 +114,9 @@ const Home = () => {
           />
         </View>
 
-        <LineBreak space={3} />
+        <LineBreak space={2} />
 
-        <YouFollow />
+        <YouFollow data={specialistsYouFollow} />
       </View>
       <LineBreak space={2} />
 
