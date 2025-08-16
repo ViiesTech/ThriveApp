@@ -22,4 +22,8 @@ export const AppImages = {
     service_bg: require('./service_bg.png'),
     rating: require('./rating.png'),
     shop_bg: require('./shop_bg.png'),
+    fashion: require('./fashion.png'),
+    checkout_bg: require('./checkout_bg.png'),
+    visa: require('./visa.png'),
+    master_big: require('./master_big.png'),
 };

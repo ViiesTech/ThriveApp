@@ -8,9 +8,10 @@ import LineBreak from './LineBreak';
 type Prop = {
     selectedTab?: any;
     setSelectedTab?: any;
+    data?: any;
 };
 
-const AppointmentsTopTabs = ({ selectedTab, setSelectedTab }: Prop) => {
+const AppointmentsTopTabs = ({ selectedTab, setSelectedTab, data }: Prop) => {
     // Animated value for the indicator movement
     const indicatorAnim = useRef(new Animated.Value(selectedTab?.id || 0)).current;
 
@@ -30,7 +31,7 @@ const AppointmentsTopTabs = ({ selectedTab, setSelectedTab }: Prop) => {
             }}
         >
             <FlatList
-                data={appointmentsTab}
+                data={data}
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={{
                     flexDirection: 'row',

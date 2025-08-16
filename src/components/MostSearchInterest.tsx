@@ -8,9 +8,10 @@ import AppText from './AppTextComps/AppText'
 type Prop = {
     data?: any;
     services?: any;
+    paddingHorizontal?:any;
 }
 
-const MostSearchInterest = ({ data, services }: Prop) => {
+const MostSearchInterest = ({ data, services, paddingHorizontal }: Prop) => {
     return (
         <View>
             <FlatList
@@ -18,7 +19,7 @@ const MostSearchInterest = ({ data, services }: Prop) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
-                    paddingHorizontal: responsiveWidth(4),
+                    paddingHorizontal: paddingHorizontal ? paddingHorizontal : responsiveWidth(4),
                     gap: 10,
                 }}
                 renderItem={({ item }) => (

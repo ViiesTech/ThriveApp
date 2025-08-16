@@ -12,8 +12,10 @@ import NearbyOffers from './NearbyOffers';
 import AppButton from './AppButton';
 import Reviews from './Reviews';
 import ServiceGalleryFooter from './ServiceGalleryFooter';
+import { useNavigation } from '@react-navigation/native';
 
 const ShopDetailsCard = () => {
+    const nav = useNavigation();
     return (
         <ScrollView style={{ flex: 1, backgroundColor: AppColors.WHITE, paddingHorizontal: responsiveWidth(5) }}>
             <LineBreak space={2} />
@@ -175,6 +177,7 @@ const ShopDetailsCard = () => {
                             <MostSearchInterest
                                 data={mostSearchInterestSerivces}
                                 services={'services'}
+                                paddingHorizontal={-1}
                             />
                         </View>
                         <LineBreak space={2} />
@@ -262,7 +265,7 @@ const ShopDetailsCard = () => {
                         <Reviews paddingHorizontal={-1} />
                         <LineBreak space={2} />
 
-                        <ServiceGalleryFooter paddingHorizontal={-1} borderWidth={-1} bookNowOnPress={() => nav.navigate('BookService')} />
+                        <ServiceGalleryFooter paddingHorizontal={-1} borderWidth={-1} bookNowOnPress={() => nav.navigate('ServiceDetails')} />
 
                         <LineBreak space={10} />
 

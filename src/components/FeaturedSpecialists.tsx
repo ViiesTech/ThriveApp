@@ -30,11 +30,11 @@ const FeaturedSpecialists = ({ data, onCardPress }: Props) => {
                             style={{
                                 width: responsiveWidth(55),
                                 height: responsiveHeight(25),
-                                alignItems: 'flex-end',
+                                // alignItems: 'flex-end',
                                 paddingHorizontal: responsiveWidth(4),
                             }}
                         >
-                            <LineBreak space={1} />
+                            {/* <LineBreak space={1} />
                             <TouchableOpacity
                                 style={{
                                     backgroundColor: AppColors.WHITE,
@@ -50,7 +50,7 @@ const FeaturedSpecialists = ({ data, onCardPress }: Props) => {
                                     size={responsiveFontSize(2.5)}
                                     color={AppColors.CRNBERRY}
                                 />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </ImageBackground>
 
                         <LineBreak space={2} />

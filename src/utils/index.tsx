@@ -1,6 +1,12 @@
 import { Dimensions } from "react-native";
 import { AppImages } from "../assets/images";
 import { AppIcons } from "../assets/icons";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Octicons from 'react-native-vector-icons/Octicons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 
 const percentageCalculation = (max: number, val: number) => max * (val / 100);
 
@@ -181,4 +187,195 @@ export const timesItems = [
 
 export const shopDetail = [
     { id: 1, title: 'Therapy . Skin Care . 2+', rating: '4.7', number: '2.7k', label: '-58% ', tex: '(6 pax available)', status: 'Available', image: AppImages.follower1, name: 'Ronald', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
+]
+
+export const checkoutPart1 = [
+    { id: 1, title: 'Date', subTitle: 'March, 10th 2021' },
+    { id: 2, title: 'Start Time', subTitle: '10:00 AM' },
+    { id: 3, title: 'Specialist', subTitle: 'Bella' },
+    { id: 4, title: 'Duration', subTitle: '3 hours' },
+]
+
+export const checkoutPart2 = [
+    { id: 1, title: 'Blunt Cut', subTitle: '$50' },
+    { id: 2, title: 'Manicure', subTitle: '$50' },
+    { id: 3, title: 'Sub Total', subTitle: '$100' },
+    { id: 4, title: 'Discount', subTitle: '-$30' },
+]
+
+export const myAccount = [
+    { id: 1, title: 'My Account', },
+    {
+        id: 2, title: 'Personal information', icon: <FontAwesome
+            name="user-o"
+            size={responsiveFontSize(3.5)}
+            color={AppColors.BLACK}
+        />,
+        navTo: 'PersonalInformation',
+    },
+    {
+        id: 3, title: 'Privacy Policy', icon: <Octicons
+            name="key-asterisk"
+            size={responsiveFontSize(3.5)}
+            color={AppColors.BLACK}
+        />
+    },
+    {
+        id: 4, title: 'Appointment History', icon: <EvilIcons
+            name="calendar"
+            size={responsiveFontSize(4)}
+            color={AppColors.BLACK}
+        />
+    },
+]
+
+export const notifications = [
+    { id: 1, title: 'Notifications', },
+    {
+        id: 2, title: 'Push Notifications', icon: <EvilIcons
+            name="bell"
+            size={responsiveFontSize(4)}
+            color={AppColors.BLACK}
+        />,
+        rightIcon: <FontAwesome
+            name="toggle-on"
+            size={responsiveFontSize(4)}
+            color={AppColors.ThemeBlue}
+        />
+    },
+    {
+        id: 3, title: 'Promotional Notifications', icon: <EvilIcons
+            name="bell"
+            size={responsiveFontSize(4)}
+            color={AppColors.BLACK}
+        />,
+        rightIcon: <FontAwesome
+            name="toggle-off"
+            size={responsiveFontSize(4)}
+            color={AppColors.GRAY}
+        />
+    },
+]
+
+export const moreItem = [
+    { id: 1, title: 'More', },
+    {
+        id: 2, title: 'Frequently Asked Questions', icon: <Ionicons
+            name="alert-circle-outline"
+            size={responsiveFontSize(4)}
+            color={AppColors.BLACK}
+        />,
+        navTo: 'AskQuestions',
+    },
+    {
+        id: 3, title: 'Log Out', icon: <MaterialIcons
+            name="logout"
+            size={responsiveFontSize(4)}
+            color={AppColors.RED_COLOR}
+        />
+    },
+]
+
+export const inboxTab = [
+    { id: 1, title: 'Messages' },
+    { id: 2, title: 'Notification' },
+]
+
+export const ChatThreads = [
+    {
+        id: 1,
+        image: AppImages.fashion,
+        name: 'Anika',
+        message: 'Book 1 is so amazing 🙈',
+        newMessage: 2,
+    },
+    {
+        id: 2,
+        image: AppImages.fashion,
+        name: 'Shreya',
+        message: 'i would like to meet the author',
+        newMessage: 1,
+    },
+    {
+        id: 3,
+        image: AppImages.fashion,
+        name: 'Lilly',
+        message: 'You: Thankyou :)',
+    },
+    {
+        id: 4,
+        image: AppImages.fashion,
+        name: 'Mona',
+        message: 'i am going to refer this book to my friends...',
+    },
+    {
+        id: 5,
+        image: AppImages.fashion,
+        name: 'Sonia',
+        message: 'Are you serious?!',
+    },
+    {
+        id: 6,
+        image: AppImages.fashion,
+        name: 'Monika',
+        message: 'You: Thanks',
+    },
+    {
+        id: 7,
+        image: AppImages.fashion,
+        name: 'Kiran',
+        message: 'You: How are you? :)',
+    },
+    {
+        id: 8,
+        image: AppImages.fashion,
+        name: 'Roshni',
+        message: 'How Are you :)',
+    }
+]
+
+export const newNotification = [
+    { id: 1, icon: <EvilIcons
+            name="calendar"
+            size={responsiveFontSize(3.6)}
+            color={AppColors.ThemeBlue}
+        />, desc: 'Reminder! . Get ready for your appointment at 9am', time: 'Just now' }
+]
+
+export const earlyNotification = [
+    {
+        id: 1, icon: <Fontisto
+            name="dollar"
+            size={responsiveFontSize(2.8)}
+            color={AppColors.ThemeBlue}
+        />, desc: 'Payment at Lovely Lather was success!', time: '11.32 PM'
+    },
+    {
+        id: 2, icon: <EvilIcons
+            name="calendar"
+            size={responsiveFontSize(3.6)}
+            color={AppColors.ThemeBlue}
+        />, desc: 'You make an appointment with Lovely Lather', time: 'Yesterday'
+    },
+    {
+        id: 3, icon: <FontAwesome
+            name="tag"
+            size={responsiveFontSize(2.8)}
+            color={AppColors.ThemeBlue}
+        />, desc: 'Get 20% offers for hair service at Lovely Lather', time: 'Yesterday'
+    },
+    {
+        id: 4, icon: <FontAwesome
+            name="tag"
+            size={responsiveFontSize(2.8)}
+            color={AppColors.ThemeBlue}
+        />, desc: 'Get 10% offers for hair service at Love Live Salon', time: 'Yesterday'
+    },
+    {
+        id: 5, icon: <EvilIcons
+            name="calendar"
+            size={responsiveFontSize(3.6)}
+            color={AppColors.ThemeBlue}
+        />, desc: 'Reminder! . Get ready for your appointment at 9am', time: 'Yesterday'
+    },
 ]

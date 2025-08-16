@@ -5,7 +5,7 @@ import { AppColors, responsiveWidth } from '../utils'
 import AppText from './AppTextComps/AppText'
 import LineBreak from './LineBreak'
 
-const YouFollow = ({ data }: any) => {
+const YouFollow = ({ data, paddingHorizontal }: any) => {
     return (
         <View>
             <FlatList
@@ -14,7 +14,7 @@ const YouFollow = ({ data }: any) => {
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
                     gap: 10,
-                    paddingHorizontal: responsiveWidth(4),
+                    paddingHorizontal: paddingHorizontal ? paddingHorizontal : responsiveWidth(4),
                 }}
                 renderItem={({ item }) => (
                     <View style={{flexDirection: 'column', alignItems: 'center'}}>

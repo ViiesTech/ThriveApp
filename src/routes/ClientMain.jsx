@@ -7,6 +7,7 @@ import { AppColors, responsiveHeight } from '../utils';
 import Home from '../screens/ClientMain/Home/Home';
 import NearBy from '../screens/ClientMain/Nearby/Nearby';
 import Icon from 'react-native-vector-icons/Entypo';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { View } from 'react-native';
 import LineBreak from '../components/LineBreak';
@@ -18,6 +19,16 @@ import ServiceFeedback from '../screens/ClientMain/Appointments/ServiceFeedback'
 import ServiceGallery from '../screens/ClientMain/Appointments/ServiceGallery';
 import BookService from '../screens/ClientMain/Appointments/BookService';
 import ShopDetails from '../screens/ClientMain/Appointments/ShopDetails';
+import ServiceDetails from '../screens/ClientMain/Appointments/ServiceDetails';
+import ServiceMenu from '../screens/ClientMain/Appointments/ServiceMenu';
+import Booking from '../screens/ClientMain/Appointments/Booking';
+import BookingCheckout from '../screens/ClientMain/Appointments/BookingCheckout';
+import PaymentMethod from '../screens/ClientMain/Appointments/PaymentMethod';
+import Profile from '../screens/ClientMain/Profile/Profile';
+import PersonalInformation from '../screens/ClientMain/Profile/PersonalInformation';
+import AskQuestions from '../screens/ClientMain/Profile/AskQuestions';
+import Inbox from '../screens/ClientMain/Inbox/Inbox';
+import PrivateInbox from '../screens/ClientMain/Inbox/PrivateInbox';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,6 +47,14 @@ const ClientMain = () => {
       <Stack.Screen name="ServiceGallery" component={ServiceGallery} />
       <Stack.Screen name="BookService" component={BookService} />
       <Stack.Screen name="ShopDetails" component={ShopDetails} />
+      <Stack.Screen name="ServiceDetails" component={ServiceDetails} />
+      <Stack.Screen name="ServiceMenu" component={ServiceMenu} />
+      <Stack.Screen name="Booking" component={Booking} />
+      <Stack.Screen name="BookingCheckout" component={BookingCheckout} />
+      <Stack.Screen name="PaymentMethod" component={PaymentMethod} />
+      <Stack.Screen name="PersonalInformation" component={PersonalInformation} />
+      <Stack.Screen name="AskQuestions" component={AskQuestions} />
+      <Stack.Screen name="PrivateInbox" component={PrivateInbox} />
     </Stack.Navigator>
   );
 };
@@ -134,18 +153,52 @@ function MyTabs() {
             ),
         }}
       />
-      {/* <Tab.Screen
-        name={ROUTES.ACCOUNT}
-        component={Account}
+       <Tab.Screen
+        name={'Inbox'}
+        component={Inbox}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Icon size={25} name={'user'} color={colors.primary} />
+              <View style={{ alignItems: 'center' }}>
+                <MaterialIcons size={25} name={'inbox'} color={AppColors.ThemeBlue} />
+                <LineBreak space={0.5} />
+                <View
+                  style={{
+                    width: responsiveHeight(0.7),
+                    height: responsiveHeight(0.7),
+                    borderRadius: 100,
+                    backgroundColor: AppColors.lightGreen,
+                  }}
+                />
+              </View>
             ) : (
-              <Icon size={25} name={'user'} color={colors.textColor} />
+              <MaterialIcons size={25} name={'inbox'} color={AppColors.GRAY} />
             ),
         }}
-      /> */}
+      />
+      <Tab.Screen
+        name={'Profile'}
+        component={Profile}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <View style={{ alignItems: 'center' }}>
+                <Icon size={25} name={'user'} color={AppColors.ThemeBlue} />
+                <LineBreak space={0.5} />
+                <View
+                  style={{
+                    width: responsiveHeight(0.7),
+                    height: responsiveHeight(0.7),
+                    borderRadius: 100,
+                    backgroundColor: AppColors.lightGreen,
+                  }}
+                />
+              </View>
+            ) : (
+              <Icon size={25} name={'user'} color={AppColors.GRAY} />
+            ),
+        }}
+      />
     </Tab.Navigator>
   );
 }

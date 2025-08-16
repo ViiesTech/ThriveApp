@@ -5,6 +5,7 @@ import Container from '../../../components/Container';
 import AppointmentsTopTabs from '../../../components/AppointmentsTopTabs';
 import LineBreak from '../../../components/LineBreak';
 import {
+  appointmentsTab,
   completedAppointments,
   ongoingAppointments,
   upcomingAppointments,
@@ -18,6 +19,7 @@ const Appointments = () => {
       <AppointmentsTopTabs
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
+        data={appointmentsTab}
       />
       <LineBreak space={1} />
       {selectedTab.id == 1 && (

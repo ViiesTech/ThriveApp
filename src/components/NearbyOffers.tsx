@@ -13,7 +13,7 @@ type Prop = {
     data?: any;
     services?: any;
     showVertical?: any;
-    paddingHorizontal?:any;
+    paddingHorizontal?: any;
 }
 
 const NearbyOffers = ({ data, services, showVertical, paddingHorizontal }: Prop) => {
@@ -198,7 +198,7 @@ const NearbyOffers = ({ data, services, showVertical, paddingHorizontal }: Prop)
                             {
                                 services ? null : (
                                     <>
-                                        <TouchableOpacity
+                                        {/* <TouchableOpacity
                                             style={{
                                                 backgroundColor: AppColors.WHITE,
                                                 width: 35,
@@ -214,7 +214,18 @@ const NearbyOffers = ({ data, services, showVertical, paddingHorizontal }: Prop)
                                                 size={responsiveFontSize(2.5)}
                                                 color={AppColors.CRNBERRY}
                                             />
-                                        </TouchableOpacity>
+                                        </TouchableOpacity> */}
+
+                                        <View
+                                            style={{
+                                                width: 35,
+                                                height: 35,
+                                                borderRadius: 100,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                marginHorizontal: responsiveWidth(4),
+                                            }}
+                                        />
 
                                         <View style={{ backgroundColor: AppColors.lightestBlue, justifyContent: 'center', borderTopRightRadius: 100, borderBottomRightRadius: 100, alignItems: 'center', width: responsiveWidth(20), height: responsiveHeight(4) }}>
                                             <AppText

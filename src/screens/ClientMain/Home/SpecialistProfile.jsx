@@ -18,6 +18,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MostSearchInterest from '../../../components/MostSearchInterest';
 import AppButton from '../../../components/AppButton';
+import NearbyOffers from './../../../components/NearbyOffers';
 
 const SpecialistProfile = () => {
   return (
