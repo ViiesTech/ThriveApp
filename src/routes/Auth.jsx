@@ -8,6 +8,7 @@ import SignUp from '../screens/auth/SignUp';
 import ForgotPassword from '../screens/auth/ForgotPassword';
 import EmailVerification from '../screens/auth/EmailVerification';
 import NewPassword from '../screens/auth/NewPassword';
+import SelectType from '../screens/auth/SelectType';
 
 const Stack = createStackNavigator();
 const Auth = () => {
@@ -19,6 +20,7 @@ const Auth = () => {
       <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="OnBoarding" component={OnBoarding} />
       <Stack.Screen name="GetStarted" component={GetStarted} />
+      <Stack.Screen name="SelectType" component={SelectType} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />

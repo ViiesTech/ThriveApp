@@ -379,3 +379,13 @@ export const earlyNotification = [
         />, desc: 'Reminder! . Get ready for your appointment at 9am', time: 'Yesterday'
     },
 ]
+
+export const nearbySpecialists = [
+    { id: 1, title: 'Therapy . Skin Care . 2+', rating: '4.7', number: '2.7k', label: '-58% ', tex: '(6 pax available)', status: 'Available', image: AppImages.follower1, name: 'Ronald', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
+    { id: 2, title: 'Therapy . Skin Care . 2+', rating: '4.7', number: '2.7k', label: '-58% ', tex: '(6 pax available)', status: 'Available', image: AppImages.follower1, name: 'Ronald', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
+]
+
+export const typeItems = [
+    {id: 1, title: 'User', svg: AppIcons.user},
+    {id: 2, title: 'Specialist', svg: AppIcons.special},
+]

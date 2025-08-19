@@ -29,6 +29,8 @@ import PersonalInformation from '../screens/ClientMain/Profile/PersonalInformati
 import AskQuestions from '../screens/ClientMain/Profile/AskQuestions';
 import Inbox from '../screens/ClientMain/Inbox/Inbox';
 import PrivateInbox from '../screens/ClientMain/Inbox/PrivateInbox';
+import OpenRequestForm from '../screens/OpenRequestFlow/OpenRequestForm';
+import NearbySpecialists from '../screens/OpenRequestFlow/NearbySpecialists';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -79,6 +81,8 @@ function MyTabs() {
       <Tab.Screen
         name={'Home'}
         component={Home}
+        // component={OpenRequestForm}
+        // component={NearbySpecialists}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (

@@ -6,8 +6,8 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from '../../utils/index';
-import { AppImages } from '../../assets/images';
 import { useNavigation } from '@react-navigation/native';
+import { FasterImageView } from '@rraut/react-native-faster-image';
 
 const Splash = () => {
   const nav = useNavigation();
@@ -27,10 +27,14 @@ const Splash = () => {
         backgroundColor: AppColors.WHITE,
       }}
     >
-      <Image
-        source={AppImages.app_logo}
+      <FasterImageView
+        source={{
+          uri: Image.resolveAssetSource(
+            require('../../assets/images/attachment.gif'),
+          ).uri,
+          isGIF: true,
+        }}
         style={{ width: responsiveWidth(80), height: responsiveHeight(40) }}
-        resizeMode="contain"
       />
     </View>
   );
