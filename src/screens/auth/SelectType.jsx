@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import AppText from '../../components/AppTextComps/AppText';
 import {
   AppColors,
@@ -12,9 +12,12 @@ import LineBreak from '../../components/LineBreak';
 import AppButton from '../../components/AppButton';
 import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SelectType = () => {
   const [type, setType] = useState('User');
+  const nav = useNavigation();
   return (
     <View style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
       <LineBreak space={4} />
@@ -61,10 +64,15 @@ const SelectType = () => {
                   >
                     <SVGXml icon={item.svg} width={100} height={100} />
                     <SVGXml
-                      icon={type === item.title ? AppIcons.check : AppIcons.un_check}
+                      icon={
+                        type === item.title ? AppIcons.check : AppIcons.un_check
+                      }
                       width={55}
                       height={55}
-                      style={{ position: 'absolute', bottom: responsiveHeight(-2.5) }}
+                      style={{
+                        position: 'absolute',
+                        bottom: responsiveHeight(-2.5),
+                      }}
                     />
                   </View>
                   <LineBreak space={4} />
@@ -84,7 +92,10 @@ const SelectType = () => {
             title="Continue"
             textColor={AppColors.WHITE}
             btnBackgroundColor={AppColors.ThemeBlue}
-            handlePress={() => nav.navigate('Main')}
+            handlePress={async () => {
+              nav.navigate('Login');
+              AsyncStorage.setItem('type', type);
+            }}
             textFontWeight={false}
           />
           <LineBreak space={7} />

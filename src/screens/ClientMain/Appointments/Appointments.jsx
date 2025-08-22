@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Container from '../../../components/Container';
 import AppointmentsTopTabs from '../../../components/AppointmentsTopTabs';
@@ -11,9 +11,21 @@ import {
   upcomingAppointments,
 } from '../../../utils';
 import AppointmentsCard from '../../../components/AppointmentsCard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Appointments = () => {
   const [selectedTab, setSelectedTab] = useState({ id: 1 });
+  const [type, setType] = useState('');
+
+  const getType = async () => {
+    const userType = await AsyncStorage.getItem('type');
+    setType(userType);
+  }
+
+  useEffect(() => {
+    getType();
+  }, []);
+
   return (
     <Container>
       <AppointmentsTopTabs
@@ -34,7 +46,7 @@ const Appointments = () => {
       )}
       {selectedTab.id == 3 && (
         <View>
-          <AppointmentsCard data={ongoingAppointments} />
+          <AppointmentsCard data={ongoingAppointments} ongoingAppointments={'ongoingAppointments'} isSpecialist={type === 'Specialist'} isUser={type === 'User'} />
         </View>
       )}
     </Container>

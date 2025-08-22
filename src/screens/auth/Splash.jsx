@@ -15,7 +15,7 @@ const Splash = () => {
   useEffect(() => {
     setTimeout(() => {
       nav.replace('OnBoarding');
-    }, 2000);
+    }, 3000);
   }, [nav]);
 
   return (

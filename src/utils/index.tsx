@@ -45,6 +45,7 @@ export const AppColors = {
     PRIMARY: "#7DD6F7",
     THEME_COLOR: '#924dbf',
     RED_COLOR: '#F75555',
+    DARK_RED: 'red',
     ThemeBlue: '#009CBD',
     Yellow: '#FF9C12',
     lightRed: '#FFD7D7',
@@ -203,7 +204,7 @@ export const checkoutPart2 = [
     { id: 4, title: 'Discount', subTitle: '-$30' },
 ]
 
-export const myAccount = [
+export const userMyAccount = [
     { id: 1, title: 'My Account', },
     {
         id: 2, title: 'Personal information', icon: <FontAwesome
@@ -226,6 +227,40 @@ export const myAccount = [
             size={responsiveFontSize(4)}
             color={AppColors.BLACK}
         />
+    },
+]
+
+export const specialistMyAccount = [
+    { id: 1, title: 'My Account', },
+    {
+        id: 2, title: 'Personal information', icon: <FontAwesome
+            name="user-o"
+            size={responsiveFontSize(3.5)}
+            color={AppColors.BLACK}
+        />,
+        navTo: 'ProviderPersonalInformation',
+    },
+    {
+        id: 3, title: 'Privacy Policy', icon: <Octicons
+            name="key-asterisk"
+            size={responsiveFontSize(3.5)}
+            color={AppColors.BLACK}
+        />
+    },
+    {
+        id: 4, title: 'Appointment History', icon: <EvilIcons
+            name="calendar"
+            size={responsiveFontSize(4)}
+            color={AppColors.BLACK}
+        />
+    },
+    {
+        id: 5, title: 'Internal Notes', icon: <MaterialIcons
+            name="notes"
+            size={responsiveFontSize(4)}
+            color={AppColors.BLACK}
+        />,
+        navTo: 'InternalNotes',
     },
 ]
 
@@ -335,11 +370,13 @@ export const ChatThreads = [
 ]
 
 export const newNotification = [
-    { id: 1, icon: <EvilIcons
+    {
+        id: 1, icon: <EvilIcons
             name="calendar"
             size={responsiveFontSize(3.6)}
             color={AppColors.ThemeBlue}
-        />, desc: 'Reminder! . Get ready for your appointment at 9am', time: 'Just now' }
+        />, desc: 'Reminder! . Get ready for your appointment at 9am', time: 'Just now'
+    }
 ]
 
 export const earlyNotification = [
@@ -386,6 +423,35 @@ export const nearbySpecialists = [
 ]
 
 export const typeItems = [
-    {id: 1, title: 'User', svg: AppIcons.user},
-    {id: 2, title: 'Specialist', svg: AppIcons.special},
+    { id: 1, title: 'User', svg: AppIcons.user },
+    { id: 2, title: 'Specialist', svg: AppIcons.special },
+]
+
+export const homeStats = [
+    { id: 1, title: 'Completed Appointments', num: '89' },
+    { id: 2, title: 'Total Earnings', num: '$4.5K' },
+    { id: 3, title: 'Total Tip Earnings', num: '$1.1K' },
+]
+
+export const todaysAppointments = [
+    { id: 1, title: 'Appointment #1234', status: 'In Progress', image: AppImages.follower1, name: 'Richard', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', },
+    { id: 2, title: 'Appointment #1234', status: 'Upcoming', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', },
+    { id: 3, title: 'Appointment #1234', status: 'Upcoming', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', },
+]
+
+export const userRequestTab = [
+    { id: 1, title: 'Open Request' },
+    { id: 2, title: 'Direct Request' },
+]
+
+export const openRequest = [
+    { id: 1, title: 'Appointment #1234', status: '01 Aug 2025', image: AppImages.follower1, name: 'Richard', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', },
+    { id: 2, title: 'Appointment #1234', status: '01 Aug 2025', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', },
+    { id: 3, title: 'Appointment #1234', status: '01 Aug 2025', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', },
+]
+
+export const directRequest = [
+    { id: 1, title: 'Appointment #1234', status: '01 Aug 2025', image: AppImages.follower1, name: 'Richard', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', },
+    { id: 2, title: 'Appointment #1234', status: '01 Aug 2025', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', },
+    { id: 3, title: 'Appointment #1234', status: '01 Aug 2025', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', },
 ]

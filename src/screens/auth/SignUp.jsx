@@ -21,6 +21,7 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import AppText from '../../components/AppTextComps/AppText';
 import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUp = () => {
   const [isNameFocused, setIsNameFocused] = useState(false);
@@ -151,7 +152,14 @@ const SignUp = () => {
           title="Join Now"
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.ThemeBlue}
-          handlePress={() => nav.navigate('Main')}
+          handlePress={async() => {
+            const type = await AsyncStorage.getItem('type');
+            if(type === 'User'){
+              nav.navigate('Main');
+            }else {
+              nav.navigate('FillTheDetails');
+            }
+          }}
           textFontWeight={false}
         />
 

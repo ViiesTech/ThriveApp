@@ -19,6 +19,7 @@ import AppButton from '../../components/AppButton';
 import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const [email, setEmail] = useState();
@@ -105,7 +106,14 @@ const Login = () => {
           title="Login"
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.ThemeBlue}
-          handlePress={() => nav.navigate('Main')}
+          handlePress={async () => {
+            const type = await AsyncStorage.getItem('type');
+            if (type === 'User') {
+              nav.navigate('Main');
+            } else {
+              nav.navigate('FillTheDetails');
+            }
+          }}
           textFontWeight={false}
         />
 

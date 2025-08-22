@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, FlatList, TouchableOpacity } from 'react-native';
 import Container from '../../../components/Container';
 import AppHeader from '../../../components/AppHeader';
@@ -10,14 +10,28 @@ import {
   notifications,
   responsiveHeight,
   responsiveWidth,
+  specialistMyAccount,
+  userMyAccount,
 } from '../../../utils';
 import { AppImages } from '../../../assets/images';
 import AppText from '../../../components/AppTextComps/AppText';
 import LineBreak from '../../../components/LineBreak';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
   const nav = useNavigation();
+  const [type, setType] = useState('');
+
+  const getType = async () => {
+    const userType = await AsyncStorage.getItem('type');
+    setType(userType);
+  }
+
+  useEffect(() => {
+    getType();
+  }, [])
+
   return (
     <Container>
       <AppHeader heading={'Profile'} />
@@ -44,7 +58,7 @@ const Profile = () => {
         <LineBreak space={2} />
 
         <FlatList
-          data={myAccount}
+          data={type === 'User' ? userMyAccount : specialistMyAccount}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={{

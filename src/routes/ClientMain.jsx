@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { AppColors, responsiveHeight } from '../utils';
@@ -31,6 +31,13 @@ import Inbox from '../screens/ClientMain/Inbox/Inbox';
 import PrivateInbox from '../screens/ClientMain/Inbox/PrivateInbox';
 import OpenRequestForm from '../screens/OpenRequestFlow/OpenRequestForm';
 import NearbySpecialists from '../screens/OpenRequestFlow/NearbySpecialists';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import ProviderHome from '../screens/ProviderMain/ProviderHome';
+import UserRequest from '../screens/ProviderMain/UserRequest';
+import ProviderPersonalInformation from '../screens/ProviderMain/ProviderPersonalInformation';
+import ProviderEditProfile from '../screens/ProviderMain/ProviderEditProfile';
+import InternalNotes from '../screens/ProviderMain/InternalNotes';
+import AddNewNotes from '../screens/ProviderMain/AddNewNotes';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -57,11 +64,26 @@ const ClientMain = () => {
       <Stack.Screen name="PersonalInformation" component={PersonalInformation} />
       <Stack.Screen name="AskQuestions" component={AskQuestions} />
       <Stack.Screen name="PrivateInbox" component={PrivateInbox} />
+      <Stack.Screen name="ProviderPersonalInformation" component={ProviderPersonalInformation} />
+      <Stack.Screen name="ProviderEditProfile" component={ProviderEditProfile} />
+      <Stack.Screen name="InternalNotes" component={InternalNotes} />
+      <Stack.Screen name="AddNewNotes" component={AddNewNotes} />
     </Stack.Navigator>
   );
 };
 
 function MyTabs() {
+  const [type, setType] = useState('');
+
+  const getType = async () => {
+    const userType = await AsyncStorage.getItem('type');
+    setType(userType);
+  }
+
+  useEffect(() => {
+    getType();
+  }, [])
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -79,8 +101,8 @@ function MyTabs() {
       }}
     >
       <Tab.Screen
-        name={'Home'}
-        component={Home}
+        name={type === 'User' ? "Home" : "ProviderHome"}
+        component={type === 'User' ? Home : ProviderHome}
         // component={OpenRequestForm}
         // component={NearbySpecialists}
         options={{
@@ -158,8 +180,8 @@ function MyTabs() {
         }}
       />
        <Tab.Screen
-        name={'Inbox'}
-        component={Inbox}
+        name={type === 'User' ? 'Inbox' : 'UserRequest'}
+        component={type === 'User' ? Inbox : UserRequest}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (

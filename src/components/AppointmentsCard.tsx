@@ -12,9 +12,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 type Prop = {
     data?: [];
     shopDetail?: any;
+    providerHome?: any;
+    userRequest?: any;
+    isSpecialist?: any;
+    ongoingAppointments?: any;
+    isUser?: any
 }
 
-const AppointmentsCard = ({ data, shopDetail }: Prop) => {
+const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpecialist, ongoingAppointments, isUser }: Prop) => {
     const nav = useNavigation();
     return (
         <View>
@@ -101,7 +106,7 @@ const AppointmentsCard = ({ data, shopDetail }: Prop) => {
                                             textSize={1.5}
                                         />
                                     </AppText>
-                                    <AppText
+                                    {item.date && <AppText
                                         title={'Date: '}
                                         textColor={AppColors.ThemeBlue}
                                         textSize={1.5}
@@ -111,7 +116,7 @@ const AppointmentsCard = ({ data, shopDetail }: Prop) => {
                                             textColor={AppColors.GRAY}
                                             textSize={1.5}
                                         />
-                                    </AppText>
+                                    </AppText>}
                                 </View>}
 
                                 {shopDetail && <View
@@ -163,9 +168,9 @@ const AppointmentsCard = ({ data, shopDetail }: Prop) => {
                             </View>
                         </View>
 
-                  {shopDetail &&  <LineBreak space={2} />}
-                    
-                       {shopDetail && <AppButton
+                        {shopDetail && <LineBreak space={2} />}
+
+                        {shopDetail && <AppButton
                             title="Book Now"
                             textColor={AppColors.WHITE}
                             btnBackgroundColor={AppColors.ThemeBlue}
@@ -174,10 +179,10 @@ const AppointmentsCard = ({ data, shopDetail }: Prop) => {
                             textFontWeight={false}
                         />}
 
-                        {item.appointmentStatus && <LineBreak space={2} />}
+                        {item.status === 'Ongoing' || userRequest || item.status === 'In Progress' || providerHome ? <LineBreak space={2} /> : null}
 
-                        {item.appointmentStatus && <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <AppText
+                        {item.status === 'Ongoing' && isUser || item.status === 'In Progress' || providerHome ? <View style={item.status === 'Ongoing' || item.status === 'In Progress' || providerHome ? { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' } : null}>
+                            {item.appointmentStatus && <AppText
                                 title={'Status: '}
                                 textColor={AppColors.ThemeBlue}
                                 textSize={1.6}
@@ -190,21 +195,75 @@ const AppointmentsCard = ({ data, shopDetail }: Prop) => {
                                     textSize={1.6}
                                     textTransform={'uppercase'}
                                 />
-                            </AppText>
+                            </AppText>}
 
                             <View style={{ paddingRight: responsiveWidth(4) }}>
                                 <AppButton
-                                    title="COMPLETE"
+                                    title={item.status !== 'In Progress' && providerHome ? "Start Appointment" : "COMPLETE"}
                                     textColor={AppColors.WHITE}
                                     btnBackgroundColor={AppColors.ThemeBlue}
                                     handlePress={() => nav.navigate('ServiceFeedback')}
-                                    btnWidth={32}
-                                    btnPadding={5}
+                                    btnWidth={item.status === 'In Progress' || providerHome ? 82 : 32}
+                                    btnPadding={item.status === 'In Progress' || providerHome ? 10 : 5}
                                     textSize={1.6}
                                     textFontWeight={false}
                                 />
                             </View>
-                        </View>}
+                        </View> : null}
+
+                        {
+                            userRequest && (
+                                <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <AppButton
+                                        title={"ACCEPT"}
+                                        textColor={AppColors.WHITE}
+                                        btnBackgroundColor={AppColors.ThemeBlue}
+                                        handlePress={() => { }}
+                                        btnWidth={38}
+                                        btnPadding={7}
+                                        textSize={1.6}
+                                        textFontWeight={false}
+                                    />
+                                    <AppButton
+                                        title={"REJECT"}
+                                        textColor={AppColors.WHITE}
+                                        btnBackgroundColor={AppColors.DARK_RED}
+                                        handlePress={() => { }}
+                                        btnWidth={38}
+                                        btnPadding={7}
+                                        textSize={1.6}
+                                        textFontWeight={false}
+                                    />
+                                </View>
+                            )
+                        }
+
+                        {
+                            isSpecialist && ongoingAppointments ? (
+                                <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <AppButton
+                                        title={"ON MY WAY"}
+                                        textColor={AppColors.WHITE}
+                                        btnBackgroundColor={AppColors.lightGreen}
+                                        handlePress={() => { }}
+                                        btnWidth={38}
+                                        btnPadding={7}
+                                        textSize={1.6}
+                                        textFontWeight={false}
+                                    />
+                                    <AppButton
+                                        title={"COMPLETE"}
+                                        textColor={AppColors.WHITE}
+                                        btnBackgroundColor={AppColors.ThemeBlue}
+                                        handlePress={() => nav.navigate('ServiceFeedback')}
+                                        btnWidth={38}
+                                        btnPadding={7}
+                                        textSize={1.6}
+                                        textFontWeight={false}
+                                    />
+                                </View>
+                            ) : null
+                        }
                     </View>
                 )}
             />

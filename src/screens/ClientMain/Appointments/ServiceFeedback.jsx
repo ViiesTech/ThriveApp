@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 import { AppColors, responsiveWidth } from '../../../utils';
 import AppText from '../../../components/AppTextComps/AppText';
@@ -10,9 +10,21 @@ import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import { AppImages } from '../../../assets/images';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ServiceFeedback = () => {
   const nav = useNavigation();
+  const [type, setType] = useState('');
+
+  const getType = async () => {
+    const userType = await AsyncStorage.getItem('type');
+    setType(userType);
+  }
+
+  useEffect(() => {
+    getType();
+  }, [])
+
   return (
     <View
       style={{
@@ -51,22 +63,28 @@ const ServiceFeedback = () => {
           title="Submit Now"
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.ThemeBlue}
-          handlePress={() => nav.navigate('ServiceGallery')}
+          handlePress={() => {
+            if(type === 'User'){
+              nav.navigate('ServiceGallery')
+            }else {
+              nav.navigate('Main')
+            }
+          }}
           textFontWeight={false}
         />
 
         <LineBreak space={7} />
-        <AppText
+       {type === 'User' && <AppText
           title={'Specialist Rating'}
           textColor={AppColors.BLACK}
           textSize={1.8}
           textFontWeight
           textAlignment={'center'}
-        />
+        />}
 
-        <LineBreak space={2} />
+      {type === 'User' &&  <LineBreak space={2} />}
 
-        <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
+      {type === 'User' && <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
           <Image
             source={AppImages.star}
             style={{ marginLeft: responsiveWidth(10) }}
@@ -77,7 +95,7 @@ const ServiceFeedback = () => {
             textSize={1.8}
             textFontWeight
           />
-        </View>
+        </View>}
       </View>
     </View>
   );
