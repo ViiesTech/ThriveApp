@@ -1,5 +1,4 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import Container from '../../components/Container';
 import AppHeader from '../../components/AppHeader';
 import SubNotesScreen from '../../components/SubNotes';

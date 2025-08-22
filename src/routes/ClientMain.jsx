@@ -38,6 +38,7 @@ import ProviderPersonalInformation from '../screens/ProviderMain/ProviderPersona
 import ProviderEditProfile from '../screens/ProviderMain/ProviderEditProfile';
 import InternalNotes from '../screens/ProviderMain/InternalNotes';
 import AddNewNotes from '../screens/ProviderMain/AddNewNotes';
+import PrivacyPolicy from '../screens/ProviderMain/PrivacyPolicy';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -68,6 +69,7 @@ const ClientMain = () => {
       <Stack.Screen name="ProviderEditProfile" component={ProviderEditProfile} />
       <Stack.Screen name="InternalNotes" component={InternalNotes} />
       <Stack.Screen name="AddNewNotes" component={AddNewNotes} />
+      <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
     </Stack.Navigator>
   );
 };

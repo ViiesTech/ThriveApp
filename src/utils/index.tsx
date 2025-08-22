@@ -245,7 +245,8 @@ export const specialistMyAccount = [
             name="key-asterisk"
             size={responsiveFontSize(3.5)}
             color={AppColors.BLACK}
-        />
+        />,
+        navTo: 'PrivacyPolicy',
     },
     {
         id: 4, title: 'Appointment History', icon: <EvilIcons
