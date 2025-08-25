@@ -70,6 +70,8 @@ const ClientMain = () => {
       <Stack.Screen name="InternalNotes" component={InternalNotes} />
       <Stack.Screen name="AddNewNotes" component={AddNewNotes} />
       <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+      <Stack.Screen name="OpenRequestForm" component={OpenRequestForm} />
+      <Stack.Screen name="NearbySpecialists" component={NearbySpecialists} />
     </Stack.Navigator>
   );
 };

@@ -7,11 +7,10 @@ import {
   responsiveWidth,
 } from '../../utils/index';
 import { useNavigation } from '@react-navigation/native';
-import { FasterImageView } from '@rraut/react-native-faster-image';
 
 const Splash = () => {
   const nav = useNavigation();
-
+ 
   useEffect(() => {
     setTimeout(() => {
       nav.replace('OnBoarding');
@@ -27,13 +26,9 @@ const Splash = () => {
         backgroundColor: AppColors.WHITE,
       }}
     >
-      <FasterImageView
-        source={{
-          uri: Image.resolveAssetSource(
-            require('../../assets/images/attachment.gif'),
-          ).uri,
-          isGIF: true,
-        }}
+      <Image
+        source={require('../../assets/images/attachment.gif')}
+        resizeMode="contain"
         style={{ width: responsiveWidth(80), height: responsiveHeight(40) }}
       />
     </View>

@@ -137,6 +137,9 @@ const Profile = () => {
               onPress={() => {
                 if (item.navTo) {
                   nav.navigate(item.navTo);
+                }else if(item.id == 3){
+                  nav.navigate("Auth");
+                  AsyncStorage.clear();
                 }
               }}
             >

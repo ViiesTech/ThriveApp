@@ -7,9 +7,10 @@ import AppText from './AppTextComps/AppText';
 type Prop = {
     data?: any;
     search?: any;
+    isColorDisabled?:any;
 }
 
-const Categories = ({ data, search = false }: Prop) => {
+const Categories = ({ data, search = false, isColorDisabled }: Prop) => {
     return (
         <View>
             <FlatList
@@ -27,7 +28,7 @@ const Categories = ({ data, search = false }: Prop) => {
                         style={{
                             flexDirection: 'row',
                             gap: 15,
-                            backgroundColor: item.id === 2 && !search ? AppColors.WHITE : AppColors.lightestBlue,
+                            backgroundColor: isColorDisabled ? AppColors.WHITE : item.id === 2 && !search ? AppColors.WHITE : AppColors.lightestBlue,
                             borderWidth: 1,
                             borderColor: item.id === 2 && !search ? AppColors.GRAY : AppColors.ThemeBlue,
                             // width: responsiveWidth(38),

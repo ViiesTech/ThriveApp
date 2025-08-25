@@ -174,7 +174,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                             title="Book Now"
                             textColor={AppColors.WHITE}
                             btnBackgroundColor={AppColors.ThemeBlue}
-                            handlePress={() => nav.navigate('ServiceFeedback')}
+                            handlePress={() => nav.navigate('BookingCheckout')}
                             btnWidth={82}
                             textFontWeight={false}
                         />}

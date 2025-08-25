@@ -219,7 +219,8 @@ export const userMyAccount = [
             name="key-asterisk"
             size={responsiveFontSize(3.5)}
             color={AppColors.BLACK}
-        />
+        />,
+        navTo: 'PrivacyPolicy',
     },
     {
         id: 4, title: 'Appointment History', icon: <EvilIcons
@@ -425,7 +426,7 @@ export const nearbySpecialists = [
 
 export const typeItems = [
     { id: 1, title: 'User', svg: AppIcons.user },
-    { id: 2, title: 'Specialist', svg: AppIcons.special },
+    { id: 2, title: 'Therapist', svg: AppIcons.special },
 ]
 
 export const homeStats = [

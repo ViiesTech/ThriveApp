@@ -7,7 +7,7 @@ import { nearbySpecialists } from '../../utils';
 const NearbySpecialists = () => {
   return (
     <Container>
-      <AppHeader onBackPress={false} heading={'Nearby Specialists'} />
+      <AppHeader onBackPress={true} heading={'Nearby Specialists'} />
       <AppointmentsCard data={nearbySpecialists} shopDetail="shopDetail" />
     </Container>
   );

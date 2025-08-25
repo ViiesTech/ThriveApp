@@ -49,6 +49,7 @@ const Home = () => {
                   alignItems: 'center',
                   backgroundColor: AppColors.ThemeBlue,
                 }}
+                onPress={() => nav.navigate("Search")}
               >
                 <Feather
                   size={responsiveFontSize(2.4)}
@@ -65,6 +66,7 @@ const Home = () => {
                   alignItems: 'center',
                   backgroundColor: AppColors.ThemeBlue,
                 }}
+                onPress={() => nav.navigate('OpenRequestForm')}
               >
                 <Feather
                   size={responsiveFontSize(2.4)}

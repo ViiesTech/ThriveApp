@@ -19,8 +19,10 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MostSearchInterest from '../../../components/MostSearchInterest';
 import AppButton from '../../../components/AppButton';
 import NearbyOffers from './../../../components/NearbyOffers';
+import { useNavigation } from '@react-navigation/native';
 
 const SpecialistProfile = () => {
+  const nav = useNavigation();
   return (
     <Container>
       <AppHeader onBackPress={true} />

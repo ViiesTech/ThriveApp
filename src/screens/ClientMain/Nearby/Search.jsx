@@ -74,9 +74,9 @@ const Search = () => {
 
         <LineBreak space={2} />
 
-        <RecentSearch />
+        {/* <RecentSearch /> */}
 
-        <LineBreak space={3} />
+        {/* <LineBreak space={3} /> */}
 
         <AppText
           title={'Popular Search'}
@@ -87,7 +87,7 @@ const Search = () => {
         <LineBreak space={2} />
 
         <View>
-          <Categories data={categories} search={'search'} />
+          <Categories data={categories} search={'search'} isColorDisabled={true} />
         </View>
         <LineBreak space={3} />
 

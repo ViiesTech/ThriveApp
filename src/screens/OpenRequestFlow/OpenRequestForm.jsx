@@ -8,11 +8,13 @@ import LineBreak from '../../components/LineBreak';
 import AppTextInput from '../../components/AppTextInput';
 import Entypo from 'react-native-vector-icons/Entypo';
 import AppButton from '../../components/AppButton';
+import { useNavigation } from '@react-navigation/native';
 
 const OpenRequestForm = () => {
+  const nav = useNavigation();
   return (
     <Container>
-      <AppHeader onBackPress={false} heading={'Open Request Form'} />
+      <AppHeader onBackPress={true} heading={'Open Request Form'} />
       <LineBreak space={2} />
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <View>
@@ -97,7 +99,7 @@ const OpenRequestForm = () => {
           title={'Submit Form'}
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.ThemeBlue}
-          handlePress={() => nav.navigate('Main')}
+          handlePress={() => nav.navigate('NearbySpecialists')}
           textFontWeight={false}
         />
       </View>
