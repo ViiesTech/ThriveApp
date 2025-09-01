@@ -10,7 +10,7 @@ import AppText from '../../../components/AppTextComps/AppText';
 const MassageCategories = () => {
   return (
     <Container>
-      <AppHeader onBackPress={true} heading={'Couples Message'} />
+      <AppHeader onBackPress={true} heading={'Couples Massage'} />
       <Image
         source={AppImages.massage}
         style={{ width: responsiveWidth(100) }}

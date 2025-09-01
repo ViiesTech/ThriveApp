@@ -19,6 +19,7 @@ import { AppIcons } from '../../../assets/icons';
 import Feather from 'react-native-vector-icons/Feather';
 import AppButton from '../../../components/AppButton';
 import { useNavigation } from '@react-navigation/native';
+import AppTextInput from '../../../components/AppTextInput';
 
 const BookingCheckout = () => {
   const nav = useNavigation();
@@ -77,7 +78,7 @@ const BookingCheckout = () => {
           textAlignment={'center'}
         />
 
-        <LineBreak space={2} />
+        <LineBreak space={1} />
 
         <View>
           <FlatList
@@ -118,12 +119,45 @@ const BookingCheckout = () => {
           />
         </View>
 
+        <LineBreak space={1} />
+
+        <AppText
+          title={'Promo Code'}
+          textColor={AppColors.BLACK}
+          textSize={1.8}
+          textAlignment={'center'}
+        />
+        <LineBreak space={1} />
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View>
+            <AppTextInput
+              inputPlaceHolder={'A1B2C3'}
+              isFocused={true}
+              containerBg={'transparent'}
+              inputHeight={4}
+              fontSize={1.5}
+              inputWidth={38}
+            />
+          </View>
+          <AppButton
+            title="Apply Now"
+            textColor={AppColors.WHITE}
+            btnBackgroundColor={AppColors.ThemeBlue}
+            handlePress={() => {}}
+            btnWidth={25}
+            btnPadding={4}
+            textSize={1.5}
+            textFontWeight={false}
+          />
+        </View>
+
         <View
           style={{
             width: responsiveWidth(78),
             height: responsiveHeight(0.2),
             backgroundColor: AppColors.LIGHTGRAY,
-            marginVertical: responsiveHeight(5),
+            marginVertical: responsiveHeight(1),
           }}
         />
 

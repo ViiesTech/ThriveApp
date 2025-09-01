@@ -80,7 +80,7 @@ const FillTheDetails = () => {
           />
           <LineBreak space={0.5} />
           <AppTextInput
-            inputPlaceHolder={'Message Therapy'}
+            inputPlaceHolder={'Massage Therapy'}
             inputWidth={75}
             rightIcon={
               <TouchableOpacity>
