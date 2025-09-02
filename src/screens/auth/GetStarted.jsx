@@ -65,7 +65,7 @@ const GetStarted = () => {
             title="Login with Email"
             textColor={AppColors.WHITE}
             btnBackgroundColor={AppColors.ThemeBlue}
-            handlePress={() => nav.navigate('SelectType')}
+            handlePress={() => nav.navigate('Login')}
             leftIcon={
               <View style={{ paddingHorizontal: responsiveWidth(4) }}>
                 <MaterialIcons
@@ -89,13 +89,13 @@ const GetStarted = () => {
           }}
         >
           <AppText
-            title={'Already have an account?'}
+            title={`Don't have an account?`}
             textColor={AppColors.WHITE}
             textSize={2}
           />
           <TouchableOpacity onPress={() => nav.navigate('SelectType')}>
             <AppText
-              title={'Sign In'}
+              title={'Sign Up'}
               textColor={AppColors.WHITE}
               textSize={2}
             />

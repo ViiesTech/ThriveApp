@@ -178,7 +178,7 @@ const Login = () => {
             textColor={AppColors.BLACK}
             textSize={2}
           />
-          <TouchableOpacity onPress={() => nav.navigate('SignUp')}>
+          <TouchableOpacity onPress={() => nav.navigate('SelectType')}>
             <AppText
               title={'Join Now'}
               textColor={AppColors.ThemeBlue}

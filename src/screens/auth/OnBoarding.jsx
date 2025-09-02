@@ -112,7 +112,7 @@ const OnBoarding = ({ navigation }) => {
             lineHeight={3}
             textAlignment={'center'}
           />
-          <TouchableOpacity onPress={() => nav.navigate('SelectType')}>
+          <TouchableOpacity onPress={() => nav.navigate('Login')}>
             <AppText
               title={'Sign In'}
               textColor={AppColors.WHITE}

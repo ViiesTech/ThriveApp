@@ -23,7 +23,7 @@ import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SignUp = () => {
+const SignUp = ({route}) => {
   const [isNameFocused, setIsNameFocused] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPhoneNumberFocused, setIsPhoneNumberFocused] = useState(false);
@@ -31,6 +31,10 @@ const SignUp = () => {
   const nav = useNavigation();
   const [isShow, setIsShow] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+
+  const {type} = route?.params;
+
+  console.log('type ===>',type)
 
   return (
     <Container>

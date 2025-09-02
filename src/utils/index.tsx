@@ -7,6 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import Toast from "react-native-toast-message";
 
 const percentageCalculation = (max: number, val: number) => max * (val / 100);
 
@@ -457,3 +458,10 @@ export const directRequest = [
     { id: 2, title: 'Appointment #1234', status: '01 Aug 2025', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', },
     { id: 3, title: 'Appointment #1234', status: '01 Aug 2025', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', },
 ]
+
+export const ShowToast = (message: string) => {
+  return Toast.show({
+    type: 'success',
+    text1: message
+  })
+}
