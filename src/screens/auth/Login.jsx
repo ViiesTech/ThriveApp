@@ -1,6 +1,5 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
 import {
@@ -8,6 +7,7 @@ import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
+  ShowToast,
 } from '../../utils';
 import AppTextInput from '../../components/AppTextInput';
 import LineBreak from '../../components/LineBreak';
@@ -19,14 +19,39 @@ import AppButton from '../../components/AppButton';
 import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useLoginMutation } from '../../redux/services';
 
 const Login = () => {
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
+  const [password,setPassword] = useState('')
   const [isShow, setIsShow] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [login,{isLoading}] = useLoginMutation()
   const nav = useNavigation();
+
+
+  const onLoginPress = async () => {
+      if(!email) {
+        ShowToast('Please enter your email')
+        return
+      } 
+      if(!password) {
+        ShowToast('Please enter your password')
+        return
+      }
+      let data = {
+        email: email,
+        password: password
+      }
+      await login(data).unwrap().then((res) => {
+        console.log('response of login ===>',res)
+        ShowToast(res.message)
+      }).catch((error) => {
+        console.log('error while login ===>',error)
+        ShowToast('Some problem occured')
+      })
+  }
 
   return (
     <Container>
@@ -53,6 +78,7 @@ const Login = () => {
             />
           }
           inputHeight={5}
+          keyboardType={'email-address'}
           value={email}
           onChangeText={text => setEmail(text)}
           isFocused={isEmailFocused}
@@ -65,6 +91,9 @@ const Login = () => {
         <AppTextInput
           inputPlaceHolder={'Password'}
           inputHeight={5}
+          value={password}
+          secureTextEntry={isShow}
+          onChangeText={text => setPassword(text)}
           rightIcon={
             <TouchableOpacity onPress={() => setIsShow(!isShow)}>
               <Ionicons
@@ -105,15 +134,15 @@ const Login = () => {
         <AppButton
           title="Login"
           textColor={AppColors.WHITE}
+          indicator={isLoading}
           btnBackgroundColor={AppColors.ThemeBlue}
-          handlePress={async () => {
-            const type = await AsyncStorage.getItem('type');
-            if (type === 'User') {
-              nav.navigate('Main');
-            } else {
-              nav.navigate('FillTheDetails');
-            }
-          }}
+          handlePress={() => onLoginPress()}
+            // const type = await AsyncStorage.getItem('type');
+            // if (type === 'User') {
+            //   nav.navigate('Main');
+            // } else {
+            //   nav.navigate('FillTheDetails');
+            // }
           textFontWeight={false}
         />
 

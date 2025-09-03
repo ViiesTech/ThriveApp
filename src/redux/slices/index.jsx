@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import { Apis } from '../services';
 
 const initialState = {
   token: null,
@@ -14,41 +15,38 @@ export const Slice = createSlice({
       state.user = {};
       state.token = null;
     },
-    // setFirstTimeVisit: (state,action) => {
-    //   state.firstVisit = action.payload;
-    // },
   },
-  // extraReducers: builder => {
-  //   builder
-  //     .addMatcher(Apis.endpoints.verifyOTP.matchFulfilled, (state, action) => {
-  //       if (action.payload?.data) {
-  //         state.user = action.payload.data;
-  //         state.token = action.payload.accessToken;
-  //       }
-  //     })
-  //     .addMatcher(Apis.endpoints.login.matchFulfilled, (state, action) => {
-  //       if (action.payload?.data) {
-  //         state.user = action.payload.data;
-  //         state.token = action.payload.accessToken;
-  //       }
-  //     })
-  //   .addMatcher(Apis.endpoints.updateUser.matchFulfilled, (state, action) => {
-  //     if (action.payload?.data) {
-  //       state.user = {
-  //         ...state.user,
-  //         ...action.payload.data,
-  //       };
-  //     }
-  //   })
-  //     .addMatcher(Apis.endpoints.updateTechnician.matchFulfilled, (state, action) => {
-  //     if (action.payload?.data) {
-  //       state.user = {
-  //         ...state.user,
-  //         ...action.payload.data,
-  //       };
-  //     }
-  //   });
-  // },
+  extraReducers: builder => {
+    builder
+      .addMatcher(Apis.endpoints.verifyOTP.matchFulfilled, (state, action) => {
+        if (action.payload?.data) {
+          state.user = action.payload.data;
+          state.token = action.payload.token;
+        }
+      })
+      .addMatcher(Apis.endpoints.login.matchFulfilled, (state, action) => {
+        if (action.payload?.data) {
+          state.user = action.payload.data;
+          state.token = action.payload.token;
+        }
+      })
+    // .addMatcher(Apis.endpoints.updateUser.matchFulfilled, (state, action) => {
+    //   if (action.payload?.data) {
+    //     state.user = {
+    //       ...state.user,
+    //       ...action.payload.data,
+    //     };
+    //   }
+    // })
+    //   .addMatcher(Apis.endpoints.updateTechnician.matchFulfilled, (state, action) => {
+    //   if (action.payload?.data) {
+    //     state.user = {
+    //       ...state.user,
+    //       ...action.payload.data,
+    //     };
+    //   }
+    // });
+  },
 });
 
 export const {logout} = Slice.actions;

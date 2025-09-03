@@ -3,6 +3,7 @@ import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import AppText from './AppTextComps/AppText';
 import { AppColors, responsiveWidth } from '../utils/index';
+import Loader from './Loader';
 
 type props = {
   title?: any;
@@ -18,6 +19,7 @@ type props = {
   borderRadius?: any;
   leftIcon?: any;
   activeOpacity?:any;
+  indicator?: any;
 };
 const AppButton = ({
   title,
@@ -33,6 +35,7 @@ const AppButton = ({
   textFontWeight = true,
   textSize = 2.2,
   activeOpacity,
+  indicator
 }: props) => {
   return (
     <TouchableOpacity
@@ -52,12 +55,16 @@ const AppButton = ({
         flexDirection: 'row',
       }}>
       {leftIcon}
+     {indicator  ?
+          <Loader size={'small'} />
+      :
       <AppText
         textColor={textColor}
         textSize={textSize}
         title={title}
         textFontWeight={textFontWeight}
       />
+      }
     </TouchableOpacity>
   );
 };

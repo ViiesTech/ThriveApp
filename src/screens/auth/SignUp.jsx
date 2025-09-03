@@ -8,6 +8,7 @@ import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
+  ShowToast,
 } from '../../utils';
 import { useNavigation } from '@react-navigation/native';
 import AuthHeader from '../../components/AuthHeader';
@@ -22,8 +23,9 @@ import AppText from '../../components/AppTextComps/AppText';
 import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useRegisterMutation } from '../../redux/services';
 
-const SignUp = ({route}) => {
+const SignUp = ({ route }) => {
   const [isNameFocused, setIsNameFocused] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPhoneNumberFocused, setIsPhoneNumberFocused] = useState(false);
@@ -31,10 +33,68 @@ const SignUp = ({route}) => {
   const nav = useNavigation();
   const [isShow, setIsShow] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [state, setState] = useState({
+    name: '',
+    email: '',
+    number: '',
+    password: '',
+  });
+  const [register, { isLoading }] = useRegisterMutation();
 
-  const {type} = route?.params;
+  const { type } = route?.params;
 
-  console.log('type ===>',type)
+  // console.log('type ===>', type);
+
+  const onSignupPress = async () => {
+    if (!state.name) {
+      ShowToast('Please enter your name');
+      return;
+    }
+    if (!state.email) {
+      ShowToast('Please enter your email');
+      return;
+    }
+    if (!state.number) {
+      ShowToast('Please enter your mobile number');
+      return;
+    }
+    if (!state.password) {
+      ShowToast('Please enter your password');
+      return;
+    }
+    if(state.password.length < 8) {
+      ShowToast('Password is too weak')
+      return 
+    }
+    let data = {
+      email: state.email,
+      password: state.password,
+      phoneNumber: state.number,
+      type: type,
+    };
+    await register(data)
+      .unwrap()
+      .then(res => {
+        console.log('response of register ===>',res)
+        ShowToast(res.message);
+        if (res.success) {
+          nav.navigate('EmailVerification', {
+            data: { ...res.data, type: type },
+          });
+        }
+      })
+      .catch(error => {
+        console.log('error while registering the account ===>', error);
+        ShowToast('Some problem occured');
+      });
+  };
+
+  const onChangeText = (state, value) => {
+    setState(prevState => ({
+      ...prevState,
+      [state]: value,
+    }));
+  };
 
   return (
     <Container>
@@ -53,6 +113,8 @@ const SignUp = ({route}) => {
 
         <AppTextInput
           inputPlaceHolder={'Name'}
+          value={state.name}
+          onChangeText={text => onChangeText('name', text)}
           logo={
             <Ionicons
               name={'person'}
@@ -70,6 +132,9 @@ const SignUp = ({route}) => {
 
         <AppTextInput
           inputPlaceHolder={'Email address'}
+          value={state.email}
+          keyboardType={'email-address'}
+          onChangeText={text => onChangeText('email', text)}
           logo={
             <MaterialIcons
               name={'email'}
@@ -87,6 +152,9 @@ const SignUp = ({route}) => {
 
         <AppTextInput
           inputPlaceHolder={'Mobile Number'}
+          value={state.number}
+          keyboardType={'numeric'}
+          onChangeText={text => onChangeText('number', text)}
           logo={
             <Octicons
               name={'number'}
@@ -107,6 +175,9 @@ const SignUp = ({route}) => {
         <AppTextInput
           inputPlaceHolder={'Password'}
           inputHeight={5}
+          secureTextEntry={isShow}
+          value={state.password}
+          onChangeText={text => onChangeText('password', text)}
           rightIcon={
             <TouchableOpacity onPress={() => setIsShow(!isShow)}>
               <Ionicons
@@ -154,16 +225,17 @@ const SignUp = ({route}) => {
 
         <AppButton
           title="Join Now"
+          indicator={isLoading}
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.ThemeBlue}
-          handlePress={async() => {
-            const type = await AsyncStorage.getItem('type');
-            if(type === 'User'){
-              nav.navigate('Main');
-            }else {
-              nav.navigate('FillTheDetails');
-            }
-          }}
+          handlePress={() => onSignupPress()}
+          // const type = await AsyncStorage.getItem('type');
+          // if(type === 'User'){
+          //   nav.navigate('Main');
+          // }else {
+          //   nav.navigate('FillTheDetails');
+          // }
+
           textFontWeight={false}
         />
 

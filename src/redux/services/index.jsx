@@ -22,20 +22,20 @@ export const Apis = createApi({
         body: data,
       }),
     }),
-    // verifyOTP: builder.mutation({
-    //   query: data => ({
-    //     url: endpoints.OTP,
-    //     method: 'POST',
-    //     body: data,
-    //   }),
-    // }),
-    // login: builder.mutation({
-    //   query: data => ({
-    //     url: endpoints.LOGIN,
-    //     method: 'POST',
-    //     body: data,
-    //   }),
-    // }),
+    verifyOTP: builder.mutation({
+      query: data => ({
+        url: endpoints.OTP,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    login: builder.mutation({
+      query: data => ({
+        url: endpoints.LOGIN,
+        method: 'POST',
+        body: data,
+      }),
+    }),
     // getProfile: builder.query({
     //   query: () => ({
     //     url: endpoints.GET_PROFILE,
@@ -50,6 +50,6 @@ export const Apis = createApi({
 
 export const {
   useRegisterMutation,
-  // useVerifyOTPMutation,
-  // useLoginMutation,
+  useVerifyOTPMutation,
+  useLoginMutation,
 } = Apis;

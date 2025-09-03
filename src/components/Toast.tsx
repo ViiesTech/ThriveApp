@@ -12,11 +12,11 @@ const Toast = ({ position }: props) => {
         success: (props) => (
             <BaseToast
                 {...props}
-                style={{ borderLeftColor: AppColors.BTNCOLOURS, borderLeftWidth: 7 }}
+                style={{ borderLeftColor: AppColors.ThemeBlue, borderLeftWidth: 7 }}
                 contentContainerStyle={{ paddingHorizontal: 15, backgroundColor: AppColors.WHITE }}
                 text1Style={{
                     fontSize: 15,
-                    color: AppColors.BTNCOLOURS,
+                    color: AppColors.ThemeBlue,
                     fontWeight: 'bold'
                 }}
             />

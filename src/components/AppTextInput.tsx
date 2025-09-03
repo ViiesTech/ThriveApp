@@ -35,6 +35,7 @@ type props = {
   borderRadius?: any;
   inputContainerPaddingHorizontal?: any;
   elevation?: any;
+  keyboardType?: any;
 };
 const AppTextInput = ({
   logo,
@@ -62,6 +63,7 @@ const AppTextInput = ({
   borderRadius,
   inputContainerPaddingHorizontal,
   elevation,
+  keyboardType,
 }: props) => {
   return (
     <View
@@ -90,6 +92,7 @@ const AppTextInput = ({
       <TextInput
         placeholder={inputPlaceHolder}
         value={value}
+        keyboardType={keyboardType}
         onChangeText={onChangeText}
         placeholderTextColor={
           placeholderTextColor ? placeholderTextColor : isFocused ? AppColors.ThemeBlue : AppColors.GRAY
@@ -112,7 +115,6 @@ const AppTextInput = ({
         onFocus={onFocus}
         onBlur={onBlur}
       />
-
       {rightIcon}
     </View>
   );
