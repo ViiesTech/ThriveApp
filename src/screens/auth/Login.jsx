@@ -32,25 +32,26 @@ const Login = () => {
 
 
   const onLoginPress = async () => {
-      if(!email) {
-        ShowToast('Please enter your email')
-        return
-      } 
-      if(!password) {
-        ShowToast('Please enter your password')
-        return
-      }
-      let data = {
-        email: email,
-        password: password
-      }
-      await login(data).unwrap().then((res) => {
-        console.log('response of login ===>',res)
-        ShowToast(res.message)
-      }).catch((error) => {
-        console.log('error while login ===>',error)
-        ShowToast('Some problem occured')
-      })
+      // if(!email) {
+      //   ShowToast('Please enter your email')
+      //   return
+      // } 
+      // if(!password) {
+      //   ShowToast('Please enter your password')
+      //   return
+      // }
+      // let data = {
+      //   email: email,
+      //   password: password
+      // }
+      // await login(data).unwrap().then((res) => {
+      //   console.log('response of login ===>',res)
+      //   ShowToast(res.message)
+      // }).catch((error) => {
+      //   console.log('error while login ===>',error)
+      //   ShowToast('Some problem occured')
+      // })
+              nav.navigate('Main');
   }
 
   return (

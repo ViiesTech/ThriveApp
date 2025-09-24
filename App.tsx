@@ -1,7 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Routes from './src/routes/Routes';
-import { Platform, SafeAreaView, StatusBar, useColorScheme } from 'react-native';
+import { SafeAreaView, StatusBar, useColorScheme } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './src/redux/store';
@@ -12,17 +13,15 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-     <SafeAreaView style={{
-        flex: 1,
-        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-      }}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <NavigationContainer>
-          <Routes />
-          <Toast position='top' />
-        </NavigationContainer>
-      </SafeAreaView>
-
+        <SafeAreaView style={{
+          flex: 1,
+        }}>
+          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <NavigationContainer>
+            <Routes />
+            <Toast position='top' />
+          </NavigationContainer>
+        </SafeAreaView>
       </PersistGate>
     </Provider>
   );
