@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
-import { View, FlatList, Image } from 'react-native'
+import { View, FlatList, Image, TouchableOpacity } from 'react-native'
 import { AppColors, responsiveWidth } from '../utils'
 import AppText from './AppTextComps/AppText'
 import LineBreak from './LineBreak'
@@ -17,7 +17,7 @@ const YouFollow = ({ data, paddingHorizontal }: any) => {
                     paddingHorizontal: paddingHorizontal ? paddingHorizontal : responsiveWidth(4),
                 }}
                 renderItem={({ item }) => (
-                    <View style={{flexDirection: 'column', alignItems: 'center'}}>
+                    <TouchableOpacity style={{flexDirection: 'column', alignItems: 'center'}}>
                         <Image
                             source={item.img}
                             resizeMode="contain"
@@ -30,7 +30,7 @@ const YouFollow = ({ data, paddingHorizontal }: any) => {
                             textSize={1.8}
                             textFontWeight
                         />}
-                    </View>
+                    </TouchableOpacity>
                 )}
             />
         </View>

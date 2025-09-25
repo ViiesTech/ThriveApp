@@ -70,14 +70,14 @@ export const banner = [
 ]
 
 export const services = [
-    { id: 1, icon: AppIcons.service1, title: 'Massage at Home' },
+    { id: 1, icon: AppIcons.service1, title: 'Solo Massage' },
     { id: 2, icon: AppIcons.service2, title: 'Couples Massage' },
-    { id: 3, icon: AppIcons.service3, title: 'Spa Party' },
-    { id: 4, icon: AppIcons.service4, title: 'Corporate Chair Massage' },
+    { id: 3, icon: AppIcons.service4, title: 'Corporate Chair Massage' },
     { id: 5, icon: AppIcons.service5, title: 'Group Yoga' },
     { id: 6, icon: AppIcons.service6, title: 'Sound Bath' },
+    { id: 8, icon: AppIcons.service8, title: 'Facial' },
     { id: 7, icon: AppIcons.service7, title: 'Vibroacoustic Therapy' },
-    { id: 8, icon: AppIcons.service8, title: 'Mobile Facials' },
+    { id: 4, icon: AppIcons.service3, title: 'Spa Party' },
 ]
 
 export const specialistsYouFollow = [
@@ -182,11 +182,11 @@ export const reviews = [
 
 export const timesItems = [
     { id: 1, time: '08:00 AM', },
-    { id: 2, time: '08:00 AM', },
-    { id: 3, time: '08:00 AM', },
-    { id: 4, time: '08:00 AM', },
-    { id: 5, time: '08:00 AM', },
-    { id: 6, time: '08:00 AM', },
+    { id: 2, time: '09:00 AM', },
+    { id: 3, time: '10:00 AM', },
+    { id: 4, time: '11:00 AM', },
+    { id: 5, time: '12:00 AM', },
+    { id: 6, time: '01:00 AM', },
 ]
 
 export const shopDetail = [

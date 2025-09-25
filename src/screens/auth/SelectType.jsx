@@ -77,8 +77,8 @@ const SelectType = () => {
             textColor={AppColors.WHITE}
             btnBackgroundColor={AppColors.appGreen}
             handlePress={async () => {
-              nav.navigate('SignUp', { type: type });
               AsyncStorage.setItem('type', type);
+              nav.navigate('Login', { type: type });
             }}
             textFontWeight={false}
           />

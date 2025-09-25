@@ -39,6 +39,7 @@ import ProviderEditProfile from '../screens/ProviderMain/ProviderEditProfile';
 import InternalNotes from '../screens/ProviderMain/InternalNotes';
 import AddNewNotes from '../screens/ProviderMain/AddNewNotes';
 import PrivacyPolicy from '../screens/ProviderMain/PrivacyPolicy';
+import LocationInformation from '../screens/ClientMain/Home/LocationInformation';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -72,6 +73,7 @@ const ClientMain = () => {
       <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
       <Stack.Screen name="OpenRequestForm" component={OpenRequestForm} />
       <Stack.Screen name="NearbySpecialists" component={NearbySpecialists} />
+      <Stack.Screen name="LocationInformation" component={LocationInformation} />
     </Stack.Navigator>
   );
 };
@@ -105,8 +107,8 @@ function MyTabs() {
       }}
     >
       <Tab.Screen
-        name={type === 'User' ? "Home" : "ProviderHome"}
-        component={type === 'User' ? Home : ProviderHome}
+        name={type === 'Provider' ? "Home" : "ProviderHome"}
+        component={type === 'Provider' ? Home : ProviderHome}
         // component={OpenRequestForm}
         // component={NearbySpecialists}
         options={{
@@ -184,8 +186,8 @@ function MyTabs() {
         }}
       />
        <Tab.Screen
-        name={type === 'User' ? 'Inbox' : 'UserRequest'}
-        component={type === 'User' ? Inbox : UserRequest}
+        name={type === 'Provider' ? 'Inbox' : 'UserRequest'}
+        component={type === 'Provider' ? Inbox : UserRequest}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (

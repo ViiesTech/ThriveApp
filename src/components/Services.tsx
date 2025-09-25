@@ -1,11 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react'
-import { View, ScrollView, FlatList, TouchableOpacity } from 'react-native'
-import { AppColors, services } from '../utils'
-import LineBreak from './LineBreak'
-import AppText from './AppTextComps/AppText'
-import SVGXml from './SVGXML'
-import { useNavigation } from '@react-navigation/native'
+import React from 'react';
+import { ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { AppColors, responsiveWidth, services } from '../utils'
+import LineBreak from './LineBreak';
+import AppText from './AppTextComps/AppText';
+import SVGXml from './SVGXML';
+import { useNavigation } from '@react-navigation/native';
 
 const Services = () => {
     const nav = useNavigation();
@@ -18,28 +18,17 @@ const Services = () => {
             <FlatList
                 data={services}
                 ItemSeparatorComponent={<LineBreak space={2} />}
-                numColumns={4}
+                columnWrapperStyle={{ justifyContent: 'center', alignSelf: 'center', gap: responsiveWidth(7.5) }}
+                numColumns={3}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => nav.navigate('MassageCategories')}>
-                        <View
-                            style={{
-                                backgroundColor: AppColors.lightestBlue,
-                                width: 60,
-                                height: 60,
-                                borderRadius: 100,
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <SVGXml icon={item.icon} width={35} height={35} />
-                        </View>
+                    <TouchableOpacity style={{ alignItems: 'center', }} onPress={() => nav.navigate('MassageCategories', { heading: item.title })}>
+                        <SVGXml icon={item.icon} width={100} height={100} />
                         <LineBreak space={1} />
                         <AppText
                             title={item.title}
                             textColor={AppColors.ThemeBlue}
-                            textSize={1.6}
-                            textwidth={23}
-                            textFontWeight
+                            textSize={1.8}
+                            textwidth={25}
                             textAlignment={'center'}
                         />
                     </TouchableOpacity>

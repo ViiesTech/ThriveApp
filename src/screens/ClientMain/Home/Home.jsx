@@ -13,7 +13,7 @@ import {
   responsiveWidth,
   specialistsYouFollow,
 } from '../../../utils';
-import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Banner from '../../../components/Banner';
 import AppText from '../../../components/AppTextComps/AppText';
 import LineBreak from '../../../components/LineBreak';
@@ -39,42 +39,23 @@ const Home = () => {
           heading="Hi, Samantha"
           subHeading="Find your desired service and treat yourself"
           rightIcon={
-            <View style={{ flexDirection: 'row', gap: 10 }}>
-              <TouchableOpacity
-                style={{
-                  width: responsiveHeight(4),
-                  height: responsiveHeight(4),
-                  borderRadius: 100,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: AppColors.ThemeBlue,
-                }}
-                onPress={() => nav.navigate("Search")}
-              >
-                <Feather
-                  size={responsiveFontSize(2.4)}
-                  name={'search'}
-                  color={AppColors.WHITE}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  width: responsiveHeight(4),
-                  height: responsiveHeight(4),
-                  borderRadius: 100,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: AppColors.ThemeBlue,
-                }}
-                onPress={() => nav.navigate('OpenRequestForm')}
-              >
-                <Feather
-                  size={responsiveFontSize(2.4)}
-                  name={'plus'}
-                  color={AppColors.WHITE}
-                />
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              style={{
+                width: responsiveHeight(4),
+                height: responsiveHeight(4),
+                borderRadius: 100,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: AppColors.appGreen,
+              }}
+              onPress={() => nav.navigate('OpenRequestForm')}
+            >
+              <MaterialIcons
+                size={responsiveFontSize(2.4)}
+                name={'question-mark'}
+                color={AppColors.WHITE}
+              />
+            </TouchableOpacity>
           }
         />
       </View>
@@ -91,7 +72,7 @@ const Home = () => {
 
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <AppText
-          title={'What do you want to do?'}
+          title={'What Are You in the Mood For?'}
           textColor={AppColors.BLACK}
           textSize={2}
           textFontWeight
@@ -106,7 +87,7 @@ const Home = () => {
 
       <LineBreak space={2} />
 
-      <View>
+      {/* <View>
         <View style={{ paddingHorizontal: responsiveWidth(4) }}>
           <AppText
             title={'Specialists you follow'}
@@ -120,9 +101,9 @@ const Home = () => {
 
         <YouFollow data={specialistsYouFollow} />
       </View>
-      <LineBreak space={2} />
+      <LineBreak space={2} /> */}
 
-      <View>
+      {/* <View>
         <View
           style={{
             paddingHorizontal: responsiveWidth(4),
@@ -209,7 +190,7 @@ const Home = () => {
         </View>
       </View>
 
-      <LineBreak space={4} />
+      <LineBreak space={4} /> */}
     </Container>
   );
 };

@@ -20,6 +20,7 @@ import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
 import { useNavigation } from '@react-navigation/native';
 import { useLoginMutation } from '../../redux/services';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -132,13 +133,15 @@ const Login = () => {
           textColor={AppColors.WHITE}
           indicator={isLoading}
           btnBackgroundColor={AppColors.appGreen}
-          handlePress={() => onLoginPress()}
-          // const type = await AsyncStorage.getItem('type');
-          // if (type === 'User') {
-          //   nav.navigate('Main');
-          // } else {
-          //   nav.navigate('FillTheDetails');
-          // }
+          // handlePress={() => onLoginPress()}
+          handlePress={async () => {
+            const type = await AsyncStorage.getItem('type');
+            if (type === 'Provider') {
+              nav.navigate('Main');
+            } else {
+              nav.navigate('FillTheDetails');
+            }
+          }}
           textFontWeight={false}
         />
 

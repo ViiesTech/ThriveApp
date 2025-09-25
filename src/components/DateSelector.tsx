@@ -5,18 +5,26 @@ import { AppColors, datesItem, responsiveHeight, responsiveWidth } from '../util
 import AppText from './AppTextComps/AppText'
 import LineBreak from './LineBreak'
 
-const DateSelector = () => {
+type Props = {
+    data?:any;
+    isSelected?:any;
+    setSelectedDate?:any;
+}
+
+const DateSelector = ({data, isSelected, setSelectedDate}: Props) => {
     return (
         <View>
             <FlatList
-                data={datesItem}
+                data={data}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                contentContainerStyle={{ gap: 10, paddingHorizontal: responsiveWidth(5) }}
+                keyExtractor={(item) => item.format("YYYY-MM-DD")}
+                contentContainerStyle={{ gap: 10, }}
                 renderItem={({ item }) => (
                     <TouchableOpacity
+                      onPress={() => setSelectedDate(item)}
                         style={{
-                            backgroundColor: item.id === 2 ? AppColors.ThemeBlue : AppColors.LIGHTGRAY,
+                            backgroundColor: item.isSame(isSelected, "day") ? AppColors.ThemeBlue : AppColors.LIGHTGRAY,
                             justifyContent: 'center',
                             alignItems: 'center',
                             width: responsiveWidth(14),
@@ -24,14 +32,14 @@ const DateSelector = () => {
                             borderRadius: 40,
                         }}>
                         <AppText
-                            title={item.day}
-                            textColor={item.id === 2 ? AppColors.WHITE : AppColors.BLACK}
+                            title={item.format("ddd")}
+                            textColor={item.isSame(isSelected, "day") ? AppColors.WHITE : AppColors.BLACK}
                             textSize={1.6}
                         />
                         <LineBreak space={0.5} />
                         <AppText
-                            title={item.date}
-                            textColor={item.id === 2 ? AppColors.WHITE : AppColors.BLACK}
+                            title={item.format("D")}
+                            textColor={item.isSame(isSelected, "day") ? AppColors.WHITE : AppColors.BLACK}
                             textSize={2.5}
                             textFontWeight
                         />

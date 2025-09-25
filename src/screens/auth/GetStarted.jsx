@@ -65,7 +65,7 @@ const GetStarted = () => {
             title="Login with Email"
             textColor={AppColors.WHITE}
             btnBackgroundColor={AppColors.appGreen}
-            handlePress={() => nav.navigate('Login')}
+            handlePress={() => nav.navigate('SelectType')}
             leftIcon={
               <View style={{ paddingHorizontal: responsiveWidth(4) }}>
                 <MaterialIcons

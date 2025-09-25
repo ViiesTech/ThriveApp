@@ -1,7 +1,8 @@
-import { Image, Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet } from 'react-native'
+import { Image, Platform, ScrollView, StatusBar, StyleSheet } from 'react-native'
 import React, { ReactNode } from 'react'
 import { AppColors } from '../utils/index'
 import { responsiveHeight } from '../utils'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 type props = {
     children: ReactNode,
