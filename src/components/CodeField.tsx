@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     },
     cellText: {
         fontSize: responsiveFontSize(3),
-        color: AppColors.BLACK,
+        color: AppColors.ThemeBlue,
         fontWeight: '500',
     },
     focusCell: {

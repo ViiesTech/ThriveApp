@@ -44,7 +44,7 @@ const EmailVerification = () => {
           <AppButton
             title="Verify Email"
             textColor={AppColors.WHITE}
-            btnBackgroundColor={AppColors.ThemeBlue}
+            btnBackgroundColor={AppColors.appGreen}
             handlePress={() => nav.navigate('NewPassword')}
             textFontWeight={false}
           />

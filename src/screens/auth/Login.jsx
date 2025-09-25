@@ -23,36 +23,35 @@ import { useLoginMutation } from '../../redux/services';
 
 const Login = () => {
   const [email, setEmail] = useState('');
-  const [password,setPassword] = useState('')
+  const [password, setPassword] = useState('');
   const [isShow, setIsShow] = useState(false);
   const [isEmailFocused, setIsEmailFocused] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-  const [login,{isLoading}] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation();
   const nav = useNavigation();
 
-
   const onLoginPress = async () => {
-      // if(!email) {
-      //   ShowToast('Please enter your email')
-      //   return
-      // } 
-      // if(!password) {
-      //   ShowToast('Please enter your password')
-      //   return
-      // }
-      // let data = {
-      //   email: email,
-      //   password: password
-      // }
-      // await login(data).unwrap().then((res) => {
-      //   console.log('response of login ===>',res)
-      //   ShowToast(res.message)
-      // }).catch((error) => {
-      //   console.log('error while login ===>',error)
-      //   ShowToast('Some problem occured')
-      // })
-              nav.navigate('Main');
-  }
+    // if(!email) {
+    //   ShowToast('Please enter your email')
+    //   return
+    // }
+    // if(!password) {
+    //   ShowToast('Please enter your password')
+    //   return
+    // }
+    // let data = {
+    //   email: email,
+    //   password: password
+    // }
+    // await login(data).unwrap().then((res) => {
+    //   console.log('response of login ===>',res)
+    //   ShowToast(res.message)
+    // }).catch((error) => {
+    //   console.log('error while login ===>',error)
+    //   ShowToast('Some problem occured')
+    // })
+    nav.navigate('Main');
+  };
 
   return (
     <Container>
@@ -75,7 +74,7 @@ const Login = () => {
             <MaterialIcons
               name={'email'}
               size={responsiveFontSize(2.5)}
-              color={isEmailFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY}
+              color={AppColors.ThemeBlue}
             />
           }
           inputHeight={5}
@@ -100,9 +99,7 @@ const Login = () => {
               <Ionicons
                 name={isShow ? 'eye' : 'eye-off'}
                 size={responsiveFontSize(2.5)}
-                color={
-                  isPasswordFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY
-                }
+                color={AppColors.ThemeBlue}
               />
             </TouchableOpacity>
           }
@@ -110,9 +107,7 @@ const Login = () => {
             <Foundation
               name={'lock'}
               size={responsiveFontSize(2.5)}
-              color={
-                isPasswordFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY
-              }
+              color={AppColors.ThemeBlue}
             />
           }
           isFocused={isPasswordFocused}
@@ -136,14 +131,14 @@ const Login = () => {
           title="Login"
           textColor={AppColors.WHITE}
           indicator={isLoading}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={() => onLoginPress()}
-            // const type = await AsyncStorage.getItem('type');
-            // if (type === 'User') {
-            //   nav.navigate('Main');
-            // } else {
-            //   nav.navigate('FillTheDetails');
-            // }
+          // const type = await AsyncStorage.getItem('type');
+          // if (type === 'User') {
+          //   nav.navigate('Main');
+          // } else {
+          //   nav.navigate('FillTheDetails');
+          // }
           textFontWeight={false}
         />
 

@@ -56,8 +56,10 @@ export const AppColors = {
     darkBlue: '#33434F',
     darkYellow: '#E55B13',
     lowGreen: '#587B58',
+    appGreen: '#60C14C',
     lightGreen: '#5EC246',
     inputBg: '#fafafa',
+    inputGrayBg: '#DEDEDE',
     inputBlur: '#f2f1fe',
     lightestBlue: '#CDECF3',
 };
@@ -426,8 +428,8 @@ export const nearbySpecialists = [
 ]
 
 export const typeItems = [
-    { id: 1, title: 'User', svg: AppIcons.user },
-    { id: 2, title: 'Therapist', svg: AppIcons.special },
+    { id: 1, title: 'Client', svg: AppIcons.client },
+    { id: 2, title: 'Provider', svg: AppIcons.provider },
 ]
 
 export const homeStats = [

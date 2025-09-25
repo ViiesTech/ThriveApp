@@ -44,7 +44,7 @@ const AppButton = ({
       style={{
         backgroundColor: btnBackgroundColor
           ? btnBackgroundColor
-          : AppColors.ThemeBlue,
+          : AppColors.appGreen,
         alignItems: 'center',
         justifyContent: 'center',
         padding: btnPadding ? btnPadding : 14,

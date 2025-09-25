@@ -46,11 +46,7 @@ const NewPassword = () => {
                 <Ionicons
                   name={isShow ? 'eye' : 'eye-off'}
                   size={responsiveFontSize(2.5)}
-                  color={
-                    isPasswordFocused
-                      ? AppColors.ThemeBlue
-                      : AppColors.LIGHTGRAY
-                  }
+                  color={AppColors.ThemeBlue}
                 />
               </TouchableOpacity>
             }
@@ -58,9 +54,7 @@ const NewPassword = () => {
               <Foundation
                 name={'lock'}
                 size={responsiveFontSize(2.5)}
-                color={
-                  isPasswordFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY
-                }
+                color={AppColors.ThemeBlue}
               />
             }
             isFocused={isPasswordFocused}
@@ -80,11 +74,7 @@ const NewPassword = () => {
                 <Ionicons
                   name={isConfirmPasswordShow ? 'eye' : 'eye-off'}
                   size={responsiveFontSize(2.5)}
-                  color={
-                    isConfirmPasswordFocused
-                      ? AppColors.ThemeBlue
-                      : AppColors.LIGHTGRAY
-                  }
+                  color={AppColors.ThemeBlue}
                 />
               </TouchableOpacity>
             }
@@ -92,11 +82,7 @@ const NewPassword = () => {
               <Foundation
                 name={'lock'}
                 size={responsiveFontSize(2.5)}
-                color={
-                  isConfirmPasswordFocused
-                    ? AppColors.ThemeBlue
-                    : AppColors.LIGHTGRAY
-                }
+                color={AppColors.ThemeBlue}
               />
             }
             isFocused={isConfirmPasswordFocused}
@@ -109,7 +95,7 @@ const NewPassword = () => {
           <AppButton
             title="Confirm New Password"
             textColor={AppColors.WHITE}
-            btnBackgroundColor={AppColors.ThemeBlue}
+            btnBackgroundColor={AppColors.appGreen}
             handlePress={() => nav.navigate('Login')}
             textFontWeight={false}
           />

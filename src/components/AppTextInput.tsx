@@ -73,7 +73,7 @@ const AppTextInput = ({
           ? containerBg
           : isFocused
             ? AppColors.WHITE
-            : AppColors.inputBg,
+            : AppColors.inputGrayBg,
         paddingHorizontal: inputContainerPaddingHorizontal
           ? responsiveWidth(inputContainerPaddingHorizontal)
           : 20,
@@ -95,7 +95,7 @@ const AppTextInput = ({
         keyboardType={keyboardType}
         onChangeText={onChangeText}
         placeholderTextColor={
-          placeholderTextColor ? placeholderTextColor : isFocused ? AppColors.ThemeBlue : AppColors.GRAY
+          placeholderTextColor ? placeholderTextColor : AppColors.ThemeBlue
         }
         style={{
           fontSize: responsiveFontSize(fontSize),

@@ -40,9 +40,7 @@ const ForgotPassword = () => {
               <MaterialIcons
                 name={'email'}
                 size={responsiveFontSize(2.5)}
-                color={
-                  isEmailFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY
-                }
+                color={AppColors.ThemeBlue}
               />
             }
             inputHeight={5}
@@ -65,7 +63,7 @@ const ForgotPassword = () => {
           <AppButton
             title="Send Code"
             textColor={AppColors.WHITE}
-            btnBackgroundColor={AppColors.ThemeBlue}
+            btnBackgroundColor={AppColors.appGreen}
             handlePress={() => nav.navigate('EmailVerification')}
             textFontWeight={false}
           />

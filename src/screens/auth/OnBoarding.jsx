@@ -18,7 +18,7 @@ const OnBoarding = ({ navigation }) => {
   const slides = [
     {
       key: 1,
-      title: 'Best Wellness Experience For You',
+      title: 'We Bring Wellness to You',
       detail: 'i‑thriv: Wellness that fits your lifestyle, energy & schedule.',
       bg: AppImages.on_boarding1,
     },
@@ -142,7 +142,7 @@ const OnBoarding = ({ navigation }) => {
         <AppButton
           title="Continue"
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={handleNext}
           textFontWeight={false}
         />
@@ -154,7 +154,7 @@ const OnBoarding = ({ navigation }) => {
         <AppButton
           title="Continue"
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={handleNext}
           textFontWeight={false}
         />
@@ -166,7 +166,7 @@ const OnBoarding = ({ navigation }) => {
         <AppButton
           title="Get Started"
           textColor={AppColors.WHITE}
-          bgColor={AppColors.PRIMARY}
+          bgColor={AppColors.appGreen}
           handlePress={handleDone}
           textFontWeight={false}
         />

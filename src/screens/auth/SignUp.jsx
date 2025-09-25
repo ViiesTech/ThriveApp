@@ -62,9 +62,9 @@ const SignUp = ({ route }) => {
       ShowToast('Please enter your password');
       return;
     }
-    if(state.password.length < 8) {
-      ShowToast('Password is too weak')
-      return 
+    if (state.password.length < 8) {
+      ShowToast('Password is too weak');
+      return;
     }
     let data = {
       email: state.email,
@@ -75,7 +75,7 @@ const SignUp = ({ route }) => {
     await register(data)
       .unwrap()
       .then(res => {
-        console.log('response of register ===>',res)
+        console.log('response of register ===>', res);
         ShowToast(res.message);
         if (res.success) {
           nav.navigate('EmailVerification', {
@@ -119,7 +119,7 @@ const SignUp = ({ route }) => {
             <Ionicons
               name={'person'}
               size={responsiveFontSize(2.5)}
-              color={isNameFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY}
+              color={AppColors.ThemeBlue}
             />
           }
           inputHeight={5}
@@ -139,7 +139,7 @@ const SignUp = ({ route }) => {
             <MaterialIcons
               name={'email'}
               size={responsiveFontSize(2.5)}
-              color={isEmailFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY}
+              color={AppColors.ThemeBlue}
             />
           }
           inputHeight={5}
@@ -159,9 +159,7 @@ const SignUp = ({ route }) => {
             <Octicons
               name={'number'}
               size={responsiveFontSize(2.5)}
-              color={
-                isPhoneNumberFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY
-              }
+              color={AppColors.ThemeBlue}
             />
           }
           inputHeight={5}
@@ -183,9 +181,7 @@ const SignUp = ({ route }) => {
               <Ionicons
                 name={isShow ? 'eye' : 'eye-off'}
                 size={responsiveFontSize(2.5)}
-                color={
-                  isPasswordFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY
-                }
+                color={AppColors.ThemeBlue}
               />
             </TouchableOpacity>
           }
@@ -193,9 +189,7 @@ const SignUp = ({ route }) => {
             <Foundation
               name={'lock'}
               size={responsiveFontSize(2.5)}
-              color={
-                isPasswordFocused ? AppColors.ThemeBlue : AppColors.LIGHTGRAY
-              }
+              color={AppColors.ThemeBlue}
             />
           }
           isFocused={isPasswordFocused}
