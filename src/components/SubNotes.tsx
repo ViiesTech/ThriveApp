@@ -1,40 +1,46 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import DraggableFlatList, { RenderItemParams } from "react-native-draggable-flatlist";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import { AppColors, responsiveFontSize, responsiveHeight, responsiveWidth } from "../utils";
-import LineBreak from "./LineBreak";
+import {
+  AppColors,
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from "../utils";
 import AppButton from "./AppButton";
 import { useNavigation } from "@react-navigation/native";
+import LineBreak from "./LineBreak";
 
 type Item = {
   id: string;
   title: string;
   description: string;
   completed: boolean;
+  type?: "header"; // for section headers
 };
 
 const initialData: Item[] = [
+  { id: "header-active", title: "ACTIVE SUB NOTES", description: "", completed: false, type: "header" },
   {
     id: "1",
     title: "Title Here",
-    description:
-      "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
+    description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
     completed: false,
   },
   {
     id: "2",
-    title: "Title Here",
-    description:
-      "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
+    title: "Another Active",
+    description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
     completed: false,
   },
+  { id: "header-completed", title: "COMPLETED SUB NOTES", description: "", completed: true, type: "header" },
   {
     id: "3",
-    title: "Title Here",
-    description:
-      "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
+    title: "Completed Note",
+    description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
     completed: true,
   },
 ];
@@ -43,17 +49,31 @@ const SubNotesScreen = () => {
   const [data, setData] = useState<Item[]>(initialData);
   const nav = useNavigation();
 
-  const renderItem = ({ item }: { item: Item }) => {
+  const renderItem = ({ item, drag, isActive }: RenderItemParams<Item>) => {
+    if (item.type === "header") {
+      return <Text style={styles.sectionTitle}>{item.title}</Text>;
+    }
+
     return (
-      <View style={{ flexDirection: 'row', gap: 10, width: responsiveWidth(82), marginVertical: responsiveHeight(1), paddingHorizontal: responsiveWidth(2) }}>
-        <TouchableOpacity>
-          <Fontisto name="nav-icon-grid-a" size={responsiveFontSize(2)} color={AppColors.GRAY} />
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 10,
+          marginVertical: responsiveHeight(1),
+          paddingHorizontal: responsiveWidth(2),
+        }}
+      >
+        {/* drag handle */}
+        <TouchableOpacity onLongPress={drag}>
+          <Fontisto
+            name="nav-icon-grid-a"
+            size={responsiveFontSize(2)}
+            color={isActive ? AppColors.ThemeBlue : AppColors.GRAY}
+          />
         </TouchableOpacity>
+
         <TouchableOpacity
-          style={[
-            styles.card,
-            { backgroundColor: AppColors.ThemeBlue },
-          ]}
+          style={[styles.card, { backgroundColor: AppColors.ThemeBlue }]}
         >
           <View style={styles.headerRow}>
             <Ionicons
@@ -89,39 +109,43 @@ const SubNotesScreen = () => {
     );
   };
 
+  const handleDragEnd = ({ data: newData }: { data: Item[] }) => {
+    // update completed flag based on section they are under
+    let inCompleted = false;
+    const updated = newData.map((item) => {
+      if (item.type === "header" && item.id === "header-completed") {
+        inCompleted = true;
+        return item;
+      }
+      if (item.type === "header" && item.id === "header-active") {
+        inCompleted = false;
+        return item;
+      }
+      return { ...item, completed: inCompleted };
+    });
+    setData(updated);
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff", padding: 10 }}>
-      <Text style={styles.sectionTitle}>ACTIVE SUB NOTES</Text>
-      <View>
-        <FlatList
-          data={data.filter((item) => !item.completed)}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-        />
-      </View>
-
-      <LineBreak space={1.5} />
-
-      <View style={{ width: responsiveWidth(92), alignSelf: 'center', height: responsiveHeight(0.2), backgroundColor: AppColors.LIGHTGRAY }} />
-
-      <LineBreak space={1} />
-
-      <Text style={styles.sectionTitle}>COMPLETED SUB NOTES</Text>
-      <FlatList
-        data={data.filter((item) => item.completed)}
+      <DraggableFlatList
+        data={data}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        onDragEnd={handleDragEnd}
       />
 
-      <LineBreak space={5} />
+      <LineBreak space={4} />
 
-      <AppButton
+      <View style={{ paddingHorizontal: responsiveWidth(4) }}>
+        <AppButton
           title="Add New"
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={() => nav.navigate("AddNewNotes")}
           textFontWeight={false}
         />
+      </View>
     </View>
   );
 };
@@ -138,6 +162,7 @@ const styles = StyleSheet.create({
   card: {
     borderRadius: 10,
     padding: 12,
+    flex: 1,
   },
   headerRow: {
     flexDirection: "row",

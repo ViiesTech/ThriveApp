@@ -39,7 +39,7 @@ const AddNewNotes = () => {
         <AppButton
           title="Save Note"
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={() => nav.navigate('InternalNotes')}
           textFontWeight={false}
         />

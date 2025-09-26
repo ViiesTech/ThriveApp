@@ -1,6 +1,12 @@
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, { useRef, useState } from 'react';
 import { View, Image, TouchableOpacity } from 'react-native';
-import { AppColors, responsiveFontSize, responsiveWidth } from '../../utils';
+import {
+  AppColors,
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from '../../utils';
 import { AppImages } from '../../assets/images';
 import LineBreak from '../../components/LineBreak';
 import AppText from '../../components/AppTextComps/AppText';
@@ -10,9 +16,15 @@ import { useNavigation } from '@react-navigation/native';
 import Container from '../../components/Container';
 import AppHeader from '../../components/AppHeader';
 import Entypo from 'react-native-vector-icons/Entypo';
+import PhoneInputScreen from '../../components/PhoneInput';
+import { Picker } from '@react-native-picker/picker';
+import FromInput from '../../components/FromInput';
 
 const ProviderEditProfile = () => {
-        const nav = useNavigation();
+  const nav = useNavigation();
+  const phoneRef = useRef();
+  const [service, setService] = useState('Massage_Therapy');
+  const [addOnOffer, setAddOnOffer] = useState('Foot_Scrub');
 
   return (
     <Container>
@@ -69,7 +81,8 @@ const ProviderEditProfile = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Mobile number'} />
+          {/* <AppTextInput inputPlaceHolder={'Mobile number'} /> */}
+          <PhoneInputScreen phoneRef={phoneRef} />
         </View>
 
         <LineBreak space={2} />
@@ -84,7 +97,7 @@ const ProviderEditProfile = () => {
           <AppTextInput inputPlaceHolder={'City & Zip Code'} />
         </View>
 
-         <LineBreak space={2} />
+        <LineBreak space={2} />
 
         <View>
           <AppText
@@ -96,7 +109,7 @@ const ProviderEditProfile = () => {
           <AppTextInput inputPlaceHolder={'Up to 70 miles max'} />
         </View>
 
-         <LineBreak space={2} />
+        <LineBreak space={2} />
         <View>
           <AppText
             title={'Select Your Core Services:'}
@@ -104,19 +117,31 @@ const ProviderEditProfile = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput
-            inputPlaceHolder={'Massage Therapy'}
-            inputWidth={75}
-            rightIcon={
-              <TouchableOpacity>
-                <Entypo
-                  name="chevron-down"
-                  size={responsiveFontSize(2.5)}
-                  color={AppColors.ThemeBlue}
-                />
-              </TouchableOpacity>
-            }
-          />
+          <View
+            style={{
+              width: responsiveWidth(90),
+              height: responsiveHeight(6),
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: AppColors.inputGrayBg,
+              borderRadius: 100,
+              alignSelf: 'center',
+              paddingLeft: responsiveWidth(3.5),
+            }}
+          >
+            <Picker
+              selectedValue={service}
+              mode="dropdown"
+              dropdownIconColor={AppColors.ThemeBlue}
+              style={{
+                width: '100%',
+                color: AppColors.ThemeBlue,
+              }}
+              onValueChange={itemValue => setService(itemValue)}
+            >
+              <Picker.Item label="Massage Therapy" value="Massage_Therapy" />
+            </Picker>
+          </View>
         </View>
         <LineBreak space={2} />
         <View>
@@ -127,27 +152,111 @@ const ProviderEditProfile = () => {
           />
 
           <LineBreak space={0.5} />
-          <AppTextInput
-            inputPlaceHolder={'Foot Scrub'}
-            inputWidth={75}
-            rightIcon={
-              <TouchableOpacity>
-                <Entypo
-                  name="chevron-down"
-                  size={responsiveFontSize(2.5)}
-                  color={AppColors.ThemeBlue}
-                />
-              </TouchableOpacity>
-            }
+          <View
+            style={{
+              width: responsiveWidth(90),
+              height: responsiveHeight(6),
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: AppColors.inputGrayBg,
+              borderRadius: 100,
+              alignSelf: 'center',
+              paddingLeft: responsiveWidth(3.5),
+            }}
+          >
+            <Picker
+              selectedValue={addOnOffer}
+              mode="dropdown"
+              dropdownIconColor={AppColors.ThemeBlue}
+              style={{
+                width: '100%',
+                color: AppColors.ThemeBlue,
+              }}
+              onValueChange={itemValue => setAddOnOffer(itemValue)}
+            >
+              <Picker.Item label="Foot Scrub" value="Foot_Scrub" />
+            </Picker>
+          </View>
+        </View>
+        <LineBreak space={2} />
+
+        <View>
+          <AppText
+            title={'Hours of availibilty'}
+            textColor={AppColors.GRAY}
+            textSize={1.8}
           />
+          <LineBreak space={1} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <AppText
+              title={'Monday'}
+              textColor={AppColors.ThemeBlue}
+              textSize={2}
+            />
+
+            <View
+              style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}
+            >
+              <FromInput label={'From'} />
+              <AppText
+                title={'-'}
+                textColor={AppColors.ThemeBlue}
+                textSize={6}
+              />
+              <FromInput label={'To'} />
+            </View>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <AppText
+              title={'Tuesday'}
+              textColor={AppColors.ThemeBlue}
+              textSize={2}
+            />
+
+            <View
+              style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}
+            >
+              <FromInput label={'From'} />
+              <AppText
+                title={'-'}
+                textColor={AppColors.ThemeBlue}
+                textSize={6}
+              />
+              <FromInput label={'To'} />
+            </View>
+          </View>
         </View>
 
         <LineBreak space={2} />
 
-         <AppButton
+        <AppButton
+          title={'Add Another Interval'}
+          textColor={AppColors.ThemeBlue}
+          borderWidth={1}
+          borderColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.WHITE}
+          handlePress={() => nav.navigate('Main')}
+          textFontWeight={false}
+        />
+
+        <LineBreak space={2} />
+
+        <AppButton
           title={'Save Information'}
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={() => nav.navigate('Main')}
           textFontWeight={false}
         />

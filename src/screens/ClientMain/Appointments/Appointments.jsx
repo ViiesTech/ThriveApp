@@ -46,7 +46,7 @@ const Appointments = () => {
       )}
       {selectedTab.id == 3 && (
         <View>
-          <AppointmentsCard data={ongoingAppointments} ongoingAppointments={'ongoingAppointments'} isSpecialist={type === 'Client'} isUser={type === 'Provider'} />
+          <AppointmentsCard data={ongoingAppointments} ongoingAppointments={'ongoingAppointments'} isSpecialist={type === 'Provider'} isUser={type === 'Client'} />
         </View>
       )}
     </Container>

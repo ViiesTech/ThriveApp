@@ -67,7 +67,7 @@ const Profile = () => {
         <LineBreak space={2} />
 
         <FlatList
-          data={type === 'Provider' ? userMyAccount : specialistMyAccount}
+          data={type === 'Client' ? userMyAccount : specialistMyAccount}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={{

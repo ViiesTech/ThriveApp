@@ -136,7 +136,7 @@ const Login = () => {
           // handlePress={() => onLoginPress()}
           handlePress={async () => {
             const type = await AsyncStorage.getItem('type');
-            if (type === 'Provider') {
+            if (type === 'Client') {
               nav.navigate('Main');
             } else {
               nav.navigate('FillTheDetails');

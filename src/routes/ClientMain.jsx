@@ -107,10 +107,8 @@ function MyTabs() {
       }}
     >
       <Tab.Screen
-        name={type === 'Provider' ? "Home" : "ProviderHome"}
-        component={type === 'Provider' ? Home : ProviderHome}
-        // component={OpenRequestForm}
-        // component={NearbySpecialists}
+        name={type === 'Client' ? "Home" : "ProviderHome"}
+        component={type === 'Client' ? Home : ProviderHome}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
@@ -131,9 +129,9 @@ function MyTabs() {
             ),
         }}
       />
-      {/* <Tab.Screen
-        name={'Nearby'}
-        component={NearBy}
+     {type === 'Provider' && <Tab.Screen
+        name={'UserRequest'}
+        component={UserRequest}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
@@ -157,7 +155,7 @@ function MyTabs() {
               <Ionicons size={25} name={'compass'} color={AppColors.GRAY} />
             ),
         }}
-      /> */}
+      />}
       <Tab.Screen
         name={'Appointments'}
         component={Appointments}
@@ -186,8 +184,8 @@ function MyTabs() {
         }}
       />
        <Tab.Screen
-        name={type === 'Provider' ? 'Inbox' : 'UserRequest'}
-        component={type === 'Provider' ? Inbox : UserRequest}
+        name={'Inbox'}
+        component={Inbox}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (

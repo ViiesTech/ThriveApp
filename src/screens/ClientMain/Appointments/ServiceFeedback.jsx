@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { Image, View } from 'react-native';
+import { View } from 'react-native';
 import { AppColors, responsiveWidth } from '../../../utils';
 import AppText from '../../../components/AppTextComps/AppText';
 import SVGXml from '../../../components/SVGXML';
@@ -8,13 +8,14 @@ import { AppIcons } from '../../../assets/icons';
 import LineBreak from '../../../components/LineBreak';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
-import { AppImages } from '../../../assets/images';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import StarRating from 'react-native-star-rating-widget';
 
 const ServiceFeedback = () => {
   const nav = useNavigation();
   const [type, setType] = useState('');
+  const [rating, setRating] = useState(0);
 
   const getType = async () => {
     const userType = await AsyncStorage.getItem('type');
@@ -34,7 +35,7 @@ const ServiceFeedback = () => {
       }}
     >
       <View style={{ alignItems: 'center' }}>
-        <SVGXml icon={AppIcons.done} width={90} height={90} />
+        <SVGXml icon={AppIcons.complete} width={90} height={90} />
       </View>
       <LineBreak space={3} />
       <AppText
@@ -56,7 +57,10 @@ const ServiceFeedback = () => {
         <LineBreak space={1} />
         <AppTextInput
           inputPlaceHolder={'write text here...'}
-          containerBg={AppColors.LIGHTESTGRAY}
+          containerBg={AppColors.inputGrayBg}
+          inputHeight={25}
+          textAlignVertical={'top'}
+          multiline={true}
         />
         <LineBreak space={2} />
         <AppButton
@@ -70,7 +74,7 @@ const ServiceFeedback = () => {
         />
 
         <LineBreak space={7} />
-        {type === 'Provider' && (
+        {type === 'Client' && (
           <AppText
             title={'Specialist Rating'}
             textColor={AppColors.BLACK}
@@ -80,16 +84,20 @@ const ServiceFeedback = () => {
           />
         )}
 
-        {type === 'Provider' && <LineBreak space={2} />}
+        {type === 'Client' && <LineBreak space={2} />}
 
-        {type === 'Provider' && (
-          <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-            <Image
-              source={AppImages.star}
-              style={{ marginLeft: responsiveWidth(10) }}
-            />
+        {type === 'Client' && (
+          <View
+            style={{
+              flexDirection: 'row',
+              gap: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <StarRating rating={rating} onChange={setRating} />
             <AppText
-              title={'4 Star'}
+              title={`${rating} Star`}
               textColor={AppColors.ThemeBlue}
               textSize={1.8}
               textFontWeight

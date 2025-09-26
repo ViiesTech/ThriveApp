@@ -52,7 +52,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
 
                             <View
                                 style={{
-                                    backgroundColor: item.status === 'Available' ? AppColors.lightestBlue : AppColors.lightGreen,
+                                    backgroundColor: item.status === 'Available' ? AppColors.lightestBlue : AppColors.ThemeBlue,
                                     paddingHorizontal: responsiveWidth(4),
                                     paddingVertical: responsiveHeight(0.7),
                                     borderTopLeftRadius: 20,
@@ -201,7 +201,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                 <AppButton
                                     title={item.status !== 'In Progress' && providerHome ? "Start Appointment" : "COMPLETE"}
                                     textColor={AppColors.WHITE}
-                                    btnBackgroundColor={AppColors.ThemeBlue}
+                                    btnBackgroundColor={AppColors.appGreen}
                                     handlePress={() => nav.navigate('ServiceFeedback')}
                                     btnWidth={item.status === 'In Progress' || providerHome ? 82 : 32}
                                     btnPadding={item.status === 'In Progress' || providerHome ? 10 : 5}
@@ -217,7 +217,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                     <AppButton
                                         title={"ACCEPT"}
                                         textColor={AppColors.WHITE}
-                                        btnBackgroundColor={AppColors.ThemeBlue}
+                                        btnBackgroundColor={AppColors.appGreen}
                                         handlePress={() => { }}
                                         btnWidth={38}
                                         btnPadding={7}
@@ -244,7 +244,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                     <AppButton
                                         title={"ON MY WAY"}
                                         textColor={AppColors.WHITE}
-                                        btnBackgroundColor={AppColors.lightGreen}
+                                        btnBackgroundColor={AppColors.ThemeBlue}
                                         handlePress={() => { }}
                                         btnWidth={38}
                                         btnPadding={7}
@@ -254,7 +254,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                     <AppButton
                                         title={"COMPLETE"}
                                         textColor={AppColors.WHITE}
-                                        btnBackgroundColor={AppColors.ThemeBlue}
+                                        btnBackgroundColor={AppColors.appGreen}
                                         handlePress={() => nav.navigate('ServiceFeedback')}
                                         btnWidth={38}
                                         btnPadding={7}
