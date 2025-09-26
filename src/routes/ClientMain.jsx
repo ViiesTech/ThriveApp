@@ -131,7 +131,7 @@ function MyTabs() {
             ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name={'Nearby'}
         component={NearBy}
         options={{
@@ -157,7 +157,7 @@ function MyTabs() {
               <Ionicons size={25} name={'compass'} color={AppColors.GRAY} />
             ),
         }}
-      />
+      /> */}
       <Tab.Screen
         name={'Appointments'}
         component={Appointments}
@@ -192,7 +192,7 @@ function MyTabs() {
           tabBarIcon: ({ focused }) =>
             focused ? (
               <View style={{ alignItems: 'center' }}>
-                <MaterialIcons size={25} name={'inbox'} color={AppColors.ThemeBlue} />
+                <MaterialIcons size={25} name={'chat'} color={AppColors.ThemeBlue} />
                 <LineBreak space={0.5} />
                 <View
                   style={{
@@ -204,7 +204,7 @@ function MyTabs() {
                 />
               </View>
             ) : (
-              <MaterialIcons size={25} name={'inbox'} color={AppColors.GRAY} />
+              <MaterialIcons size={25} name={'chat'} color={AppColors.GRAY} />
             ),
         }}
       />

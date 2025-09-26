@@ -75,6 +75,18 @@ const PersonalInformation = () => {
 
         <View>
           <AppText
+            title={'Address'}
+            textColor={AppColors.GRAY}
+            textSize={1.8}
+          />
+          <LineBreak space={0.5} />
+          <AppTextInput inputPlaceHolder={'Address'} />
+        </View>
+
+        <LineBreak space={2} />
+
+        <View>
+          <AppText
             title={'Password'}
             textColor={AppColors.GRAY}
             textSize={1.8}
@@ -88,7 +100,7 @@ const PersonalInformation = () => {
          <AppButton
           title={'Save Information'}
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={() => nav.navigate('Main')}
           textFontWeight={false}
         />

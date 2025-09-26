@@ -19,11 +19,11 @@ const ServiceFeedback = () => {
   const getType = async () => {
     const userType = await AsyncStorage.getItem('type');
     setType(userType);
-  }
+  };
 
   useEffect(() => {
     getType();
-  }, [])
+  }, []);
 
   return (
     <View
@@ -62,40 +62,40 @@ const ServiceFeedback = () => {
         <AppButton
           title="Submit Now"
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={() => {
-            if(type === 'User'){
-              nav.navigate('ServiceGallery')
-            }else {
-              nav.navigate('Main')
-            }
+            nav.navigate('Main');
           }}
           textFontWeight={false}
         />
 
         <LineBreak space={7} />
-       {type === 'User' && <AppText
-          title={'Specialist Rating'}
-          textColor={AppColors.BLACK}
-          textSize={1.8}
-          textFontWeight
-          textAlignment={'center'}
-        />}
-
-      {type === 'User' &&  <LineBreak space={2} />}
-
-      {type === 'User' && <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-          <Image
-            source={AppImages.star}
-            style={{ marginLeft: responsiveWidth(10) }}
-          />
+        {type === 'Provider' && (
           <AppText
-            title={'4 Star'}
-            textColor={AppColors.ThemeBlue}
+            title={'Specialist Rating'}
+            textColor={AppColors.BLACK}
             textSize={1.8}
             textFontWeight
+            textAlignment={'center'}
           />
-        </View>}
+        )}
+
+        {type === 'Provider' && <LineBreak space={2} />}
+
+        {type === 'Provider' && (
+          <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
+            <Image
+              source={AppImages.star}
+              style={{ marginLeft: responsiveWidth(10) }}
+            />
+            <AppText
+              title={'4 Star'}
+              textColor={AppColors.ThemeBlue}
+              textSize={1.8}
+              textFontWeight
+            />
+          </View>
+        )}
       </View>
     </View>
   );

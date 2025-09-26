@@ -67,7 +67,7 @@ const PaymentMethod = () => {
         <AppButton
           title={'Pay Now'}
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={() => nav.navigate('Main')}
           textFontWeight={false}
         />

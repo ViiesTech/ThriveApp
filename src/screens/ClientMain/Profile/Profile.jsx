@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { View, Image, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, FlatList, TouchableOpacity, Switch } from 'react-native';
 import Container from '../../../components/Container';
 import AppHeader from '../../../components/AppHeader';
 import {
@@ -22,15 +22,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Profile = () => {
   const nav = useNavigation();
   const [type, setType] = useState('');
+  const [switchStates, setSwitchStates] = useState({
+    1: true, // id: initialValue
+    2: false,
+    3: true,
+  });
+
+  const toggleSwitch = (id, newValue) => {
+    setSwitchStates(prev => ({ ...prev, [id]: newValue }));
+  };
 
   const getType = async () => {
     const userType = await AsyncStorage.getItem('type');
     setType(userType);
-  }
+  };
 
   useEffect(() => {
     getType();
-  }, [])
+  }, []);
 
   return (
     <Container>
@@ -58,7 +67,7 @@ const Profile = () => {
         <LineBreak space={2} />
 
         <FlatList
-          data={type === 'User' ? userMyAccount : specialistMyAccount}
+          data={type === 'Provider' ? userMyAccount : specialistMyAccount}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={{
@@ -116,7 +125,12 @@ const Profile = () => {
                   textFontWeight={item.id == 1}
                 />
               </View>
-              {item.rightIcon && item.rightIcon}
+              {item.rightIcon && (
+                <Switch
+                  value={switchStates[item.id] ?? false}
+                  onValueChange={val => toggleSwitch(item.id, val)}
+                />
+              )}
             </TouchableOpacity>
           )}
         />
@@ -137,8 +151,8 @@ const Profile = () => {
               onPress={() => {
                 if (item.navTo) {
                   nav.navigate(item.navTo);
-                }else if(item.id == 3){
-                  nav.navigate("Auth");
+                } else if (item.id == 3) {
+                  nav.navigate('Auth');
                   AsyncStorage.clear();
                 }
               }}

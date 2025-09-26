@@ -218,7 +218,7 @@ const BookingCheckout = () => {
         <AppButton
           title={'Pay Now'}
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
+          btnBackgroundColor={AppColors.appGreen}
           handlePress={() => nav.navigate('PaymentMethod')}
           textFontWeight={false}
         />
