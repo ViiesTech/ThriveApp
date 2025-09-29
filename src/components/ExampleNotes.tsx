@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import DraggableFlatList, { RenderItemParams } from "react-native-draggable-flatlist";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {
@@ -45,6 +46,7 @@ const initialData: Item[] = [
 ];
 
 const SubNotesScreen = () => {
+  const [data, setData] = useState<Item[]>(initialData);
   const nav = useNavigation();
 
   const renderItem = ({ item, drag, isActive }: RenderItemParams<Item>) => {
@@ -107,12 +109,30 @@ const SubNotesScreen = () => {
     );
   };
 
+  const handleDragEnd = ({ data: newData }: { data: Item[] }) => {
+    // update completed flag based on section they are under
+    let inCompleted = false;
+    const updated = newData.map((item) => {
+      if (item.type === "header" && item.id === "header-completed") {
+        inCompleted = true;
+        return item;
+      }
+      if (item.type === "header" && item.id === "header-active") {
+        inCompleted = false;
+        return item;
+      }
+      return { ...item, completed: inCompleted };
+    });
+    setData(updated);
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: "#fff", padding: 10 }}>
-      <FlatList
-        data={initialData}
+      <DraggableFlatList
+        data={data}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
+        onDragEnd={handleDragEnd}
       />
 
       <LineBreak space={4} />
