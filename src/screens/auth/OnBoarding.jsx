@@ -19,20 +19,20 @@ const OnBoarding = ({ navigation }) => {
     {
       key: 1,
       title: 'We Bring Wellness to You',
-      detail: 'i‑thriv: Wellness that fits your lifestyle, energy & schedule.',
+      detail: 'From home to office, our provider meets you where you are.',
       bg: AppImages.on_boarding1,
     },
     {
       key: 2,
-      title: 'Meet Our Wellness Specialists',
+      title: 'Care You Can Trust',
       detail:
-        'Top massage, yoga & healing pros—licensed, vetted, and ready to serve you.',
+        'Handpicked, licensed, and insured practitioners - so you can relax with confidence.',
       bg: AppImages.on_boarding2,
     },
     {
       key: 3,
-      title: 'Find Your Service Fast',
-      detail: 'Top wellness pros. Anywhere you need them.',
+      title: 'Made for Your Life',
+      detail: 'Convenient, flexible, and personalized service - all at the tap of your fingertip.',
       bg: AppImages.on_boarding3,
     },
   ];

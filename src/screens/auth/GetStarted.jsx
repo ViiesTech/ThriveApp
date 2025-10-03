@@ -29,7 +29,7 @@ const GetStarted = () => {
     >
       <View style={{ paddingVertical: responsiveHeight(5) }}>
         <AppText
-          title={'Join i-thriv'}
+          title={'Wellness starts with i-thriv'}
           textColor={AppColors.WHITE}
           textSize={2.5}
           textFontWeight
@@ -37,7 +37,7 @@ const GetStarted = () => {
         />
         <LineBreak space={2} />
         <AppText
-          title={'Book massage, yoga & spa services anytime, anywhere.'}
+          title={'Ready? Begin'}
           textColor={AppColors.WHITE}
           textAlignment={'center'}
           textwidth={70}
