@@ -40,6 +40,7 @@ import InternalNotes from '../screens/ProviderMain/InternalNotes';
 import AddNewNotes from '../screens/ProviderMain/AddNewNotes';
 import PrivacyPolicy from '../screens/ProviderMain/PrivacyPolicy';
 import LocationInformation from '../screens/ClientMain/Home/LocationInformation';
+import ClientPersonalInformation from '../screens/ClientMain/Profile/ClientPersonalInformation';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -74,6 +75,7 @@ const ClientMain = () => {
       <Stack.Screen name="OpenRequestForm" component={OpenRequestForm} />
       <Stack.Screen name="NearbySpecialists" component={NearbySpecialists} />
       <Stack.Screen name="LocationInformation" component={LocationInformation} />
+      <Stack.Screen name="ClientPersonalInformation" component={ClientPersonalInformation} />
     </Stack.Navigator>
   );
 };

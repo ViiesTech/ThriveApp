@@ -8,6 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Toast from "react-native-toast-message";
+import Feather from 'react-native-vector-icons/Feather';
 
 const percentageCalculation = (max: number, val: number) => max * (val / 100);
 
@@ -156,9 +157,9 @@ export const upcomingAppointments = [
 ]
 
 export const ongoingAppointments = [
-    { id: 1, title: 'Appointment #1234', appointmentStatus: 'EN Route', status: 'Ongoing', image: AppImages.follower1, name: 'Richard', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
-    { id: 2, title: 'Appointment #1234', appointmentStatus: 'Arrive', status: 'Ongoing', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', date: '29 Jun 2025' },
-    { id: 3, title: 'Appointment #1234', appointmentStatus: 'EN Route', status: 'Ongoing', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', date: '01 July 2025' },
+    { id: 1, title: 'Appointment #1234', appointmentStatus: 'In Route', status: 'Ongoing', image: AppImages.follower1, name: 'Richard', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
+    { id: 2, title: 'Appointment #1234', appointmentStatus: 'Arrived', status: 'Ongoing', image: AppImages.follower1, name: 'Olivia', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'SPY', date: '29 Jun 2025' },
+    { id: 3, title: 'Appointment #1234', appointmentStatus: 'In Route', status: 'Ongoing', image: AppImages.follower1, name: 'Samantha', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Skin Care', date: '01 July 2025' },
 ]
 
 export const galleryImages = [
@@ -190,7 +191,7 @@ export const timesItems = [
 ]
 
 export const shopDetail = [
-    { id: 1, title: 'Therapy . Skin Care . 2+', rating: '4.7', number: '2.7k', label: '-58% ', tex: '(6 pax available)', status: 'Available', image: AppImages.follower1, name: 'Ronald', location: '360 Stillwater Rd. Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
+    { id: 1, title: 'Therapy . Skin Care . 2+', rating: '4.7', number: '2.7k', label: '-58% ', tex: '(6 pax available)', status: 'Available', image: AppImages.service, name: 'Bella', location: 'Palm City, FL 34990', service: 'Massage', date: '01 July 2025' },
 ]
 
 export const checkoutPart1 = [
@@ -215,18 +216,10 @@ export const userMyAccount = [
             size={responsiveFontSize(3.5)}
             color={AppColors.BLACK}
         />,
-        navTo: 'PersonalInformation',
+        navTo: 'ClientPersonalInformation',
     },
     {
-        id: 3, title: 'Privacy Policy', icon: <Octicons
-            name="key-asterisk"
-            size={responsiveFontSize(3.5)}
-            color={AppColors.BLACK}
-        />,
-        navTo: 'PrivacyPolicy',
-    },
-    {
-        id: 4, title: 'Appointment History', icon: <EvilIcons
+        id: 3, title: 'Appointment History', icon: <EvilIcons
             name="calendar"
             size={responsiveFontSize(4)}
             color={AppColors.BLACK}
@@ -297,12 +290,31 @@ export const notifications = [
     },
 ]
 
-export const moreItem = [
+export const moreItemClient = [
     { id: 1, title: 'More', },
     {
-        id: 2, title: 'Frequently Asked Questions', icon: <Ionicons
-            name="alert-circle-outline"
+        id: 2, title: 'Privacy Policy', icon: <Octicons
+            name="key-asterisk"
+            size={responsiveFontSize(3.5)}
+            color={AppColors.BLACK}
+        />,
+        navTo: 'PrivacyPolicy',
+    },
+    {
+        id: 3, title: 'Log Out', icon: <MaterialIcons
+            name="logout"
             size={responsiveFontSize(4)}
+            color={AppColors.RED_COLOR}
+        />
+    },
+]
+
+export const moreItemProvider = [
+    { id: 1, title: 'More', },
+    {
+        id: 2, title: 'Frequently Asked Questions', icon: <Feather
+            name="alert-circle"
+            size={responsiveFontSize(3.5)}
             color={AppColors.BLACK}
         />,
         navTo: 'AskQuestions',
@@ -317,7 +329,7 @@ export const moreItem = [
 ]
 
 export const inboxTab = [
-    { id: 1, title: 'Messages' },
+    { id: 1, title: 'Message' },
     { id: 2, title: 'Notification' },
 ]
 

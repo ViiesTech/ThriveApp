@@ -14,7 +14,7 @@ type props = {
 
 const Container = ({ children, scrollEnabled, image, showScrollBar, paddingBottom }: props) => {
     return (
-        <SafeAreaView style={{ flex: 1, }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
             <ScrollView contentContainerStyle={{ paddingBottom: responsiveHeight(paddingBottom) }} showsVerticalScrollIndicator={showScrollBar} scrollEnabled={scrollEnabled} style={styles.container}>
                 {image &&
                     <Image source={image} style={styles.imageStyle} />

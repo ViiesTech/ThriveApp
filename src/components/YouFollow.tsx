@@ -1,11 +1,27 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, FlatList, Image, TouchableOpacity } from 'react-native'
 import { AppColors, responsiveWidth } from '../utils'
 import AppText from './AppTextComps/AppText'
 import LineBreak from './LineBreak'
 
-const YouFollow = ({ data, paddingHorizontal }: any) => {
+type Props = {
+    data?: any;
+    paddingHorizontal?: any;
+    disabledSelection?: any;
+}
+
+const YouFollow = ({ data, paddingHorizontal, disabledSelection }: Props) => {
+    const [isSelected, setIsSelected] = useState({ index: '' });
+
+    useEffect(() => {
+        if (disabledSelection) {
+            setIsSelected({ index: null })
+        }
+    }, [disabledSelection])
+
+
     return (
         <View>
             <FlatList
@@ -16,13 +32,21 @@ const YouFollow = ({ data, paddingHorizontal }: any) => {
                     gap: 10,
                     paddingHorizontal: paddingHorizontal ? paddingHorizontal : responsiveWidth(4),
                 }}
-                renderItem={({ item }) => (
-                    <TouchableOpacity style={{flexDirection: 'column', alignItems: 'center'}}>
-                        <Image
-                            source={item.img}
-                            resizeMode="contain"
-                            style={{ width: responsiveWidth(19) }}
-                        />
+                renderItem={({ item, index }) => (
+                    <TouchableOpacity style={{ flexDirection: 'column', alignItems: 'center' }} onPress={() => {
+                        if (disabledSelection) {
+                            return null
+                        } else {
+                            setIsSelected({ index })
+                        }
+                    }}>
+                        <View style={{ borderWidth: 4, borderColor: isSelected.index == index ? AppColors.ThemeBlue : AppColors.WHITE, borderRadius: 100 }}>
+                            <Image
+                                source={item.img}
+                                // resizeMode="contain"
+                                style={{ width: responsiveWidth(19), height: responsiveWidth(19) }}
+                            />
+                        </View>
                         <LineBreak space={1} />
                         {item.name && <AppText
                             title={item.name}

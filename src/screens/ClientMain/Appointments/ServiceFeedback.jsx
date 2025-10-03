@@ -35,7 +35,7 @@ const ServiceFeedback = () => {
       }}
     >
       <View style={{ alignItems: 'center' }}>
-        <SVGXml icon={AppIcons.complete} width={90} height={90} />
+        <SVGXml icon={AppIcons.done} width={90} height={90} />
       </View>
       <LineBreak space={3} />
       <AppText
@@ -58,9 +58,9 @@ const ServiceFeedback = () => {
         <AppTextInput
           inputPlaceHolder={'write text here...'}
           containerBg={AppColors.inputGrayBg}
-          inputHeight={25}
-          textAlignVertical={'top'}
-          multiline={true}
+          // inputHeight={25}
+          // textAlignVertical={'top'}
+          // multiline={true}
         />
         <LineBreak space={2} />
         <AppButton

@@ -4,8 +4,7 @@ import { AppColors, responsiveHeight, responsiveWidth } from "../utils";
 import AppText from "./AppTextComps/AppText";
 import LineBreak from "./LineBreak";
 
-export default function FromInput({label}: any) {
-    const [value, setValue] = useState("");
+export default function FromInput({label, editable, value}: any) {
 
     return (
         <View style={styles.input}>
@@ -17,10 +16,10 @@ export default function FromInput({label}: any) {
             />
             <TextInput
                 placeholder=""
+                editable={editable}
                 placeholderTextColor="#0097A7" // cyan/blue like in your image
                 value={value}
                 style={{ paddingTop: responsiveHeight(0.2), paddingLeft: responsiveWidth(-1) }}
-                onChangeText={setValue}
             />
         </View>
     );

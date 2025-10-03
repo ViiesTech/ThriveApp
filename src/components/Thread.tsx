@@ -1,9 +1,10 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
 import { Image, ImageSourcePropType, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { AppColors, responsiveHeight } from '../utils'
+import { AppColors, responsiveFontSize, responsiveHeight, responsiveWidth } from '../utils'
 import LineBreak from './LineBreak'
 import AppText from './AppTextComps/AppText'
+import Feather from 'react-native-vector-icons/Feather';
 
 type props = {
     image?: ImageSourcePropType,
@@ -11,11 +12,13 @@ type props = {
     message?: string,
     newMessage?: number,
     cardOnPress?: any,
+    onLongPress?: any,
+    selectedChat?: any,
 }
 
-const Thread = ({ image, name, message, newMessage, cardOnPress }: props) => {
+const Thread = ({ image, name, message, newMessage, cardOnPress, onLongPress, selectedChat }: props) => {
     return (
-        <TouchableOpacity style={styles.container} onPress={cardOnPress}>
+        <TouchableOpacity style={[styles.container, {backgroundColor: selectedChat ? AppColors.lightestBlue : AppColors.WHITE}]} onPress={cardOnPress} onLongPress={onLongPress}>
             <View style={{ flexDirection: 'row', gap: 14, alignItems: 'center' }}>
                 <Image source={image} style={styles.imageStyle} />
                 <View>
@@ -44,6 +47,17 @@ const Thread = ({ image, name, message, newMessage, cardOnPress }: props) => {
                     />
                 </View>
             }
+
+            {
+                selectedChat &&
+                <View style={styles.messageCircle}>
+                    <Feather
+                        name="check"
+                        size={responsiveFontSize(2)}
+                        color={AppColors.WHITE}
+                    />
+                </View>
+            }
         </TouchableOpacity>
     )
 }
@@ -55,6 +69,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingHorizontal: responsiveWidth(4),
+        paddingVertical: responsiveHeight(1),
     },
     imageStyle: {
         height: responsiveHeight(8),

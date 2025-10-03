@@ -22,6 +22,7 @@ import MostSearchInterest from './../../components/MostSearchInterest';
 import NearbyOffers from '../../components/NearbyOffers';
 import { useNavigation } from '@react-navigation/native';
 import SVGXml from '../../components/SVGXML';
+import Services from '../../components/Services';
 
 const ProviderPersonalInformation = () => {
   const nav = useNavigation();
@@ -275,7 +276,7 @@ const ProviderPersonalInformation = () => {
         <LineBreak space={2} />
       </View>
 
-      <View style={{ alignItems: 'center' }}>
+      {/* <View style={{ alignItems: 'center' }}>
         <FlatList
           data={services}
           ItemSeparatorComponent={<LineBreak space={2} />}
@@ -308,6 +309,10 @@ const ProviderPersonalInformation = () => {
             </TouchableOpacity>
           )}
         />
+      </View> */}
+
+      <View style={{alignItems: 'center'}}>
+        <Services />
       </View>
 
       {/* <View>

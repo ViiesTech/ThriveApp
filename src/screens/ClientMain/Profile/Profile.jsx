@@ -6,6 +6,8 @@ import AppHeader from '../../../components/AppHeader';
 import {
   AppColors,
   moreItem,
+  moreItemClient,
+  moreItemProvider,
   myAccount,
   notifications,
   responsiveHeight,
@@ -80,6 +82,10 @@ const Profile = () => {
               onPress={() => {
                 if (item.navTo) {
                   nav.navigate(item.navTo);
+                }else if(type === 'Client' && item.id == 3){
+                  nav.navigate("Appointments")
+                }else if(type === 'Provider' && item.id == 4){
+                  nav.navigate("Appointments")
                 }
               }}
             >
@@ -138,7 +144,7 @@ const Profile = () => {
         <LineBreak space={3} />
 
         <FlatList
-          data={moreItem}
+          data={type === 'Client' ? moreItemClient : moreItemProvider}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={{

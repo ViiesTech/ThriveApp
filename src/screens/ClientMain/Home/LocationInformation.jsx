@@ -35,6 +35,7 @@ const selectorData = [
 const LocationInformation = () => {
   const phoneRef = useRef();
   const [isSelected, setIsSelected] = useState(0);
+  const [isUaeAddress, setIsUaeAddress] = useState(false);
   const nav = useNavigation();
 
   return (
@@ -74,9 +75,9 @@ const LocationInformation = () => {
               gap: responsiveWidth(4),
             }}
           >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsUaeAddress(!isUaeAddress)}>
               <SVGXml
-                icon={true ? AppIcons.check : AppIcons.un_check}
+                icon={isUaeAddress ? AppIcons.check : AppIcons.un_check}
                 width={55}
                 height={55}
               />

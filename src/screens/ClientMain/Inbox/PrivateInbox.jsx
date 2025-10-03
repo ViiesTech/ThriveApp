@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 // ChatScreen.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -13,12 +13,15 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { AppColors, responsiveHeight, responsiveWidth } from '../../../utils';
 import LineBreak from '../../../components/LineBreak';
 import AppHeader from '../../../components/AppHeader';
 import BackIcon from '../../../components/AppTextComps/BackIcon';
 import { AppImages } from '../../../assets/images';
 import { useNavigation } from '@react-navigation/native';
+import AppTextInput from '../../../components/AppTextInput';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type MessageType = {
   id: string,
@@ -49,6 +52,17 @@ const PrivateInbox = () => {
     { id: '6', typing: true, sender: 'other' },
   ]);
   const nav = useNavigation();
+
+   const [type, setType] = useState('');
+
+  const getType = async () => {
+    const userType = await AsyncStorage.getItem('type');
+    setType(userType);
+  }
+
+  useEffect(() => {
+    getType();
+  }, []);
 
   const renderMessage = ({ item }) => {
     if (item.typing) {
@@ -86,12 +100,15 @@ const PrivateInbox = () => {
   };
 
   return (
-    <KeyboardAvoidingView style={{flex: 1,}} behavior='height'>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="height">
       <View style={styles.container}>
         {/* Header */}
         <View style={styles.header}>
           <View style={{ flexDirection: 'row', gap: 25, alignItems: 'center' }}>
-            <BackIcon onBackPress={() => nav.goBack()} iconColor={AppColors.ThemeBlue} />
+            <BackIcon
+              onBackPress={() => nav.goBack()}
+              iconColor={AppColors.ThemeBlue}
+            />
             <Image source={AppImages.follower1} style={styles.avatar} />
           </View>
           <View>
@@ -99,22 +116,47 @@ const PrivateInbox = () => {
             <Text style={styles.online}>Online</Text>
           </View>
           <View style={{ flex: 1 }} />
-          <Icon name="ellipsis-vertical" size={22} color={AppColors.ThemeBlue} />
+          <Icon
+            name="ellipsis-vertical"
+            size={22}
+            color={AppColors.ThemeBlue}
+          />
         </View>
 
         {/* Messages */}
         <ScrollView>
-        <FlatList
-          data={messages}
-          keyExtractor={item => item.id}
-          renderItem={renderMessage}
-          contentContainerStyle={{ padding: 15 }}
+          <FlatList
+            data={messages}
+            keyExtractor={item => item.id}
+            renderItem={renderMessage}
+            contentContainerStyle={{ padding: 15 }}
           />
-          </ScrollView>
+        </ScrollView>
+
+    {type === "Client" && <View style={{paddingHorizontal: responsiveWidth(4)}}>
+          <Text style={[styles.online, {color: AppColors.GRAY}]}>Chat locked until booking is accepted.</Text>
+        </View>}
 
         {/* Input */}
         <View style={styles.inputRow}>
-          <TextInput placeholder="Type a message" style={styles.input} />
+          <TouchableOpacity>
+            <Entypo name="attachment" size={22} color={AppColors.DARKGRAY} />
+          </TouchableOpacity>
+          {/* <TextInput placeholder="Type a message" style={styles.input} /> */}
+          <AppTextInput
+            inputPlaceHolder={'Type a message'}
+            placeholderTextColor={AppColors.DARKGRAY}
+            inputWidth={52}
+            rightIcon={
+              <TouchableOpacity>
+                <Entypo
+                  name="emoji-happy"
+                  size={22}
+                  color={AppColors.DARKGRAY}
+                />
+              </TouchableOpacity>
+            }
+          />
           <TouchableOpacity style={styles.sendButton}>
             <Icon name="send" size={22} color="#fff" />
           </TouchableOpacity>
@@ -151,6 +193,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderTopWidth: 0.5,
+    gap: responsiveWidth(2),
     borderColor: '#ccc',
     paddingHorizontal: responsiveWidth(4),
     paddingVertical: responsiveHeight(2),

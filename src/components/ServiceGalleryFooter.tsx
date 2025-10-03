@@ -5,6 +5,7 @@ import AppText from './AppTextComps/AppText'
 import { AppColors, responsiveFontSize, responsiveHeight, responsiveWidth } from '../utils'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppButton from './AppButton';
+import { useNavigation } from '@react-navigation/native';
 
 type Prop = {
     bookNowOnPress?:any;
@@ -14,10 +15,13 @@ type Prop = {
 }
 
 const ServiceGalleryFooter = ({bookNowOnPress, borderWidth, btnText, paddingHorizontal}: Prop) => {
+    const nav = useNavigation();
     return (
         <View style={{ backgroundColor: AppColors.WHITE, borderWidth: borderWidth ? borderWidth : 1, borderColor: AppColors.LIGHTGRAY, paddingVertical: responsiveHeight(3), paddingHorizontal: paddingHorizontal ? paddingHorizontal : responsiveWidth(4) }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                <View>
+            <View 
+            // style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+                {/* <View>
                     <View style={{ flexDirection: 'row' }}>
                         <AppText
                             title={'Total '}
@@ -48,10 +52,10 @@ const ServiceGalleryFooter = ({bookNowOnPress, borderWidth, btnText, paddingHori
                             />
                         </AppText>
                     </View>
-                </View>
+                </View> */}
 
-                <View style={{ flexDirection: 'row', gap: 20, alignItems: 'center' }}>
-                    <TouchableOpacity style={styles.iconContainer} onPress={() => { }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <TouchableOpacity style={styles.iconContainer} onPress={() => nav.navigate("PrivateInbox")}>
                         <Ionicons
                             name="chatbubble-ellipses-sharp"
                             size={responsiveFontSize(3)}
@@ -65,7 +69,7 @@ const ServiceGalleryFooter = ({bookNowOnPress, borderWidth, btnText, paddingHori
                         btnBackgroundColor={AppColors.ThemeBlue}
                         handlePress={bookNowOnPress}
                         textSize={2}
-                        btnWidth={40}
+                        btnWidth={72}
                         textFontWeight={false}
                     />
                 </View>

@@ -87,6 +87,42 @@ const PersonalInformation = () => {
 
         <View>
           <AppText
+            title={'City'}
+            textColor={AppColors.GRAY}
+            textSize={1.8}
+          />
+          <LineBreak space={0.5} />
+          <AppTextInput inputPlaceHolder={'Address'} />
+        </View>
+
+        <LineBreak space={2} />
+
+        <View>
+          <AppText
+            title={'State'}
+            textColor={AppColors.GRAY}
+            textSize={1.8}
+          />
+          <LineBreak space={0.5} />
+          <AppTextInput inputPlaceHolder={'Address'} />
+        </View>
+
+        <LineBreak space={2} />
+
+        <View>
+          <AppText
+            title={'Zip Code'}
+            textColor={AppColors.GRAY}
+            textSize={1.8}
+          />
+          <LineBreak space={0.5} />
+          <AppTextInput inputPlaceHolder={'Address'} />
+        </View>
+
+        <LineBreak space={2} />
+
+        <View>
+          <AppText
             title={'Password'}
             textColor={AppColors.GRAY}
             textSize={1.8}

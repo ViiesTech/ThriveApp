@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
-import { View, FlatList, Image } from 'react-native'
+import { View, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { AppColors, responsiveFontSize, responsiveHeight, responsiveWidth } from '../utils'
 import AppText from './AppTextComps/AppText'
 import LineBreak from './LineBreak'
@@ -8,6 +8,7 @@ import AppButton from './AppButton'
 import { useNavigation } from '@react-navigation/native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type Prop = {
     data?: [];
@@ -52,7 +53,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
 
                             <View
                                 style={{
-                                    backgroundColor: item.status === 'Available' ? AppColors.lightestBlue : AppColors.ThemeBlue,
+                                    backgroundColor: item.status === 'Available' ? AppColors.lightestBlue : providerHome || isSpecialist ? AppColors.ThemeBlue : AppColors.appGreen,
                                     paddingHorizontal: responsiveWidth(4),
                                     paddingVertical: responsiveHeight(0.7),
                                     borderTopLeftRadius: 20,
@@ -71,7 +72,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                         <LineBreak space={1} />
 
                         <View style={{ flexDirection: 'row', gap: 10 }}>
-                            <Image source={item.image} style={{ width: 40, height: 40 }} />
+                            <Image source={item.image} style={{ width: 40, height: 40, borderRadius: 100 }} />
 
                             <View>
                                 <AppText
@@ -170,14 +171,25 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
 
                         {shopDetail && <LineBreak space={2} />}
 
-                        {shopDetail && <AppButton
-                            title="Book Now"
-                            textColor={AppColors.WHITE}
-                            btnBackgroundColor={AppColors.ThemeBlue}
-                            handlePress={() => nav.navigate('BookingCheckout')}
-                            btnWidth={82}
-                            textFontWeight={false}
-                        />}
+                        {shopDetail &&
+                            <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
+                                <TouchableOpacity style={styles.iconContainer} onPress={() => nav.navigate("PrivateInbox")}>
+                                    <Ionicons
+                                        name="chatbubble-ellipses-sharp"
+                                        size={responsiveFontSize(3)}
+                                        color={AppColors.ThemeBlue}
+                                    />
+                                </TouchableOpacity>
+                                <AppButton
+                                    title="Book Now"
+                                    textColor={AppColors.WHITE}
+                                    btnBackgroundColor={AppColors.ThemeBlue}
+                                    handlePress={() => nav.navigate('LocationInformation')}
+                                    btnWidth={65}
+                                    textFontWeight={false}
+                                />
+                            </View>
+                        }
 
                         {item.status === 'Ongoing' || userRequest || item.status === 'In Progress' || providerHome ? <LineBreak space={2} /> : null}
 
@@ -193,13 +205,12 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                     title={item.appointmentStatus}
                                     textColor={AppColors.BLACK}
                                     textSize={1.6}
-                                    textTransform={'uppercase'}
                                 />
                             </AppText>}
 
                             <View style={{ paddingRight: responsiveWidth(4) }}>
                                 <AppButton
-                                    title={item.status !== 'In Progress' && providerHome ? "Start Appointment" : "COMPLETE"}
+                                    title={item.status !== 'In Progress' && providerHome ? "Start Appointment" : "Complete"}
                                     textColor={AppColors.WHITE}
                                     btnBackgroundColor={AppColors.appGreen}
                                     handlePress={() => nav.navigate('ServiceFeedback')}
@@ -271,4 +282,16 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
     )
 }
 
-export default AppointmentsCard
+export default AppointmentsCard;
+
+const styles = StyleSheet.create({
+    iconContainer: {
+        width: responsiveHeight(6),
+        height: responsiveHeight(6),
+        borderWidth: 1,
+        borderColor: AppColors.ThemeBlue,
+        borderRadius: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+});

@@ -14,6 +14,7 @@ import AppTextInput from '../../components/AppTextInput';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AppButton from '../../components/AppButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NewPassword = () => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
@@ -24,7 +25,7 @@ const NewPassword = () => {
   const nav = useNavigation();
 
   return (
-    <View style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),
@@ -34,7 +35,7 @@ const NewPassword = () => {
       >
         <AuthHeader
           heading="New password,"
-          subHeading="Now, you can create new password and confirm it below"
+          subHeading="Create and confirm your new secure password."
         />
 
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -102,7 +103,7 @@ const NewPassword = () => {
         </View>
         <LineBreak space={2} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

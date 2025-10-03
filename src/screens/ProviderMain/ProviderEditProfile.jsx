@@ -19,12 +19,49 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import PhoneInputScreen from '../../components/PhoneInput';
 import { Picker } from '@react-native-picker/picker';
 import FromInput from '../../components/FromInput';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const ProviderEditProfile = () => {
   const nav = useNavigation();
   const phoneRef = useRef();
   const [service, setService] = useState('Massage_Therapy');
   const [addOnOffer, setAddOnOffer] = useState('Foot_Scrub');
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [activeField, setActiveField] = useState({ day: null, type: null }); 
+  // type = "from" or "to"
+
+  // state for all inputs
+  const [time, setTime] = useState({
+    monday: { from: null, to: null },
+    tuesday: { from: null, to: null },
+  });
+
+  const showDatePicker = (day, type) => {
+    setActiveField({ day, type });
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleConfirm = (date) => {
+    const formatted = date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    setTime((prev) => ({
+      ...prev,
+      [activeField.day]: {
+        ...prev[activeField.day],
+        [activeField.type]: formatted,
+      },
+    }));
+
+    hideDatePicker();
+  };
 
   return (
     <Container>
@@ -83,6 +120,34 @@ const ProviderEditProfile = () => {
           <LineBreak space={0.5} />
           {/* <AppTextInput inputPlaceHolder={'Mobile number'} /> */}
           <PhoneInputScreen phoneRef={phoneRef} />
+        </View>
+        <LineBreak space={2} />
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <View>
+            <AppText
+              title={'House No.'}
+              textColor={AppColors.GRAY}
+              textSize={1.8}
+            />
+            <LineBreak space={0.5} />
+            <AppTextInput inputPlaceHolder={'House No'} inputWidth={34} />
+          </View>
+          <View>
+            <AppText
+              title={'Street'}
+              textColor={AppColors.GRAY}
+              textSize={1.8}
+            />
+            <LineBreak space={0.5} />
+            <AppTextInput inputPlaceHolder={'Address'} inputWidth={34} />
+          </View>
         </View>
 
         <LineBreak space={2} />
@@ -203,13 +268,25 @@ const ProviderEditProfile = () => {
             <View
               style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}
             >
-              <FromInput label={'From'} />
+              <TouchableOpacity onPress={() => showDatePicker("monday", "from")}>
+                <FromInput
+                  label={'From'}
+                  value={time.monday.from}
+                  editable={false}
+                />
+              </TouchableOpacity>
               <AppText
                 title={'-'}
                 textColor={AppColors.ThemeBlue}
                 textSize={6}
               />
-              <FromInput label={'To'} />
+              <TouchableOpacity onPress={() => showDatePicker("monday", "to")}>
+                <FromInput
+                  label={'To'}
+                  value={time.monday.to}
+                  editable={false}
+                />
+              </TouchableOpacity>
             </View>
           </View>
           <View
@@ -228,16 +305,27 @@ const ProviderEditProfile = () => {
             <View
               style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}
             >
-              <FromInput label={'From'} />
+              <TouchableOpacity onPress={() => showDatePicker("tuesday", "from")}>
+                <FromInput label={'From'} value={time.tuesday.from} editable={false} />
+              </TouchableOpacity>
               <AppText
                 title={'-'}
                 textColor={AppColors.ThemeBlue}
                 textSize={6}
               />
-              <FromInput label={'To'} />
+              <TouchableOpacity onPress={() => showDatePicker("tuesday", "to")}>
+                <FromInput label={'To'} value={time.tuesday.to} editable={false} />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
+
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          mode="time"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+        />
 
         <LineBreak space={2} />
 

@@ -18,7 +18,7 @@ const Services = () => {
             <FlatList
                 data={services}
                 ItemSeparatorComponent={<LineBreak space={2} />}
-                columnWrapperStyle={{ justifyContent: 'center', alignSelf: 'center', gap: responsiveWidth(7.5) }}
+                columnWrapperStyle={{ justifyContent: 'center', alignSelf: 'center', gap: responsiveWidth(6) }}
                 numColumns={3}
                 renderItem={({ item }) => (
                     <TouchableOpacity style={{ alignItems: 'center', }} onPress={() => nav.navigate('MassageCategories', { heading: item.title })}>
@@ -26,7 +26,7 @@ const Services = () => {
                         <LineBreak space={1} />
                         <AppText
                             title={item.title}
-                            textColor={AppColors.ThemeBlue}
+                            textColor={AppColors.darkBlue}
                             textSize={1.8}
                             textwidth={25}
                             textAlignment={'center'}

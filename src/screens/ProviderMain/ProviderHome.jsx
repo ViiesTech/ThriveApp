@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, Image, FlatList } from 'react-native';
+import { View, Image, FlatList, TouchableOpacity } from 'react-native';
 import Container from '../../components/Container';
 import LineBreak from '../../components/LineBreak';
 import {
@@ -15,8 +15,10 @@ import AppText from '../../components/AppTextComps/AppText';
 import { AppImages } from '../../assets/images';
 import Feather from 'react-native-vector-icons/Feather';
 import AppointmentsCard from '../../components/AppointmentsCard';
+import { useNavigation } from '@react-navigation/native';
 
 const ProviderHome = () => {
+  const nav = useNavigation();
   return (
     <Container>
       <LineBreak space={2} />
@@ -40,11 +42,14 @@ const ProviderHome = () => {
               textFontWeight
             />
           </View>
+          <TouchableOpacity 
+           onPress={() => nav.navigate('Main', {screen: 'Inbox', params: { isNotification: true },})}>
           <Feather
             name="bell"
             size={responsiveFontSize(3)}
             color={AppColors.BLACK}
-          />
+            />
+            </TouchableOpacity>
         </View>
 
         <LineBreak space={4} />

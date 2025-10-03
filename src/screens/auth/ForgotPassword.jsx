@@ -14,13 +14,14 @@ import LineBreak from '../../components/LineBreak';
 import AppText from '../../components/AppTextComps/AppText';
 import AppTextInput from '../../components/AppTextInput';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ForgotPassword = () => {
   const nav = useNavigation();
   const [isEmailFocused, setIsEmailFocused] = useState(false);
 
   return (
-    <View style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),
@@ -30,7 +31,7 @@ const ForgotPassword = () => {
       >
         <AuthHeader
           heading="Forgot password,"
-          subHeading="Please type your email below and we will give you a OTP code"
+          subHeading="Please enter  your email below. We will send you a passcode."
         />
 
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -70,7 +71,7 @@ const ForgotPassword = () => {
         </View>
         <LineBreak space={2} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

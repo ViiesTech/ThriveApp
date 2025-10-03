@@ -9,6 +9,13 @@ import {
 } from '../../utils';
 import LineBreak from '../../components/LineBreak';
 
+const ListItem = ({ text }) => (
+  <View style={styles.listItemRow}>
+    <Text style={styles.bullet}>•</Text>
+    <Text style={styles.listItemText}>{text}</Text>
+  </View>
+);
+
 const PrivacyPolicy = () => {
   return (
     <Container>
@@ -22,45 +29,30 @@ const PrivacyPolicy = () => {
         </Text>
 
         <Text style={styles.heading}>1. Information We Collect</Text>
+        <Text style={[styles.listItemText, { paddingHorizontal: 0 }]}>
+          We collect the following types of personal data:
+        </Text>
+
         <Text style={styles.subHeading}>For Clients:</Text>
-        <Text style={styles.listItem}>• Name, email address, phone number</Text>
-        <Text style={styles.listItem}>
-          • Booking details (services selected, location, date/time)
-        </Text>
-        <Text style={styles.listItem}>
-          • Payment information (processed through third-party providers like
-          Stripe)
-        </Text>
-        <Text style={styles.listItem}>
-          • Optional health or wellness preferences (e.g., massage type,
-          pressure level)
-        </Text>
+        <ListItem text="Name, email address, phone number" />
+        <ListItem text="Booking details (services selected, location, date/time)" />
+        <ListItem text="Payment information (processed through third-party providers like Stripe)" />
+        <ListItem text="Optional health or wellness preferences (e.g., massage type, pressure level)" />
 
         <Text style={styles.subHeading}>For Providers:</Text>
-        <Text style={styles.listItem}>• Full name, contact information</Text>
-        <Text style={styles.listItem}>
-          • Professional credentials, insurance, licensing documents
-        </Text>
-        <Text style={styles.listItem}>• Bank details for payouts</Text>
-        <Text style={styles.listItem}>
-          • Availability and service offerings
-        </Text>
+        <ListItem text="Full name, contact information" />
+        <ListItem text="Professional credentials, insurance, licensing documents" />
+        <ListItem text="Bank details for payouts" />
+        <ListItem text="Availability and service offerings" />
 
         <Text style={styles.heading}>2. How We Use Your Information</Text>
-        <Text style={styles.listItem}>
-          • Facilitate service bookings and manage appointments
-        </Text>
-        <Text style={styles.listItem}>
-          • Communicate updates or changes to your booking
-        </Text>
-        <Text style={styles.listItem}>
-          • Process payments and issue provider payouts
-        </Text>
-        <Text style={styles.listItem}>
-          • Improve user experience and personalize services
-        </Text>
-        <Text style={styles.listItem}>• Comply with legal obligations</Text>
+        <ListItem text="Facilitate service bookings and manage appointments" />
+        <ListItem text="Communicate updates or changes to your booking" />
+        <ListItem text="Process payments and issue provider payouts" />
+        <ListItem text="Improve user experience and personalize services" />
+        <ListItem text="Comply with legal obligations" />
       </View>
+
       <LineBreak space={4} />
     </Container>
   );
@@ -89,10 +81,22 @@ const styles = StyleSheet.create({
     marginBottom: responsiveHeight(1),
     lineHeight: responsiveHeight(2.5),
   },
-  listItem: {
+  listItemRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: responsiveHeight(0.5),
+    paddingHorizontal: responsiveWidth(2),
+  },
+  bullet: {
+    fontSize: responsiveFontSize(2),
+    marginRight: responsiveWidth(2),
+    color: '#444',
+    lineHeight: responsiveHeight(2.5),
+  },
+  listItemText: {
+    flex: 1,
     fontSize: responsiveFontSize(1.8),
     color: '#444',
-    marginBottom: responsiveHeight(0.5),
     lineHeight: responsiveHeight(2.5),
   },
 });

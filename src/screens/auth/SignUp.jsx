@@ -41,53 +41,53 @@ const SignUp = ({ route }) => {
   });
   const [register, { isLoading }] = useRegisterMutation();
 
-  const { type } = route?.params;
+  // const { type } = route?.params;
 
   // console.log('type ===>', type);
 
-  const onSignupPress = async () => {
-    if (!state.name) {
-      ShowToast('Please enter your name');
-      return;
-    }
-    if (!state.email) {
-      ShowToast('Please enter your email');
-      return;
-    }
-    if (!state.number) {
-      ShowToast('Please enter your mobile number');
-      return;
-    }
-    if (!state.password) {
-      ShowToast('Please enter your password');
-      return;
-    }
-    if (state.password.length < 8) {
-      ShowToast('Password is too weak');
-      return;
-    }
-    let data = {
-      email: state.email,
-      password: state.password,
-      phoneNumber: state.number,
-      type: type,
-    };
-    await register(data)
-      .unwrap()
-      .then(res => {
-        console.log('response of register ===>', res);
-        ShowToast(res.message);
-        if (res.success) {
-          nav.navigate('EmailVerification', {
-            data: { ...res.data, type: type },
-          });
-        }
-      })
-      .catch(error => {
-        console.log('error while registering the account ===>', error);
-        ShowToast('Some problem occured');
-      });
-  };
+  // const onSignupPress = async () => {
+  //   if (!state.name) {
+  //     ShowToast('Please enter your name');
+  //     return;
+  //   }
+  //   if (!state.email) {
+  //     ShowToast('Please enter your email');
+  //     return;
+  //   }
+  //   if (!state.number) {
+  //     ShowToast('Please enter your mobile number');
+  //     return;
+  //   }
+  //   if (!state.password) {
+  //     ShowToast('Please enter your password');
+  //     return;
+  //   }
+  //   if (state.password.length < 8) {
+  //     ShowToast('Password is too weak');
+  //     return;
+  //   }
+  //   let data = {
+  //     email: state.email,
+  //     password: state.password,
+  //     phoneNumber: state.number,
+  //     type: type,
+  //   };
+  //   await register(data)
+  //     .unwrap()
+  //     .then(res => {
+  //       console.log('response of register ===>', res);
+  //       ShowToast(res.message);
+  //       if (res.success) {
+  //         nav.navigate('EmailVerification', {
+  //           data: { ...res.data, type: type },
+  //         });
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.log('error while registering the account ===>', error);
+  //       ShowToast('Some problem occured');
+  //     });
+  // };
 
   const onChangeText = (state, value) => {
     setState(prevState => ({
@@ -221,15 +221,16 @@ const SignUp = ({ route }) => {
           title="Join Now"
           indicator={isLoading}
           textColor={AppColors.WHITE}
-          btnBackgroundColor={AppColors.ThemeBlue}
-          handlePress={() => onSignupPress()}
-          // const type = await AsyncStorage.getItem('type');
-          // if(type === 'User'){
-          //   nav.navigate('Main');
-          // }else {
-          //   nav.navigate('FillTheDetails');
-          // }
-
+          btnBackgroundColor={AppColors.appGreen}
+          // handlePress={() => onSignupPress()}
+          handlePress={async () => {
+            const type = await AsyncStorage.getItem('type');
+            if (type === 'User') {
+              nav.navigate('Main');
+            } else {
+              nav.navigate('FillTheDetails');
+            }
+          }}
           textFontWeight={false}
         />
 

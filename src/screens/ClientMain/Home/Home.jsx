@@ -13,7 +13,7 @@ import {
   responsiveWidth,
   specialistsYouFollow,
 } from '../../../utils';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
 import Banner from '../../../components/Banner';
 import AppText from '../../../components/AppTextComps/AppText';
 import LineBreak from '../../../components/LineBreak';
@@ -41,19 +41,19 @@ const Home = () => {
           rightIcon={
             <TouchableOpacity
               style={{
-                width: responsiveHeight(4),
-                height: responsiveHeight(4),
+                width: responsiveHeight(5),
+                height: responsiveHeight(5),
                 borderRadius: 100,
                 justifyContent: 'center',
                 alignItems: 'center',
-                backgroundColor: AppColors.appGreen,
+                backgroundColor: AppColors.lightestBlue,
               }}
-              onPress={() => nav.navigate('OpenRequestForm')}
+              onPress={() => nav.navigate('Main', {screen: 'Inbox', params: { isNotification: true },})}
             >
-              <MaterialIcons
-                size={responsiveFontSize(2.4)}
-                name={'question-mark'}
-                color={AppColors.WHITE}
+              <Fontisto
+                size={responsiveFontSize(2.6)}
+                name={'bell'}
+                color={AppColors.ThemeBlue}
               />
             </TouchableOpacity>
           }

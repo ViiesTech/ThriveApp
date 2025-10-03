@@ -64,7 +64,7 @@ const Login = () => {
       >
         <AuthHeader
           heading="Welcome back,"
-          subHeading="Let’s get you back to wellness."
+          subHeading="Time to recharge."
         />
 
         <LineBreak space={15} />
@@ -206,7 +206,7 @@ const Login = () => {
             textColor={AppColors.BLACK}
             textSize={2}
           />
-          <TouchableOpacity onPress={() => nav.navigate('SelectType')}>
+          <TouchableOpacity onPress={() => nav.navigate('SignUp')}>
             <AppText
               title={'Join Now'}
               textColor={AppColors.ThemeBlue}

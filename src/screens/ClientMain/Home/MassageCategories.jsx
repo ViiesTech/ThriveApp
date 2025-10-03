@@ -124,8 +124,8 @@ const MassageCategories = ({ route }) => {
   const [currentMonth, setCurrentMonth] = useState(moment()); 
   const [selectedDate, setSelectedDate] = useState(moment());
   const [selectedTime, setSelectedTime] = useState(null);
+  const [isCheckedProvider, setIsCheckedProvider] = useState(false);
 
-  // Generate days for current month
   const daysInMonth = [];
   const startOfMonth = currentMonth.clone().startOf('month').startOf('week');
   const endOfMonth = currentMonth.clone().endOf('month').endOf('week');
@@ -138,10 +138,8 @@ const MassageCategories = ({ route }) => {
 
   const toggleSelect = index => {
     if (isSelected.includes(index)) {
-      // remove if already selected
       setIsSelected(isSelected.filter(i => i !== index));
     } else {
-      // add new selected index
       setIsSelected([...isSelected, index]);
     }
   };
@@ -185,7 +183,7 @@ const MassageCategories = ({ route }) => {
     <Container>
       <AppHeader
         onBackPress={true}
-        heading={heading === 'Solo Massage' ? `${heading} - Special` : heading}
+        heading={heading}
       />
       <Image
         source={AppImages.massage}
@@ -415,14 +413,13 @@ const MassageCategories = ({ route }) => {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'center',
               alignItems: 'center',
               gap: responsiveWidth(4),
             }}
           >
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsCheckedProvider(!isCheckedProvider)}>
               <SVGXml
-                icon={false ? AppIcons.check : AppIcons.un_check}
+                icon={isCheckedProvider ? AppIcons.check : AppIcons.un_check}
                 width={55}
                 height={55}
               />
@@ -435,37 +432,11 @@ const MassageCategories = ({ route }) => {
               textFontWeight
             />
           </View>
-          <LineBreak space={2} />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: responsiveWidth(4),
-            }}
-          >
-            <TouchableOpacity>
-              <SVGXml
-                icon={true ? AppIcons.check : AppIcons.un_check}
-                width={55}
-                height={55}
-              />
-            </TouchableOpacity>
-            <AppText
-              title={
-                'I would like to rebook my previous provider (subject to availability)'
-              }
-              textColor={AppColors.BLACK}
-              textSize={2}
-              textwidth={60}
-              textFontWeight
-            />
-          </View>
         </View>
 
         <LineBreak space={3} />
 
-        <YouFollow data={followerData} paddingHorizontal={-1} />
+        <YouFollow data={followerData} paddingHorizontal={-1} disabledSelection={isCheckedProvider === false} />
 
         <LineBreak space={3} />
 
@@ -506,7 +477,14 @@ const MassageCategories = ({ route }) => {
           title="Next"
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.appGreen}
-          handlePress={() => nav.navigate("LocationInformation")}
+          // handlePress={() => nav.navigate("LocationInformation")}
+          handlePress={() => {
+            if(isCheckedProvider){
+              nav.navigate("ShopDetails")
+            }else {
+              nav.navigate("LocationInformation")
+            }
+          }}
           textFontWeight={false}
         />
         <LineBreak space={4} />

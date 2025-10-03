@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import AuthHeader from '../../components/AuthHeader';
@@ -7,12 +8,13 @@ import LineBreak from '../../components/LineBreak';
 import AppButton from '../../components/AppButton';
 import AppText from '../../components/AppTextComps/AppText';
 import FieldCode from '../../components/CodeField';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const EmailVerification = () => {
   const nav = useNavigation();
 
   return (
-    <View style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),
@@ -22,7 +24,7 @@ const EmailVerification = () => {
       >
         <AuthHeader
           heading="Email verification,"
-          subHeading="Please type OTP code that we give you"
+          subHeading="Please enter the passcode we sent you."
         />
 
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -51,7 +53,7 @@ const EmailVerification = () => {
         </View>
         <LineBreak space={2} />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -22,17 +22,18 @@ import LineBreak from '../../../components/LineBreak';
 import AppointmentsCard from '../../../components/AppointmentsCard';
 import AppText from '../../../components/AppTextComps/AppText';
 import ShopDetailsCard from '../../../components/ShopDetailsCard';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const ShopDetails = () => {
   const nav = useNavigation();
   const [isShowFullDetails, setIsShowFullDetails] = useState(false);
 
   return (
-    <View style={{ flex: 1 }}>
-      <ImageBackground
-        source={AppImages.shop_bg}
-        style={{ width: responsiveWidth(100), height: responsiveHeight(100) }}
-      >
+    <ImageBackground
+      source={AppImages.shop_bg}
+      style={{ width: responsiveWidth(100), height: responsiveHeight(100) }}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
         <LineBreak space={2} />
         <View
           style={{
@@ -42,24 +43,30 @@ const ShopDetails = () => {
             alignItems: 'center',
           }}
         >
-          <TouchableOpacity
-            style={styles.iconContainer}
-            onPress={() => nav.goBack()}
-          >
+          <TouchableOpacity onPress={() => nav.goBack()}>
             <FontAwesome
               name="angle-left"
-              size={responsiveFontSize(3.5)}
+              size={responsiveFontSize(4)}
               color={AppColors.ThemeBlue}
             />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.iconContainer} onPress={() => {}}>
+          <AppText
+            title={'Provider'}
+            textColor={AppColors.BLACK}
+            textSize={2}
+            textFontWeight
+          />
+
+          <View />
+
+          {/* <TouchableOpacity style={styles.iconContainer} onPress={() => {}}>
             <FontAwesome
               name="map"
               size={responsiveFontSize(2.5)}
               color={AppColors.ThemeBlue}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {isShowFullDetails ? null : (
@@ -67,7 +74,7 @@ const ShopDetails = () => {
             style={{
               flex: 1,
               justifyContent: 'flex-end',
-              paddingVertical: responsiveWidth(30),
+              paddingVertical: responsiveWidth(5),
             }}
           >
             <AppointmentsCard data={shopDetail} shopDetail="shopDetail" />
@@ -108,8 +115,8 @@ const ShopDetails = () => {
             <ShopDetailsCard />
           </>
         )}
-      </ImageBackground>
-    </View>
+      </SafeAreaView>
+    </ImageBackground>
   );
 };
 
@@ -119,10 +126,10 @@ const styles = StyleSheet.create({
   iconContainer: {
     width: responsiveHeight(5),
     height: responsiveHeight(5),
-    backgroundColor: AppColors.LIGHTESTGRAY,
+    // backgroundColor: AppColors.LIGHTESTGRAY,
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 5,
+    // elevation: 5,
   },
 });

@@ -36,12 +36,12 @@ const Appointments = () => {
       <LineBreak space={1} />
       {selectedTab.id == 1 && (
         <View>
-          <AppointmentsCard data={completedAppointments} />
+          <AppointmentsCard data={completedAppointments} isSpecialist={type === 'Provider'} />
         </View>
       )}
       {selectedTab.id == 2 && (
         <View>
-          <AppointmentsCard data={upcomingAppointments} />
+          <AppointmentsCard data={upcomingAppointments} isSpecialist={type === 'Provider'} />
         </View>
       )}
       {selectedTab.id == 3 && (
