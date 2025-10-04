@@ -22,7 +22,6 @@ const Banner = () => {
                             style={{
                                 width: responsiveWidth(92),
                                 height: responsiveHeight(19),
-                                marginTop: item.id == 1 ? responsiveHeight(0.5) : 0,
                             }}
                         />
                     </View>

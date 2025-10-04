@@ -10,9 +10,10 @@ type Props = {
     data?: any;
     paddingHorizontal?: any;
     disabledSelection?: any;
+    onPress?: any;
 }
 
-const YouFollow = ({ data, paddingHorizontal, disabledSelection }: Props) => {
+const YouFollow = ({ data, paddingHorizontal, disabledSelection, onPress }: Props) => {
     const [isSelected, setIsSelected] = useState({ index: '' });
 
     useEffect(() => {
@@ -33,13 +34,7 @@ const YouFollow = ({ data, paddingHorizontal, disabledSelection }: Props) => {
                     paddingHorizontal: paddingHorizontal ? paddingHorizontal : responsiveWidth(4),
                 }}
                 renderItem={({ item, index }) => (
-                    <TouchableOpacity style={{ flexDirection: 'column', alignItems: 'center' }} onPress={() => {
-                        if (disabledSelection) {
-                            return null
-                        } else {
-                            setIsSelected({ index })
-                        }
-                    }}>
+                    <TouchableOpacity style={{ flexDirection: 'column', alignItems: 'center' }} onPress={() => onPress()}>
                         <View style={{ borderWidth: 4, borderColor: isSelected.index == index ? AppColors.ThemeBlue : AppColors.WHITE, borderRadius: 100 }}>
                             <Image
                                 source={item.img}

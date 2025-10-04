@@ -121,7 +121,7 @@ const MassageCategories = ({ route }) => {
   const [selectedGender, setSelectedGender] = useState(0);
   const [selectedSize, setSelectedSize] = useState(0);
   const [isSelected, setIsSelected] = useState([]);
-  const [currentMonth, setCurrentMonth] = useState(moment()); 
+  const [currentMonth, setCurrentMonth] = useState(moment());
   const [selectedDate, setSelectedDate] = useState(moment());
   const [selectedTime, setSelectedTime] = useState(null);
   const [isCheckedProvider, setIsCheckedProvider] = useState(false);
@@ -181,10 +181,7 @@ const MassageCategories = ({ route }) => {
 
   return (
     <Container>
-      <AppHeader
-        onBackPress={true}
-        heading={heading}
-      />
+      <AppHeader onBackPress={true} heading={heading} />
       <Image
         source={AppImages.massage}
         style={{ width: responsiveWidth(100) }}
@@ -347,7 +344,11 @@ const MassageCategories = ({ route }) => {
             alignItems: 'center',
           }}
         >
-          <TouchableOpacity onPress={() => setCurrentMonth(currentMonth.clone().subtract(1, "month"))}>
+          <TouchableOpacity
+            onPress={() =>
+              setCurrentMonth(currentMonth.clone().subtract(1, 'month'))
+            }
+          >
             <Feather
               name="chevron-left"
               size={responsiveFontSize(3)}
@@ -356,13 +357,17 @@ const MassageCategories = ({ route }) => {
           </TouchableOpacity>
 
           <AppText
-            title={currentMonth.format("MMMM, YYYY")}
+            title={currentMonth.format('MMMM, YYYY')}
             textColor={AppColors.BLACK}
             textSize={1.8}
             textFontWeight
           />
 
-          <TouchableOpacity onPress={() => setCurrentMonth(currentMonth.clone().add(1, "month"))}>
+          <TouchableOpacity
+            onPress={() =>
+              setCurrentMonth(currentMonth.clone().add(1, 'month'))
+            }
+          >
             <Feather
               name="chevron-right"
               size={responsiveFontSize(3)}
@@ -373,11 +378,18 @@ const MassageCategories = ({ route }) => {
 
         <LineBreak space={2} />
 
-        <DateSelector data={daysInMonth} setSelectedDate={setSelectedDate} isSelected={selectedDate} />
+        <DateSelector
+          data={daysInMonth}
+          setSelectedDate={setSelectedDate}
+          isSelected={selectedDate}
+        />
 
         <LineBreak space={2} />
 
-        <TimeSelector isSelected={selectedTime} setSelectedTime={setSelectedTime} />
+        <TimeSelector
+          isSelected={selectedTime}
+          setSelectedTime={setSelectedTime}
+        />
 
         <LineBreak space={2} />
 
@@ -417,7 +429,9 @@ const MassageCategories = ({ route }) => {
               gap: responsiveWidth(4),
             }}
           >
-            <TouchableOpacity onPress={() => setIsCheckedProvider(!isCheckedProvider)}>
+            <TouchableOpacity
+              onPress={() => setIsCheckedProvider(!isCheckedProvider)}
+            >
               <SVGXml
                 icon={isCheckedProvider ? AppIcons.check : AppIcons.un_check}
                 width={55}
@@ -436,9 +450,16 @@ const MassageCategories = ({ route }) => {
 
         <LineBreak space={3} />
 
-        <YouFollow data={followerData} paddingHorizontal={-1} disabledSelection={isCheckedProvider === false} />
+        {!isCheckedProvider && (
+          <YouFollow
+            data={followerData}
+            paddingHorizontal={-1}
+            disabledSelection={isCheckedProvider === false}
+            onPress={() => nav.navigate('ShopDetails')}
+          />
+        )}
 
-        <LineBreak space={3} />
+        {!isCheckedProvider && <LineBreak space={3} />}
 
         {heading === 'Corporate Chair Massage' && (
           <>
@@ -473,20 +494,13 @@ const MassageCategories = ({ route }) => {
           </>
         )}
 
-        <AppButton
+      {isCheckedProvider &&  <AppButton
           title="Next"
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.appGreen}
-          // handlePress={() => nav.navigate("LocationInformation")}
-          handlePress={() => {
-            if(isCheckedProvider){
-              nav.navigate("ShopDetails")
-            }else {
-              nav.navigate("LocationInformation")
-            }
-          }}
+          handlePress={() => nav.navigate('LocationInformation')}
           textFontWeight={false}
-        />
+        />}
         <LineBreak space={4} />
       </View>
     </Container>
