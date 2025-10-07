@@ -53,7 +53,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
 
                             <View
                                 style={{
-                                    backgroundColor: item.status === 'Available' ? AppColors.lightestBlue : providerHome || isSpecialist ? AppColors.ThemeBlue : AppColors.appGreen,
+                                    backgroundColor: item.status === 'Available' ? AppColors.lightestBlue : providerHome || isSpecialist || userRequest ? AppColors.ThemeBlue : AppColors.appGreen,
                                     paddingHorizontal: responsiveWidth(4),
                                     paddingVertical: responsiveHeight(0.7),
                                     borderTopLeftRadius: 20,
@@ -210,9 +210,9 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
 
                             <View style={{ paddingRight: responsiveWidth(4) }}>
                                 <AppButton
-                                    title={item.status !== 'In Progress' && providerHome ? "Start Appointment" : "Complete"}
+                                    title={item.status !== 'In Progress' && providerHome ? "Start Appointment" : "COMPLETE"}
                                     textColor={AppColors.WHITE}
-                                    btnBackgroundColor={AppColors.appGreen}
+                                    btnBackgroundColor={providerHome ? AppColors.appGreen : AppColors.ThemeBlue}
                                     handlePress={() => nav.navigate('ServiceFeedback')}
                                     btnWidth={item.status === 'In Progress' || providerHome ? 82 : 32}
                                     btnPadding={item.status === 'In Progress' || providerHome ? 10 : 5}
@@ -238,7 +238,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                     <AppButton
                                         title={"REJECT"}
                                         textColor={AppColors.WHITE}
-                                        btnBackgroundColor={AppColors.DARK_RED}
+                                        btnBackgroundColor={AppColors.theme_red}
                                         handlePress={() => { }}
                                         btnWidth={38}
                                         btnPadding={7}

@@ -9,9 +9,10 @@ type Prop = {
     selectedTab?: any;
     setSelectedTab?: any;
     data?: any;
+    textwidth?: any;
 };
 
-const AppointmentsTopTabs = ({ selectedTab, setSelectedTab, data }: Prop) => {
+const AppointmentsTopTabs = ({ selectedTab, setSelectedTab, data, textwidth }: Prop) => {
     // Animated value for the indicator movement
     const indicatorAnim = useRef(new Animated.Value(selectedTab?.id || 0)).current;
 
@@ -53,7 +54,7 @@ const AppointmentsTopTabs = ({ selectedTab, setSelectedTab, data }: Prop) => {
                                 textColor={isSelected ? AppColors.ThemeBlue : AppColors.DARKGRAY}
                                 textSize={1.8}
                                 textFontWeight
-                                textwidth={30}
+                                textwidth={textwidth ? textwidth : 40}
                                 textAlignment={'center'}
                             />
                             <LineBreak space={0.5} />

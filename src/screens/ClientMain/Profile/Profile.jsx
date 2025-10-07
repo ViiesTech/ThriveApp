@@ -20,6 +20,7 @@ import AppText from '../../../components/AppTextComps/AppText';
 import LineBreak from '../../../components/LineBreak';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SVGXml from '../../../components/SVGXML';
 
 const Profile = () => {
   const nav = useNavigation();
@@ -44,12 +45,12 @@ const Profile = () => {
   }, []);
 
   return (
-    <Container>
+    <Container style={{ marginBottom: responsiveHeight(-6) }}>
       <AppHeader heading={'Profile'} />
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <View style={{ alignItems: 'center' }}>
           <Image
-            source={AppImages.on_boarding1}
+            source={AppImages.profile}
             style={{ width: 80, height: 80, borderRadius: 100 }}
           />
           <LineBreak space={1.2} />
@@ -82,14 +83,15 @@ const Profile = () => {
               onPress={() => {
                 if (item.navTo) {
                   nav.navigate(item.navTo);
-                }else if(type === 'Client' && item.id == 3){
-                  nav.navigate("Appointments")
-                }else if(type === 'Provider' && item.id == 4){
-                  nav.navigate("Appointments")
+                } else if (type === 'Client' && item.id == 3) {
+                  nav.navigate('Appointments');
+                } else if (type === 'Provider' && item.id == 4) {
+                  nav.navigate('Appointments');
                 }
               }}
             >
-              {item.icon && item.icon}
+              {/* {item.icon && item.icon} */}
+              <SVGXml icon={item.icon} width={25} height={25} />
               <AppText
                 title={item.title}
                 textColor={AppColors.BLACK}
@@ -123,7 +125,8 @@ const Profile = () => {
               <View
                 style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}
               >
-                {item.icon && item.icon}
+                {/* {item.icon && item.icon} */}
+                <SVGXml icon={item.icon} width={25} height={25} />
                 <AppText
                   title={item.title}
                   textColor={AppColors.BLACK}
@@ -157,16 +160,20 @@ const Profile = () => {
               onPress={() => {
                 if (item.navTo) {
                   nav.navigate(item.navTo);
-                } else if (item.id == 3) {
+                } else if (item.id == 4 && type === 'Client') {
+                  nav.navigate('Auth');
+                  AsyncStorage.clear();
+                }else if (item.id == 3 && type === 'Provider') {
                   nav.navigate('Auth');
                   AsyncStorage.clear();
                 }
               }}
             >
-              {item.icon && item.icon}
+              {/* {item.icon && item.icon} */}
+              <SVGXml icon={item.icon} width={25} height={25} />
               <AppText
                 title={item.title}
-                textColor={item.id == 3 ? AppColors.RED_COLOR : AppColors.BLACK}
+                textColor={item.id == 4 && type === 'Client' || item.id == 3 && type === 'Provider' ? AppColors.RED_COLOR : AppColors.BLACK}
                 textSize={1.8}
                 textFontWeight={item.id == 1}
               />

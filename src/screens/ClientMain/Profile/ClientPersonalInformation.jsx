@@ -34,7 +34,7 @@ const ClientPersonalInformation = () => {
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <View style={{ alignItems: 'center' }}>
           <Image
-            source={AppImages.on_boarding1}
+            source={AppImages.profile}
             style={{ width: 80, height: 80, borderRadius: 100 }}
           />
           <LineBreak space={1.2} />

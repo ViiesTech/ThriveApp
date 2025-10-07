@@ -20,7 +20,7 @@ import { useNavigation } from '@react-navigation/native';
 const ProviderHome = () => {
   const nav = useNavigation();
   return (
-    <Container>
+    <Container style={{marginBottom: responsiveHeight(-6)}}>
       <LineBreak space={2} />
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <View

@@ -21,7 +21,7 @@ const TimeSelector = ({isSelected, setSelectedTime}: Prop) => {
                     <TouchableOpacity 
                   onPress={() => setSelectedTime(item.time)}
                     style={{
-                        backgroundColor: isSelected === item.time ? AppColors.ThemeBlue : AppColors.LIGHTGRAY,
+                        backgroundColor: isSelected === item.time ? AppColors.ThemeBlue : AppColors.inputGrayBg,
                         paddingHorizontal: responsiveWidth(4),
                         paddingVertical: responsiveHeight(3),
                         borderRadius: 25,

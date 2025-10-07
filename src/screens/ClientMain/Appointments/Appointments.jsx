@@ -32,6 +32,7 @@ const Appointments = () => {
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
         data={appointmentsTab}
+        textwidth={30}
       />
       <LineBreak space={1} />
       {selectedTab.id == 1 && (

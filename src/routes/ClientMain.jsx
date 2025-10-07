@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { AppColors, responsiveHeight } from '../utils';
+import { AppColors, responsiveFontSize, responsiveHeight } from '../utils';
 import Home from '../screens/ClientMain/Home/Home';
 import NearBy from '../screens/ClientMain/Nearby/Nearby';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -41,6 +41,8 @@ import AddNewNotes from '../screens/ProviderMain/AddNewNotes';
 import PrivacyPolicy from '../screens/ProviderMain/PrivacyPolicy';
 import LocationInformation from '../screens/ClientMain/Home/LocationInformation';
 import ClientPersonalInformation from '../screens/ClientMain/Profile/ClientPersonalInformation';
+import SVGXml from '../components/SVGXML';
+import { AppIcons } from '../assets/icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -103,7 +105,7 @@ function MyTabs() {
           display: 'none',
         },
         tabBarStyle: {
-          height: responsiveHeight(10),
+          height: responsiveHeight(12),
           paddingTop: responsiveHeight(1.8),
         },
       }}
@@ -115,7 +117,8 @@ function MyTabs() {
           tabBarIcon: ({ focused }) =>
             focused ? (
               <View style={{ alignItems: 'center' }}>
-                <Icon size={25} name={'home'} color={AppColors.ThemeBlue} />
+                {/* <Icon size={25} name={'home'} color={AppColors.ThemeBlue} /> */}
+                <SVGXml icon={AppIcons.home_blue} width={30} height={30} />
                 <LineBreak space={0.5} />
                 <View
                   style={{
@@ -127,7 +130,8 @@ function MyTabs() {
                 />
               </View>
             ) : (
-              <Icon size={25} name={'home'} color={AppColors.GRAY} />
+              // <Icon size={25} name={'home'} color={AppColors.GRAY} />
+                <SVGXml icon={AppIcons.home_gray} width={30} height={30} />
             ),
         }}
       />
@@ -139,7 +143,7 @@ function MyTabs() {
             focused ? (
               <View style={{ alignItems: 'center' }}>
                 <Ionicons
-                  size={25}
+                  size={responsiveFontSize(4)}
                   name={'compass'}
                   color={AppColors.ThemeBlue}
                 />
@@ -154,7 +158,7 @@ function MyTabs() {
                 />
               </View>
             ) : (
-              <Ionicons size={25} name={'compass'} color={AppColors.GRAY} />
+              <Ionicons size={responsiveFontSize(4)} name={'compass'} color={AppColors.DARKGRAY} />
             ),
         }}
       />}
@@ -165,11 +169,12 @@ function MyTabs() {
           tabBarIcon: ({ focused }) =>
             focused ? (
               <View style={{ alignItems: 'center' }}>
-                <Ionicons
+                {/* <Ionicons
                   size={20}
                   name={'calendar'}
                   color={AppColors.ThemeBlue}
-                />
+                /> */}
+                <SVGXml icon={AppIcons.calendar_blue} width={30} height={30} />
                 <LineBreak space={0.5} />
                 <View
                   style={{
@@ -181,7 +186,8 @@ function MyTabs() {
                 />
               </View>
             ) : (
-              <Ionicons size={20} name={'calendar'} color={AppColors.GRAY} />
+              // <Ionicons size={20} name={'calendar'} color={AppColors.GRAY} />
+                <SVGXml icon={AppIcons.calendar_gray} width={30} height={30} />
             ),
         }}
       />
@@ -192,7 +198,8 @@ function MyTabs() {
           tabBarIcon: ({ focused }) =>
             focused ? (
               <View style={{ alignItems: 'center' }}>
-                <MaterialIcons size={25} name={'chat'} color={AppColors.ThemeBlue} />
+                {/* <MaterialIcons size={25} name={'chat'} color={AppColors.ThemeBlue} /> */}
+                <SVGXml icon={AppIcons.chat_blue} width={30} height={30} />
                 <LineBreak space={0.5} />
                 <View
                   style={{
@@ -204,7 +211,8 @@ function MyTabs() {
                 />
               </View>
             ) : (
-              <MaterialIcons size={25} name={'chat'} color={AppColors.GRAY} />
+              // <MaterialIcons size={25} name={'chat'} color={AppColors.GRAY} />
+                <SVGXml icon={AppIcons.chat_gray} width={30} height={30} />
             ),
         }}
       />
@@ -215,7 +223,8 @@ function MyTabs() {
           tabBarIcon: ({ focused }) =>
             focused ? (
               <View style={{ alignItems: 'center' }}>
-                <Icon size={25} name={'user'} color={AppColors.ThemeBlue} />
+                {/* <Icon size={25} name={'user'} color={AppColors.ThemeBlue} /> */}
+                <SVGXml icon={AppIcons.profile_blue} width={30} height={30} />
                 <LineBreak space={0.5} />
                 <View
                   style={{
@@ -227,7 +236,8 @@ function MyTabs() {
                 />
               </View>
             ) : (
-              <Icon size={25} name={'user'} color={AppColors.GRAY} />
+              // <Icon size={25} name={'user'} color={AppColors.GRAY} />
+                <SVGXml icon={AppIcons.profile_gray} width={30} height={30} />
             ),
         }}
       />

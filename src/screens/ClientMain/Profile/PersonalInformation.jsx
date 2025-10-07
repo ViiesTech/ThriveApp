@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Image } from 'react-native';
 import Container from '../../../components/Container';
 import AppHeader from '../../../components/AppHeader';
@@ -10,16 +10,19 @@ import AppText from '../../../components/AppTextComps/AppText';
 import AppTextInput from '../../../components/AppTextInput';
 import AppButton from '../../../components/AppButton';
 import { useNavigation } from '@react-navigation/native';
+import PhoneInputScreen from '../../../components/PhoneInput';
 
 const PersonalInformation = () => {
     const nav = useNavigation();
+    const phoneRef = useRef();
+
   return (
     <Container>
       <AppHeader onBackPress={true} heading={'Personal Information'} />
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <View style={{ alignItems: 'center' }}>
           <Image
-            source={AppImages.on_boarding1}
+            source={AppImages.profile}
             style={{ width: 80, height: 80, borderRadius: 100 }}
           />
           <LineBreak space={1.2} />
@@ -44,7 +47,7 @@ const PersonalInformation = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Name'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
 
         <LineBreak space={2} />
@@ -56,7 +59,7 @@ const PersonalInformation = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Email Address'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
 
         <LineBreak space={2} />
@@ -68,7 +71,7 @@ const PersonalInformation = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Mobile number'} />
+          <PhoneInputScreen phoneRef={phoneRef} />
         </View>
 
         <LineBreak space={2} />
@@ -80,7 +83,7 @@ const PersonalInformation = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Address'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
 
         <LineBreak space={2} />
@@ -92,7 +95,7 @@ const PersonalInformation = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Address'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
 
         <LineBreak space={2} />
@@ -104,7 +107,7 @@ const PersonalInformation = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Address'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
 
         <LineBreak space={2} />
@@ -116,7 +119,7 @@ const PersonalInformation = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Address'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
 
         <LineBreak space={2} />
@@ -128,10 +131,10 @@ const PersonalInformation = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Password'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
 
-        <LineBreak space={5} />
+        <LineBreak space={7} />
 
          <AppButton
           title={'Save Information'}

@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
     lineHeight: responsiveHeight(2.5),
   },
   listItemText: {
-    flex: 1,
     fontSize: responsiveFontSize(1.8),
     color: '#444',
     lineHeight: responsiveHeight(2.5),

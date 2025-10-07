@@ -24,7 +24,7 @@ const DateSelector = ({data, isSelected, setSelectedDate}: Props) => {
                     <TouchableOpacity
                       onPress={() => setSelectedDate(item)}
                         style={{
-                            backgroundColor: item.isSame(isSelected, "day") ? AppColors.ThemeBlue : AppColors.LIGHTGRAY,
+                            backgroundColor: item.isSame(isSelected, "day") ? AppColors.ThemeBlue : AppColors.inputGrayBg,
                             justifyContent: 'center',
                             alignItems: 'center',
                             width: responsiveWidth(14),

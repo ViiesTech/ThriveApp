@@ -149,7 +149,7 @@ const MassageCategories = ({ route }) => {
     'Couples Massage': coupleMassageOptionsAndAddOns,
     'Spa Party': spaPartyOptionsAndAddOns,
     'Vibroacoustic Therapy': vibroacousticTherapyOptionsAndAddOns,
-    Facial: facialOptionsAndAddOns,
+    'Facial': facialOptionsAndAddOns,
   };
 
   const sessionDuration = {
@@ -160,7 +160,29 @@ const MassageCategories = ({ route }) => {
     'Spa Party': spaPartySessionDuration,
     'Corporate Chair Massage': corporateChairMassagePartySessionDuration,
     'Vibroacoustic Therapy': vibroacousticTherapySessionDuration,
-    Facial: FacialessionDuration,
+    'Facial': FacialessionDuration,
+  };
+
+  const image = {
+    'Solo Massage': AppImages.solo_massage,
+    'Couples Massage': AppImages.couples_massage,
+    'Group Yoga': AppImages.group_yoga,
+    'Sound Bath': AppImages.sound_bath,
+    'Spa Party': AppImages.spa_party,
+    'Corporate Chair Massage': AppImages.corporate_chair_massage,
+    'Vibroacoustic Therapy': AppImages.vibroacoustic_therapy,
+    'Facial': AppImages.facial,
+  };
+
+  const desc = {
+    'Solo Massage': 'Enjoy a personalized massage in your home or vacation rental, customized to your needs for total relaxation. Perfect for stress relief, recovery, or simple self-care. Enhance your session with add-ons for the ultimate experience. Book now and have your wellness, anywhere, in as little as 4 hours',
+    'Couples Massage': 'Couples Massage – By default, sessions are scheduled back-to-back, giving each partner their own time to fully relax while the other unwinds. Perfect for working parents, busy couples, or anyone who values a little solo recharge before reconnecting. Prefer side-by-side? Just let us know when booking. Wellness, anywhere—book within 4 hours or pre-book a customized service.',
+    'Group Yoga': 'Bring balance to your group with a 1-hour yoga session for 6–20 guests, led by a licensed instructor. Includes 10 yoga mats (more available on request). Perfect for wellness retreats, vacation rentals, outdoor events, spa parties, or corporate offices. Wellness, anywhere—book today within 4 hours or pre-book your session.',
+    'Sound Bath': 'Experience deep relaxation and renewal with a 1-hour sound bath for 6–20 guests, guided by a licensed practitioner. Includes 10 yoga mats (more available on request). Perfect for wellness retreats, vacation rentals, outdoor events, spa parties, or corporate offices. Wellness, anywhere—book today within 4 hours or pre-book your session.',
+    'Spa Party': 'Perfect for homes, vacation rentals, bachelorette parties, or wellness retreats. Enjoy 30-minute sessions (8–10 guests minimum) or 60-minute sessions (4–8 guests minimum). Book today for one provider; for larger groups or 2+ providers, we recommend 24 hours’ notice. Additional providers can be booked at i-thriv.com/book. For even bigger groups, contact us to customize your event. Wellness, anywhere—book within 4 hours or pre-book a customized service..',
+    'Corporate Chair Massage': 'Wellness, anywhere—book today within 4 hours! Great for corporate offices looking to relax and recharge their teams. Reserve 2–8 hours of chair massage, with sessions averaging 10–15 minutes per person. One licensed provider is included (per provider, per hour), and additional providers can be arranged by request. All providers are licensed and insured. Prefer to plan ahead? Pre-book your office wellness session anytime. For insurance or liability documents, email info@i-thriv.com.',
+    'Vibroacoustic Therapy': 'Relax faster. Reset deeper. Feel renewed. Our Vibroacoustic Therapy sessions (60 or 90 minutes) use InHarmony sound & vibration technology and BrainTap brainwave entrainment to calm stress, clear your mind, and restore balance. Choose a quick reset or a full body renewal with massage. Wellness, anywhere—book today within 4 hours or pre-book your session.',
+    'Facial': 'We bring radiant skin care to your door with licensed estheticians. Choose from facials like Teen, Custom Deluxe, Nano-Needling, Dermaplaning, or Microdermabrasion—each tailored to your skin type. All tools are provided for a safe, relaxing glow-up at home. Don’t forget to add your enhancements for the ultimate facial experience.',
   };
 
   const sessionDurationSubtitle = {
@@ -183,7 +205,7 @@ const MassageCategories = ({ route }) => {
     <Container>
       <AppHeader onBackPress={true} heading={heading} />
       <Image
-        source={AppImages.massage}
+        source={image[heading]}
         style={{ width: responsiveWidth(100) }}
       />
 
@@ -191,9 +213,7 @@ const MassageCategories = ({ route }) => {
 
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <AppText
-          title={
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
-          }
+          title={desc[heading]}
           textColor={AppColors.GRAY}
           textSize={1.6}
           lineHeight={2.5}

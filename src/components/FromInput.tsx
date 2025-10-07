@@ -30,10 +30,10 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     input: {
-        backgroundColor: "#E0E0E0", // grey background
+        backgroundColor: AppColors.inputGrayBg, // grey background
         borderRadius: 100,           // pill shape
         paddingHorizontal: responsiveWidth(4),
-        width: responsiveWidth(32),
+        width: responsiveWidth(30),
         height: responsiveHeight(7),                 // same height as your screenshot
     },
 });

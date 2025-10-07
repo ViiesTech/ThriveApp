@@ -28,7 +28,7 @@ const ProviderEditProfile = () => {
   const [addOnOffer, setAddOnOffer] = useState('Foot_Scrub');
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const [activeField, setActiveField] = useState({ day: null, type: null }); 
+  const [activeField, setActiveField] = useState({ day: null, type: null });
   // type = "from" or "to"
 
   // state for all inputs
@@ -46,13 +46,13 @@ const ProviderEditProfile = () => {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
+  const handleConfirm = date => {
     const formatted = date.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
+      hour: '2-digit',
+      minute: '2-digit',
     });
 
-    setTime((prev) => ({
+    setTime(prev => ({
       ...prev,
       [activeField.day]: {
         ...prev[activeField.day],
@@ -204,7 +204,20 @@ const ProviderEditProfile = () => {
               }}
               onValueChange={itemValue => setService(itemValue)}
             >
-              <Picker.Item label="Massage Therapy" value="Massage_Therapy" />
+              <Picker.Item label="Solo Massage" value="Solo Massage" />
+              <Picker.Item label="Couples Massage" value="Couples Massage" />
+              <Picker.Item label="Group Yoga" value="Group Yoga" />
+              <Picker.Item label="Sound Bath" value="Sound Bath" />
+              <Picker.Item label="Spa Party" value="Spa Party" />
+              <Picker.Item
+                label="Corporate Chair Massage"
+                value="Corporate Chair Massage"
+              />
+              <Picker.Item
+                label="Vibroacoustic Therapy"
+                value="Vibroacoustic Therapy"
+              />
+              <Picker.Item label="Facial" value="Facial" />
             </Picker>
           </View>
         </View>
@@ -239,7 +252,22 @@ const ProviderEditProfile = () => {
               }}
               onValueChange={itemValue => setAddOnOffer(itemValue)}
             >
-              <Picker.Item label="Foot Scrub" value="Foot_Scrub" />
+              <Picker.Item
+                label="1 Provider (Back to Back)"
+                value="1 Provider (Back to Back)"
+              />
+              <Picker.Item
+                label="2 Providers (Side by side)"
+                value="2 Providers (Side by side)"
+              />
+              <Picker.Item
+                label="Aromatherapy (+$25 per  Person)"
+                value="Aromatherapy (+$25 per  Person)"
+              />
+              <Picker.Item
+                label="Hot Stone (+$45 per Person)"
+                value="Hot Stone (+$45 per Person)"
+              />
             </Picker>
           </View>
         </View>
@@ -247,7 +275,7 @@ const ProviderEditProfile = () => {
 
         <View>
           <AppText
-            title={'Hours of availibilty'}
+            title={'Hours of availibilty (Typo)'}
             textColor={AppColors.GRAY}
             textSize={1.8}
           />
@@ -268,7 +296,9 @@ const ProviderEditProfile = () => {
             <View
               style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}
             >
-              <TouchableOpacity onPress={() => showDatePicker("monday", "from")}>
+              <TouchableOpacity
+                onPress={() => showDatePicker('monday', 'from')}
+              >
                 <FromInput
                   label={'From'}
                   value={time.monday.from}
@@ -280,7 +310,7 @@ const ProviderEditProfile = () => {
                 textColor={AppColors.ThemeBlue}
                 textSize={6}
               />
-              <TouchableOpacity onPress={() => showDatePicker("monday", "to")}>
+              <TouchableOpacity onPress={() => showDatePicker('monday', 'to')}>
                 <FromInput
                   label={'To'}
                   value={time.monday.to}
@@ -305,16 +335,26 @@ const ProviderEditProfile = () => {
             <View
               style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}
             >
-              <TouchableOpacity onPress={() => showDatePicker("tuesday", "from")}>
-                <FromInput label={'From'} value={time.tuesday.from} editable={false} />
+              <TouchableOpacity
+                onPress={() => showDatePicker('tuesday', 'from')}
+              >
+                <FromInput
+                  label={'From'}
+                  value={time.tuesday.from}
+                  editable={false}
+                />
               </TouchableOpacity>
               <AppText
                 title={'-'}
                 textColor={AppColors.ThemeBlue}
                 textSize={6}
               />
-              <TouchableOpacity onPress={() => showDatePicker("tuesday", "to")}>
-                <FromInput label={'To'} value={time.tuesday.to} editable={false} />
+              <TouchableOpacity onPress={() => showDatePicker('tuesday', 'to')}>
+                <FromInput
+                  label={'To'}
+                  value={time.tuesday.to}
+                  editable={false}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -339,7 +379,7 @@ const ProviderEditProfile = () => {
           textFontWeight={false}
         />
 
-        <LineBreak space={2} />
+        <LineBreak space={5} />
 
         <AppButton
           title={'Save Information'}

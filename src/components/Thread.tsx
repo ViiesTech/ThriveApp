@@ -18,47 +18,61 @@ type props = {
 
 const Thread = ({ image, name, message, newMessage, cardOnPress, onLongPress, selectedChat }: props) => {
     return (
-        <TouchableOpacity style={[styles.container, {backgroundColor: selectedChat ? AppColors.lightestBlue : AppColors.WHITE}]} onPress={cardOnPress} onLongPress={onLongPress}>
-            <View style={{ flexDirection: 'row', gap: 14, alignItems: 'center' }}>
+        <TouchableOpacity
+            style={[
+                styles.container,
+                {
+                    backgroundColor: selectedChat
+                        ? AppColors.lightestBlue
+                        : AppColors.WHITE,
+                },
+            ]}
+            onPress={cardOnPress}
+            onLongPress={onLongPress}
+            activeOpacity={0.8}
+        >
+            <View style={styles.row}>
+                {/* Left side: profile */}
                 <Image source={image} style={styles.imageStyle} />
-                <View>
+
+                {/* Middle: name and message */}
+                <View style={styles.textContainer}>
                     <AppText
                         title={name}
                         textColor={AppColors.BLACK}
-                        textSize={2.4}
+                        textSize={2.2}
                         textFontWeight
                     />
-                    <LineBreak space={0.5} />
                     <AppText
                         title={message}
                         textColor={AppColors.GRAY}
                         textSize={1.8}
-                        textwidth={59}
                         numberOfLines={1}
                     />
                 </View>
-            </View>
-            {newMessage &&
-                <View style={styles.messageCircle}>
-                    <AppText
-                        title={newMessage}
-                        textColor={AppColors.WHITE}
-                        textSize={2.2}
-                    />
-                </View>
-            }
 
-            {
-                selectedChat &&
-                <View style={styles.messageCircle}>
-                    <Feather
-                        name="check"
-                        size={responsiveFontSize(2)}
-                        color={AppColors.WHITE}
+                {/* Right side: time + badge */}
+                <View style={styles.rightContainer}>
+                    <AppText
+                        title={'11.32 PM'}
+                        textColor={'#ADB3BC'}
+                        textSize={1.5}
                     />
+                    {newMessage && (
+                        <View style={styles.messageCircle}>
+                            <AppText
+                                title={newMessage}
+                                textColor={AppColors.WHITE}
+                                textSize={1.6}
+                            />
+                        </View>
+                    )}
+                    {selectedChat &&
+                        (<View style={styles.messageCircle}> <Feather name="check" size={responsiveFontSize(1.6)} color={AppColors.WHITE} /> </View>)}
                 </View>
-            }
+            </View>
         </TouchableOpacity>
+
     )
 }
 
@@ -66,23 +80,36 @@ export default Thread
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        paddingVertical: responsiveHeight(1.8),
         paddingHorizontal: responsiveWidth(4),
-        paddingVertical: responsiveHeight(1),
+        borderBottomWidth: 1,
+        borderBottomColor: '#E8E8E8',
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     imageStyle: {
-        height: responsiveHeight(8),
-        width: responsiveHeight(8),
-        borderRadius: 100
+        width: responsiveWidth(12),
+        height: responsiveWidth(12),
+        borderRadius: responsiveWidth(6),
+    },
+    textContainer: {
+        flex: 1,
+        marginLeft: responsiveWidth(5),
+    },
+    rightContainer: {
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
+        height: responsiveHeight(6),
     },
     messageCircle: {
-        backgroundColor: AppColors.lightGreen,
-        height: responsiveHeight(3),
-        alignItems: 'center',
+        backgroundColor: '#34C759', // WhatsApp-like green
+        borderRadius: responsiveWidth(3),
+        minWidth: responsiveWidth(5.5),
+        height: responsiveWidth(5.5),
         justifyContent: 'center',
-        width: responsiveHeight(3),
-        borderRadius: 100
-    }
-})
+        alignItems: 'center',
+        marginTop: responsiveHeight(0.5),
+    },
+});

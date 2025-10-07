@@ -33,6 +33,7 @@ export const responsiveWidth = (w: number) => {
 export const AppColors = {
     BLACK: "#000000",
     WHITE: "#FFFFFF",
+    theme_red: '#D4001C',
     BTNCOLOURS: "#F48A88",
     LIGHT_BTNCOLOURS: "#6e3357",
     LIGHTGRAY: "#D9D9D9",
@@ -211,53 +212,29 @@ export const checkoutPart2 = [
 export const userMyAccount = [
     { id: 1, title: 'My Account', },
     {
-        id: 2, title: 'Personal information', icon: <FontAwesome
-            name="user-o"
-            size={responsiveFontSize(3.5)}
-            color={AppColors.BLACK}
-        />,
+        id: 2, title: 'Personal information', icon: AppIcons.personalInfo,
         navTo: 'ClientPersonalInformation',
     },
     {
-        id: 3, title: 'Appointment History', icon: <EvilIcons
-            name="calendar"
-            size={responsiveFontSize(4)}
-            color={AppColors.BLACK}
-        />
+        id: 3, title: 'Appointment History', icon: AppIcons.appointment
     },
 ]
 
 export const specialistMyAccount = [
     { id: 1, title: 'My Account', },
     {
-        id: 2, title: 'Personal information', icon: <FontAwesome
-            name="user-o"
-            size={responsiveFontSize(3.5)}
-            color={AppColors.BLACK}
-        />,
+        id: 2, title: 'Personal information', icon: AppIcons.personalInfo,
         navTo: 'ProviderPersonalInformation',
     },
     {
-        id: 3, title: 'Privacy Policy', icon: <Octicons
-            name="key-asterisk"
-            size={responsiveFontSize(3.5)}
-            color={AppColors.BLACK}
-        />,
+        id: 3, title: 'Privacy Policy', icon: AppIcons.lock,
         navTo: 'PrivacyPolicy',
     },
     {
-        id: 4, title: 'Appointment History', icon: <EvilIcons
-            name="calendar"
-            size={responsiveFontSize(4)}
-            color={AppColors.BLACK}
-        />
+        id: 4, title: 'Appointment History', icon: AppIcons.appointment
     },
     {
-        id: 5, title: 'Internal Notes', icon: <MaterialIcons
-            name="notes"
-            size={responsiveFontSize(4)}
-            color={AppColors.BLACK}
-        />,
+        id: 5, title: 'Internal Notes', icon: AppIcons.notes,
         navTo: 'InternalNotes',
     },
 ]
@@ -265,11 +242,7 @@ export const specialistMyAccount = [
 export const notifications = [
     { id: 1, title: 'Notifications', },
     {
-        id: 2, title: 'Push Notifications', icon: <EvilIcons
-            name="bell"
-            size={responsiveFontSize(4)}
-            color={AppColors.BLACK}
-        />,
+        id: 2, title: 'Push Notifications', icon: AppIcons.bell,
         rightIcon: <FontAwesome
             name="toggle-on"
             size={responsiveFontSize(4)}
@@ -277,11 +250,7 @@ export const notifications = [
         />
     },
     {
-        id: 3, title: 'Promotional Notifications', icon: <EvilIcons
-            name="bell"
-            size={responsiveFontSize(4)}
-            color={AppColors.BLACK}
-        />,
+        id: 3, title: 'Promotional Notifications', icon: AppIcons.bell,
         rightIcon: <FontAwesome
             name="toggle-off"
             size={responsiveFontSize(4)}
@@ -290,41 +259,29 @@ export const notifications = [
     },
 ]
 
-export const moreItemClient = [
+export const    moreItemClient = [
     { id: 1, title: 'More', },
     {
-        id: 2, title: 'Privacy Policy', icon: <Octicons
-            name="key-asterisk"
-            size={responsiveFontSize(3.5)}
-            color={AppColors.BLACK}
-        />,
+        id: 2, title: 'Privacy Policy', icon: AppIcons.lock,
         navTo: 'PrivacyPolicy',
     },
     {
-        id: 3, title: 'Log Out', icon: <MaterialIcons
-            name="logout"
-            size={responsiveFontSize(4)}
-            color={AppColors.RED_COLOR}
-        />
+        id: 3, title: 'Frequently Asked Questions', icon: AppIcons.alert,
+        navTo: 'AskQuestions',
+    },
+    {
+        id: 4, title: 'Log Out', icon: AppIcons.logout
     },
 ]
 
 export const moreItemProvider = [
     { id: 1, title: 'More', },
     {
-        id: 2, title: 'Frequently Asked Questions', icon: <Feather
-            name="alert-circle"
-            size={responsiveFontSize(3.5)}
-            color={AppColors.BLACK}
-        />,
+        id: 2, title: 'Frequently Asked Questions', icon: AppIcons.alert,
         navTo: 'AskQuestions',
     },
     {
-        id: 3, title: 'Log Out', icon: <MaterialIcons
-            name="logout"
-            size={responsiveFontSize(4)}
-            color={AppColors.RED_COLOR}
-        />
+        id: 3, title: 'Log Out', icon: AppIcons.logout
     },
 ]
 
@@ -390,9 +347,9 @@ export const newNotification = [
     {
         id: 1, icon: <EvilIcons
             name="calendar"
-            size={responsiveFontSize(3.6)}
+            size={responsiveFontSize(2.8)}
             color={AppColors.ThemeBlue}
-        />, desc: 'Reminder! . Get ready for your appointment at 9am', time: 'Just now'
+        />, desc: 'Reminder! Get ready for your appointment at 9am', time: 'Just now'
     }
 ]
 
@@ -402,21 +359,21 @@ export const earlyNotification = [
             name="dollar"
             size={responsiveFontSize(2.8)}
             color={AppColors.ThemeBlue}
-        />, desc: 'Payment at Lovely Lather was success!', time: '11.32 PM'
+        />, desc: 'Payment at i-thriv was success!', time: '11.32 PM'
     },
     {
         id: 2, icon: <EvilIcons
             name="calendar"
-            size={responsiveFontSize(3.6)}
+            size={responsiveFontSize(2.8)}
             color={AppColors.ThemeBlue}
-        />, desc: 'You make an appointment with Lovely Lather', time: 'Yesterday'
+        />, desc: 'You make an appointment with i-thriv', time: 'Yesterday'
     },
     {
         id: 3, icon: <FontAwesome
             name="tag"
             size={responsiveFontSize(2.8)}
             color={AppColors.ThemeBlue}
-        />, desc: 'Get 20% offers for hair service at Lovely Lather', time: 'Yesterday'
+        />, desc: 'Get 20% offers for hair service at i-thriv', time: 'Yesterday'
     },
     {
         id: 4, icon: <FontAwesome
@@ -428,7 +385,7 @@ export const earlyNotification = [
     {
         id: 5, icon: <EvilIcons
             name="calendar"
-            size={responsiveFontSize(3.6)}
+            size={responsiveFontSize(2.8)}
             color={AppColors.ThemeBlue}
         />, desc: 'Reminder! . Get ready for your appointment at 9am', time: 'Yesterday'
     },

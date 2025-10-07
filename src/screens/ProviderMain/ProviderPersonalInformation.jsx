@@ -276,7 +276,7 @@ const ProviderPersonalInformation = () => {
         <LineBreak space={2} />
       </View>
 
-      {/* <View style={{ alignItems: 'center' }}>
+      <View style={{ alignItems: 'center' }}>
         <FlatList
           data={services}
           ItemSeparatorComponent={<LineBreak space={2} />}
@@ -309,11 +309,11 @@ const ProviderPersonalInformation = () => {
             </TouchableOpacity>
           )}
         />
-      </View> */}
-
-      <View style={{alignItems: 'center'}}>
-        <Services />
       </View>
+
+      {/* <View style={{alignItems: 'center'}}>
+        <Services />
+      </View> */}
 
       {/* <View>
         <View style={{ paddingHorizontal: responsiveWidth(5) }}>

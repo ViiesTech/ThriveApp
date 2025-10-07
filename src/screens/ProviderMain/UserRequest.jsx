@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import Container from '../../components/Container'
 import AppointmentsTopTabs from '../../components/AppointmentsTopTabs'
-import { openRequest, userRequestTab } from '../../utils'
+import { openRequest, responsiveHeight, userRequestTab } from '../../utils'
 import LineBreak from '../../components/LineBreak'
 import AppointmentsCard from '../../components/AppointmentsCard'
 
@@ -10,7 +10,7 @@ const UserRequest = () => {
     const [selectedTab, setSelectedTab] = useState({ id: 1 });
   
   return (
-    <Container>
+    <Container style={{marginBottom: responsiveHeight(-6)}}>
       <LineBreak space={1} />
       <AppointmentsTopTabs
         selectedTab={selectedTab}

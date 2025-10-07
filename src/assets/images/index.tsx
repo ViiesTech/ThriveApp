@@ -26,4 +26,13 @@ export const AppImages = {
     checkout_bg: require('./checkout_bg.png'),
     visa: require('./visa.png'),
     master_big: require('./master_big.png'),
+    profile: require('./profile.png'),
+    solo_massage: require('./solo_massage.png'),
+    couples_massage: require('./couples_massage.png'),
+    corporate_chair_massage: require('./corporate_chair_massage.png'),
+    facial: require('./facial.png'),
+    group_yoga: require('./group_yoga.png'),
+    sound_bath: require('./sound_bath.png'),
+    spa_party: require('./spa_party.png'),
+    vibroacoustic_therapy: require('./vibroacoustic_therapy.png'),
 };

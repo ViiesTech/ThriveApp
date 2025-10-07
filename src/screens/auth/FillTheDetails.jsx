@@ -36,7 +36,7 @@ const FillTheDetails = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Name'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
         <LineBreak space={2} />
         <View>
@@ -46,7 +46,7 @@ const FillTheDetails = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'Email Address'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
         <LineBreak space={2} />
         <View>
@@ -67,7 +67,7 @@ const FillTheDetails = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <AppTextInput inputPlaceHolder={'City & Zip Code'} />
+          <AppTextInput inputPlaceHolder={''} />
         </View>
         <LineBreak space={2} />
         <View>
@@ -109,7 +109,14 @@ const FillTheDetails = () => {
               }}
               onValueChange={itemValue => setService(itemValue)}
             >
-              <Picker.Item label="Massage Therapy" value="Massage_Therapy" />
+              <Picker.Item label="Solo Massage" value="Solo Massage" />
+               <Picker.Item label="Couples Massage" value="Couples Massage" />
+              <Picker.Item label="Group Yoga" value="Group Yoga" />
+              <Picker.Item label="Sound Bath" value="Sound Bath" />
+              <Picker.Item label="Spa Party" value="Spa Party" />
+              <Picker.Item label="Corporate Chair Massage" value="Corporate Chair Massage" />
+              <Picker.Item label="Vibroacoustic Therapy" value="Vibroacoustic Therapy" />
+              <Picker.Item label="Facial" value="Facial" />
             </Picker>
           </View>
         </View>
@@ -144,14 +151,17 @@ const FillTheDetails = () => {
               }}
               onValueChange={itemValue => setAddOnOffer(itemValue)}
             >
-              <Picker.Item label="Foot Scrub" value="Foot_Scrub" />
+              <Picker.Item label="1 Provider (Back to Back)" value="1 Provider (Back to Back)" />
+              <Picker.Item label="2 Providers (Side by side)" value="2 Providers (Side by side)" />
+              <Picker.Item label="Aromatherapy (+$25 per  Person)" value="Aromatherapy (+$25 per  Person)" />
+              <Picker.Item label="Hot Stone (+$45 per Person)" value="Hot Stone (+$45 per Person)" />
             </Picker>
           </View>
         </View>
         <LineBreak space={2} />
         <View>
           <AppText
-            title={'If you have any questions'}
+            title={'Notes and additional information'}
             textColor={AppColors.GRAY}
             textSize={1.8}
           />

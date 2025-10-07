@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
     fontSize: responsiveFontSize(2),
     fontWeight: '600',
     color: '#000',
-    flex: 1,
   },
   separator: {
     height: responsiveHeight(0.2),

@@ -55,7 +55,7 @@ const Inbox = ({ route }) => {
   }, [isNotification]);
 
   return (
-    <Container>
+    <Container style={{marginBottom: responsiveHeight(-6)}}>
       <AppointmentsTopTabs
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
@@ -65,7 +65,7 @@ const Inbox = ({ route }) => {
 
       {selectedTab.id == 1 && (
         <View>
-          <View style={{ paddingHorizontal: responsiveWidth(4) }}>
+          <View style={{ marginHorizontal: responsiveWidth(4) }}>
           <AppTextInput
             logo={<Feather name="search" size={22} color="#0ea5e9" />}
             inputPlaceHolder={'Search messages or salon'}
@@ -80,7 +80,7 @@ const Inbox = ({ route }) => {
       )}
 
       {selectedTab.id == 2 && (
-        <View style={{ paddingHorizontal: responsiveWidth(4) }}>
+        <View style={{ marginHorizontal: responsiveWidth(4) }}>
           <AppText
             title={'New'}
             textColor={AppColors.BLACK}
@@ -167,8 +167,8 @@ const Inbox = ({ route }) => {
                 <View
                   style={{
                     backgroundColor: AppColors.lightestBlue,
-                    width: 50,
-                    height: 50,
+                    width: 45,
+                    height: 45,
                     borderRadius: 100,
                     justifyContent: 'center',
                     alignItems: 'center',
