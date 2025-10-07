@@ -21,12 +21,13 @@ const ForgotPassword = () => {
   const [isEmailFocused, setIsEmailFocused] = useState(false);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
+    <SafeAreaView style={{ flex: 1, paddingVertical: responsiveHeight(4), backgroundColor: AppColors.WHITE }}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),
           paddingVertical: responsiveHeight(2),
           flex: 1,
+          justifyContent: 'center',
         }}
       >
         <AuthHeader

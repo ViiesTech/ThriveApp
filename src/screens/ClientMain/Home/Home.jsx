@@ -28,7 +28,7 @@ import EnableLocationModal from '../../../components/EnableLocationModal';
 const Home = () => {
   const nav = useNavigation();
   return (
-    <Container>
+    <Container style={{flex: 1, marginBottom: responsiveHeight(-6)}}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { ScrollView, FlatList, TouchableOpacity, View } from 'react-native';
 import { AppColors, responsiveWidth, services } from '../utils'
 import LineBreak from './LineBreak';
 import AppText from './AppTextComps/AppText';

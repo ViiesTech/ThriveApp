@@ -60,7 +60,7 @@ export const AppColors = {
     appGreen: '#60C14C',
     lightGreen: '#5EC246',
     inputBg: '#fafafa',
-    inputGrayBg: '#DEDEDE',
+    inputGrayBg: '#E3E6EB',
     inputBlur: '#f2f1fe',
     lightestBlue: '#CDECF3',
 };

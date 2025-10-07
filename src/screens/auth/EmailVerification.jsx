@@ -14,7 +14,7 @@ const EmailVerification = () => {
   const nav = useNavigation();
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
+    <SafeAreaView style={{ flex: 1,paddingVertical: responsiveHeight(4), backgroundColor: AppColors.WHITE }}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),

@@ -21,13 +21,6 @@ const SelectType = () => {
   return (
     <View style={{ flex: 1, backgroundColor: AppColors.WHITE }}>
       <LineBreak space={4} />
-      <AppText
-        title={'Sign up as...'}
-        textColor={AppColors.BLACK}
-        textSize={3}
-        textFontWeight
-        textAlignment={'center'}
-      />
 
       <View
         style={{
@@ -35,7 +28,15 @@ const SelectType = () => {
           paddingHorizontal: responsiveWidth(4),
         }}
       >
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <AppText
+            title={'Sign up as...'}
+            textColor={AppColors.BLACK}
+            textSize={3}
+            textFontWeight
+            textAlignment={'center'}
+          />
+          <LineBreak space={10} />
           <View>
             <FlatList
               data={typeItems}
@@ -43,11 +44,14 @@ const SelectType = () => {
               contentContainerStyle={{
                 flex: 1,
                 justifyContent: 'space-between',
-                paddingHorizontal: responsiveWidth(5),
+                paddingHorizontal: responsiveWidth(12),
               }}
               renderItem={({ item }) => (
                 <TouchableOpacity
-                  style={{ alignItems: 'center', paddingHorizontal: responsiveWidth(5) }}
+                  style={{
+                    alignItems: 'center',
+                    // paddingHorizontal: responsiveWidth(5),
+                  }}
                   onPress={() => setType(item.title)}
                 >
                   <SVGXml icon={item.svg} width={130} height={130} />
@@ -71,7 +75,7 @@ const SelectType = () => {
             />
           </View>
         </View>
-        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+        <View style={{ flex: 0.7, justifyContent: 'flex-end' }}>
           <AppButton
             title="Continue"
             textColor={AppColors.WHITE}
@@ -82,7 +86,7 @@ const SelectType = () => {
             }}
             textFontWeight={false}
           />
-          <LineBreak space={7} />
+          <LineBreak space={10} />
         </View>
       </View>
     </View>

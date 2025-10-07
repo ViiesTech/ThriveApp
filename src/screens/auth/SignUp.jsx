@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import Container from '../../components/Container';
 import {
@@ -24,6 +24,7 @@ import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRegisterMutation } from '../../redux/services';
+import PhoneInputScreen from '../../components/PhoneInput';
 
 const SignUp = ({ route }) => {
   const [isNameFocused, setIsNameFocused] = useState(false);
@@ -40,6 +41,7 @@ const SignUp = ({ route }) => {
     password: '',
   });
   const [register, { isLoading }] = useRegisterMutation();
+  const phoneRef = useRef()
 
   // const { type } = route?.params;
 
@@ -97,11 +99,12 @@ const SignUp = ({ route }) => {
   };
 
   return (
-    <Container>
+    <Container scrollEnabled={false}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),
           paddingVertical: responsiveHeight(2),
+          flex: 1, justifyContent: 'center',
         }}
       >
         <AuthHeader
@@ -150,7 +153,7 @@ const SignUp = ({ route }) => {
 
         <LineBreak space={2} />
 
-        <AppTextInput
+        {/* <AppTextInput
           inputPlaceHolder={'Mobile Number'}
           value={state.number}
           keyboardType={'numeric'}
@@ -166,7 +169,9 @@ const SignUp = ({ route }) => {
           isFocused={isPhoneNumberFocused}
           onFocus={() => setIsPhoneNumberFocused(true)}
           onBlur={() => setIsPhoneNumberFocused(false)}
-        />
+        /> */}
+
+        <PhoneInputScreen phoneRef={phoneRef} />
 
         <LineBreak space={2} />
 
@@ -225,7 +230,7 @@ const SignUp = ({ route }) => {
           // handlePress={() => onSignupPress()}
           handlePress={async () => {
             const type = await AsyncStorage.getItem('type');
-            if (type === 'User') {
+            if (type === 'Client') {
               nav.navigate('Main');
             } else {
               nav.navigate('FillTheDetails');

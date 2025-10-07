@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import Container from '../../components/Container';
@@ -55,17 +56,16 @@ const Login = () => {
   };
 
   return (
-    <Container>
+    <Container scrollEnabled={false}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),
           paddingVertical: responsiveHeight(2),
+          flex: 1,
+          justifyContent: 'center',
         }}
       >
-        <AuthHeader
-          heading="Welcome back,"
-          subHeading="Time to recharge."
-        />
+        <AuthHeader heading="Welcome back," subHeading="Time to recharge." />
 
         <LineBreak space={15} />
 
