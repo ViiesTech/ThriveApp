@@ -105,7 +105,7 @@ function MyTabs() {
           display: 'none',
         },
         tabBarStyle: {
-          height: responsiveHeight(12),
+          height: responsiveHeight(11),
           paddingTop: responsiveHeight(1.8),
         },
       }}
@@ -158,7 +158,7 @@ function MyTabs() {
                 />
               </View>
             ) : (
-              <Ionicons size={responsiveFontSize(4)} name={'compass'} color={AppColors.DARKGRAY} />
+              <Ionicons size={responsiveFontSize(4)} name={'compass'} color={'#ADB3BC'} />
             ),
         }}
       />}
