@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useRef, useState } from 'react';
-import { View, Image, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import {
   AppColors,
   responsiveFontSize,
@@ -20,12 +20,49 @@ import PhoneInputScreen from '../../components/PhoneInput';
 import { Picker } from '@react-native-picker/picker';
 import FromInput from '../../components/FromInput';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import ImagePicker from 'react-native-image-crop-picker';
+import Feather from 'react-native-vector-icons/Feather';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const ProviderEditProfile = () => {
   const nav = useNavigation();
   const phoneRef = useRef();
   const [service, setService] = useState('Massage_Therapy');
   const [addOnOffer, setAddOnOffer] = useState('Foot_Scrub');
+  const [image, setImage] = useState('');
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState([]); // store multiple values here
+  const [items, setItems] = useState([
+    { label: 'Solo Massage', value: 'Solo Massage' },
+    { label: 'Couples Massage', value: 'Couples Massage' },
+    { label: 'Group Yoga', value: 'Group Yoga' },
+    { label: 'Sound Bath', value: 'Sound Bath' },
+    { label: 'Spa Party', value: 'Spa Party' },
+    { label: 'Corporate Chair Massage', value: 'Corporate Chair Massage' },
+    { label: 'Vibroacoustic Therapy', value: 'Vibroacoustic Therapy' },
+    { label: 'Facial', value: 'Facial' },
+  ]);
+
+  const [openAddOn, setOpenAddOn] = useState(false);
+  const [valueAddOn, setValueAddOn] = useState([]); // store multiple values here
+  const [itemsAddOn, setItemsAddOn] = useState([
+    {
+      label: 'Aromatherapy (+$25 per Person)',
+      value: 'Aromatherapy (+$25 per Person)',
+    },
+    {
+      label: 'Hot Stone (+$45 per Person)',
+      value: 'Hot Stone (+$45 per Person)',
+    },
+    {
+      label: 'Aromatherapy (+$25 per  Person)',
+      value: 'Aromatherapy (+$25 per  Person)',
+    },
+    { label: 'Face Peel', value: 'Face Peel' },
+    { label: 'Dermaplaning', value: 'Dermaplaning' },
+    { label: 'Nano-Needling', value: 'Nano-Needling' },
+    { label: 'Microdermabrasion', value: 'Microdermabrasion' },
+  ]);
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [activeField, setActiveField] = useState({ day: null, type: null });
@@ -63,15 +100,35 @@ const ProviderEditProfile = () => {
     hideDatePicker();
   };
 
+  const pickImage = () => {
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      setImage(image.path);
+      console.log(image);
+    });
+  };
+
   return (
     <Container>
       <AppHeader onBackPress={true} heading={'Edit Profile'} />
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <View style={{ alignItems: 'center' }}>
-          <Image
-            source={AppImages.on_boarding1}
-            style={{ width: 80, height: 80, borderRadius: 100 }}
-          />
+          <TouchableOpacity onPress={() => pickImage()}>
+            <Image
+              source={image ? { uri: image } : AppImages.profile}
+              style={{ width: 80, height: 80, borderRadius: 100 }}
+            />
+            <View style={{ position: 'absolute', bottom: 0, right: 0 }}>
+              <Feather
+                name="edit"
+                size={responsiveFontSize(2)}
+                color={AppColors.BLACK}
+              />
+            </View>
+          </TouchableOpacity>
           <LineBreak space={1.2} />
           <AppText
             title={'Samantha Wilson'}
@@ -182,44 +239,29 @@ const ProviderEditProfile = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <View
-            style={{
-              width: responsiveWidth(90),
-              height: responsiveHeight(6),
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: AppColors.inputGrayBg,
-              borderRadius: 100,
-              alignSelf: 'center',
-              paddingLeft: responsiveWidth(3.5),
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            multiple={true}
+            min={0}
+            max={8}
+            autoScroll
+            placeholderStyle={{
+              color: AppColors.ThemeBlue,
+              paddingHorizontal: responsiveWidth(4),
             }}
-          >
-            <Picker
-              selectedValue={service}
-              mode="dropdown"
-              dropdownIconColor={AppColors.ThemeBlue}
-              style={{
-                width: '100%',
-                color: AppColors.ThemeBlue,
-              }}
-              onValueChange={itemValue => setService(itemValue)}
-            >
-              <Picker.Item label="Solo Massage" value="Solo Massage" />
-              <Picker.Item label="Couples Massage" value="Couples Massage" />
-              <Picker.Item label="Group Yoga" value="Group Yoga" />
-              <Picker.Item label="Sound Bath" value="Sound Bath" />
-              <Picker.Item label="Spa Party" value="Spa Party" />
-              <Picker.Item
-                label="Corporate Chair Massage"
-                value="Corporate Chair Massage"
-              />
-              <Picker.Item
-                label="Vibroacoustic Therapy"
-                value="Vibroacoustic Therapy"
-              />
-              <Picker.Item label="Facial" value="Facial" />
-            </Picker>
-          </View>
+            placeholder="Select Services"
+            mode="BADGE"
+            listMode="MODAL"
+            style={styles.dropdown}
+            dropDownContainerStyle={styles.dropdownContainer}
+            badgeStyle={styles.badgeStyle}
+            badgeTextStyle={styles.badgeTextStyle}
+          />
         </View>
         <LineBreak space={2} />
         <View>
@@ -230,46 +272,29 @@ const ProviderEditProfile = () => {
           />
 
           <LineBreak space={0.5} />
-          <View
-            style={{
-              width: responsiveWidth(90),
-              height: responsiveHeight(6),
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: AppColors.inputGrayBg,
-              borderRadius: 100,
-              alignSelf: 'center',
-              paddingLeft: responsiveWidth(3.5),
+          <DropDownPicker
+            open={openAddOn}
+            value={valueAddOn}
+            items={itemsAddOn}
+            setOpen={setOpenAddOn}
+            setValue={setValueAddOn}
+            setItems={setItemsAddOn}
+            multiple={true}
+            min={0}
+            max={8}
+            autoScroll
+            placeholderStyle={{
+              color: AppColors.ThemeBlue,
+              paddingHorizontal: responsiveWidth(4),
             }}
-          >
-            <Picker
-              selectedValue={addOnOffer}
-              mode="dropdown"
-              dropdownIconColor={AppColors.ThemeBlue}
-              style={{
-                width: '100%',
-                color: AppColors.ThemeBlue,
-              }}
-              onValueChange={itemValue => setAddOnOffer(itemValue)}
-            >
-              <Picker.Item
-                label="1 Provider (Back to Back)"
-                value="1 Provider (Back to Back)"
-              />
-              <Picker.Item
-                label="2 Providers (Side by side)"
-                value="2 Providers (Side by side)"
-              />
-              <Picker.Item
-                label="Aromatherapy (+$25 per  Person)"
-                value="Aromatherapy (+$25 per  Person)"
-              />
-              <Picker.Item
-                label="Hot Stone (+$45 per Person)"
-                value="Hot Stone (+$45 per Person)"
-              />
-            </Picker>
-          </View>
+            placeholder="Select AddOn"
+            mode="BADGE"
+            listMode="MODAL"
+            style={styles.dropdown}
+            dropDownContainerStyle={styles.dropdownContainer}
+            badgeStyle={styles.badgeStyle}
+            badgeTextStyle={styles.badgeTextStyle}
+          />
         </View>
         <LineBreak space={2} />
 
@@ -395,3 +420,26 @@ const ProviderEditProfile = () => {
 };
 
 export default ProviderEditProfile;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+  },
+  dropdown: {
+    borderColor: '#ccc',
+    borderRadius: 100,
+    backgroundColor: AppColors.inputGrayBg,
+  },
+  dropdownContainer: {
+    borderColor: '#ccc',
+  },
+  badgeStyle: {
+    borderRadius: 8,
+  },
+  badgeTextStyle: {
+    color: AppColors.ThemeBlue,
+    fontWeight: 'bold',
+  },
+});

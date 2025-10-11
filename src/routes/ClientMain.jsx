@@ -43,6 +43,7 @@ import LocationInformation from '../screens/ClientMain/Home/LocationInformation'
 import ClientPersonalInformation from '../screens/ClientMain/Profile/ClientPersonalInformation';
 import SVGXml from '../components/SVGXML';
 import { AppIcons } from '../assets/icons';
+import { useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -83,16 +84,17 @@ const ClientMain = () => {
 };
 
 function MyTabs() {
-  const [type, setType] = useState('');
+    const {type} = useSelector(state => state.persistedData)
+  // const [type, setType] = useState('');
 
-  const getType = async () => {
-    const userType = await AsyncStorage.getItem('type');
-    setType(userType);
-  }
+  // const getType = async () => {
+  //   const userType = await AsyncStorage.getItem('type');
+  //   setType(userType);
+  // }
 
-  useEffect(() => {
-    getType();
-  }, [])
+  // useEffect(() => {
+  //   getType();
+  // }, [])
 
   return (
     <Tab.Navigator

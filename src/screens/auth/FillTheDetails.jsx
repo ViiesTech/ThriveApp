@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useRef, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Container from '../../components/Container';
 import AuthHeader from '../../components/AuthHeader';
 import { AppColors, responsiveHeight, responsiveWidth } from '../../utils';
@@ -12,19 +12,51 @@ import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import ImagePicker from 'react-native-image-crop-picker';
 import PhoneInputScreen from '../../components/PhoneInput';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const FillTheDetails = () => {
   const nav = useNavigation();
-  const [service, setService] = useState('Massage_Therapy');
-  const [addOnOffer, setAddOnOffer] = useState('Foot_Scrub');
   const phoneRef = useRef();
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState([]); // store multiple values here
+  const [items, setItems] = useState([
+    { label: 'Solo Massage', value: 'Solo Massage' },
+    { label: 'Couples Massage', value: 'Couples Massage' },
+    { label: 'Group Yoga', value: 'Group Yoga' },
+    { label: 'Sound Bath', value: 'Sound Bath' },
+    { label: 'Spa Party', value: 'Spa Party' },
+    { label: 'Corporate Chair Massage', value: 'Corporate Chair Massage' },
+    { label: 'Vibroacoustic Therapy', value: 'Vibroacoustic Therapy' },
+    { label: 'Facial', value: 'Facial' },
+  ]);
+
+  const [openAddOn, setOpenAddOn] = useState(false);
+  const [valueAddOn, setValueAddOn] = useState([]); // store multiple values here
+  const [itemsAddOn, setItemsAddOn] = useState([
+    {
+      label: 'Aromatherapy (+$25 per Person)',
+      value: 'Aromatherapy (+$25 per Person)',
+    },
+    {
+      label: 'Hot Stone (+$45 per Person)',
+      value: 'Hot Stone (+$45 per Person)',
+    },
+    {
+      label: 'Aromatherapy (+$25 per  Person)',
+      value: 'Aromatherapy (+$25 per  Person)',
+    },
+    { label: 'Face Peel', value: 'Face Peel' },
+    { label: 'Dermaplaning', value: 'Dermaplaning' },
+    { label: 'Nano-Needling', value: 'Nano-Needling' },
+    { label: 'Microdermabrasion', value: 'Microdermabrasion' },
+  ]);
 
   return (
     <Container>
       <LineBreak space={2} />
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <AuthHeader
-          heading="Create your Profile"
+          heading="Create Your Profile"
           subHeading="Please enter your personal information below. i-thriv does not share any date with third parties."
         />
         <LineBreak space={4} />
@@ -87,7 +119,7 @@ const FillTheDetails = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <View
+          {/* <View
             style={{
               width: responsiveWidth(90),
               height: responsiveHeight(6),
@@ -118,7 +150,30 @@ const FillTheDetails = () => {
               <Picker.Item label="Vibroacoustic Therapy" value="Vibroacoustic Therapy" />
               <Picker.Item label="Facial" value="Facial" />
             </Picker>
-          </View>
+          </View> */}
+          <DropDownPicker
+            open={open}
+            value={value}
+            items={items}
+            setOpen={setOpen}
+            setValue={setValue}
+            setItems={setItems}
+            multiple={true}
+            min={0}
+            max={8}
+            autoScroll
+            placeholderStyle={{
+              color: AppColors.ThemeBlue,
+              paddingHorizontal: responsiveWidth(4),
+            }}
+            placeholder="Select Services"
+            mode="BADGE"
+            listMode="MODAL"
+            style={styles.dropdown}
+            dropDownContainerStyle={styles.dropdownContainer}
+            badgeStyle={styles.badgeStyle}
+            badgeTextStyle={styles.badgeTextStyle}
+          />
         </View>
 
         <LineBreak space={2} />
@@ -129,7 +184,7 @@ const FillTheDetails = () => {
             textSize={1.8}
           />
           <LineBreak space={0.5} />
-          <View
+          {/* <View
             style={{
               width: responsiveWidth(90),
               height: responsiveHeight(6),
@@ -151,12 +206,47 @@ const FillTheDetails = () => {
               }}
               onValueChange={itemValue => setAddOnOffer(itemValue)}
             >
-              <Picker.Item label="1 Provider (Back to Back)" value="1 Provider (Back to Back)" />
-              <Picker.Item label="2 Providers (Side by side)" value="2 Providers (Side by side)" />
-              <Picker.Item label="Aromatherapy (+$25 per  Person)" value="Aromatherapy (+$25 per  Person)" />
-              <Picker.Item label="Hot Stone (+$45 per Person)" value="Hot Stone (+$45 per Person)" />
+              <Picker.Item
+                label="1 Provider (Back to Back)"
+                value="1 Provider (Back to Back)"
+              />
+              <Picker.Item
+                label="2 Providers (Side by side)"
+                value="2 Providers (Side by side)"
+              />
+              <Picker.Item
+                label="Aromatherapy (+$25 per  Person)"
+                value="Aromatherapy (+$25 per  Person)"
+              />
+              <Picker.Item
+                label="Hot Stone (+$45 per Person)"
+                value="Hot Stone (+$45 per Person)"
+              />
             </Picker>
-          </View>
+          </View> */}
+          <DropDownPicker
+            open={openAddOn}
+            value={valueAddOn}
+            items={itemsAddOn}
+            setOpen={setOpenAddOn}
+            setValue={setValueAddOn}
+            setItems={setItemsAddOn}
+            multiple={true}
+            min={0}
+            max={8}
+            autoScroll
+            placeholderStyle={{
+              color: AppColors.ThemeBlue,
+              paddingHorizontal: responsiveWidth(4),
+            }}
+            placeholder="Select AddOn"
+            mode="BADGE"
+            listMode="MODAL"
+            style={styles.dropdown}
+            dropDownContainerStyle={styles.dropdownContainer}
+            badgeStyle={styles.badgeStyle}
+            badgeTextStyle={styles.badgeTextStyle}
+          />
         </View>
         <LineBreak space={2} />
         <View>
@@ -204,3 +294,26 @@ const FillTheDetails = () => {
 };
 
 export default FillTheDetails;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 16,
+  },
+  dropdown: {
+    borderColor: '#ccc',
+    borderRadius: 100,
+    backgroundColor: AppColors.inputGrayBg,
+  },
+  dropdownContainer: {
+    borderColor: '#ccc',
+  },
+  badgeStyle: {
+    borderRadius: 8,
+  },
+  badgeTextStyle: {
+    color: AppColors.ThemeBlue,
+    fontWeight: 'bold',
+  },
+});

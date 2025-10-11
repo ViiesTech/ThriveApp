@@ -23,6 +23,7 @@ import { useNavigation } from '@react-navigation/native';
 import AppTextInput from '../../../components/AppTextInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSelector } from 'react-redux';
 
 type MessageType = {
   id: string,
@@ -53,17 +54,8 @@ const PrivateInbox = () => {
     { id: '6', typing: true, sender: 'other' },
   ]);
   const nav = useNavigation();
+  const { type } = useSelector(state => state.persistedData);
 
-  const [type, setType] = useState('');
-
-  const getType = async () => {
-    const userType = await AsyncStorage.getItem('type');
-    setType(userType);
-  };
-
-  useEffect(() => {
-    getType();
-  }, []);
 
   const renderMessage = ({ item }) => {
     if (item.typing) {

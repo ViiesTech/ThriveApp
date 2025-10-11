@@ -12,19 +12,11 @@ import {
 } from '../../../utils';
 import AppointmentsCard from '../../../components/AppointmentsCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 
 const Appointments = () => {
   const [selectedTab, setSelectedTab] = useState({ id: 1 });
-  const [type, setType] = useState('');
-
-  const getType = async () => {
-    const userType = await AsyncStorage.getItem('type');
-    setType(userType);
-  }
-
-  useEffect(() => {
-    getType();
-  }, []);
+  const { type } = useSelector(state => state.persistedData);
 
   return (
     <Container>

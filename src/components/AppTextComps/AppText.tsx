@@ -24,6 +24,7 @@ type textProps = {
   children?: React.ReactNode;
   textDecorationLine?:any;
   paddingHorizontal?:any;
+  textAlignVertical?:any;
 };
 
 const AppText = ({
@@ -42,12 +43,13 @@ const AppText = ({
   children,
   textDecorationLine,
   paddingHorizontal,
+  textAlignVertical,
 }: textProps) => {
   return (
     <Text
       numberOfLines={numberOfLines}
       style={{
-        width: textwidth ? responsiveWidth(textwidth) : null,
+        width: textwidth && responsiveWidth(textwidth),
         fontSize: textSize
           ? responsiveFontSize(textSize)
           : responsiveFontSize(1.4),
@@ -62,6 +64,7 @@ const AppText = ({
         paddingBottom: paddingBottom ? responsiveHeight(paddingBottom) : null,
         textDecorationLine: textDecorationLine,
         paddingHorizontal: responsiveWidth(paddingHorizontal),
+        textAlignVertical: textAlignVertical
       }}>
       {title}
       {children}

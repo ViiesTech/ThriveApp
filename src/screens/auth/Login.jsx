@@ -21,7 +21,7 @@ import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
 import { useNavigation } from '@react-navigation/native';
 import { useLoginMutation } from '../../redux/services';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -31,6 +31,7 @@ const Login = () => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const nav = useNavigation();
+  const {type} = useSelector(state => state.persistedData)
 
   const onLoginPress = async () => {
     // if(!email) {
@@ -134,13 +135,13 @@ const Login = () => {
           indicator={isLoading}
           btnBackgroundColor={AppColors.appGreen}
           // handlePress={() => onLoginPress()}
-          handlePress={async () => {
-            const type = await AsyncStorage.getItem('type');
-            if (type === 'Client') {
+          handlePress={() => {
+            // const type = await AsyncStorage.getItem('type');
+            // if (type === 'Client') {
               nav.navigate('Main');
-            } else {
-              nav.navigate('FillTheDetails');
-            }
+            // } else {
+            //   nav.navigate('FillTheDetails');
+            // }
           }}
           textFontWeight={false}
         />
@@ -202,7 +203,7 @@ const Login = () => {
           }}
         >
           <AppText
-            title={'Don"t have an account?'}
+            title={`Don'${'t'} have an account?`}
             textColor={AppColors.BLACK}
             textSize={2}
           />

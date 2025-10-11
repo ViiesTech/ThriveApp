@@ -4,6 +4,7 @@ import { Apis } from '../services';
 const initialState = {
   token: null,
   user: {},
+  type: ''
   // profileCreated: false,
 };
 
@@ -14,6 +15,9 @@ export const Slice = createSlice({
     logout: state => {
       state.user = {};
       state.token = null;
+    },
+      setUserType: (state,action) => {
+      state.type = action.payload;
     },
   },
   extraReducers: builder => {
@@ -49,6 +53,6 @@ export const Slice = createSlice({
   },
 });
 
-export const {logout} = Slice.actions;
+export const {logout,setUserType} = Slice.actions;
 
 export default Slice.reducer;

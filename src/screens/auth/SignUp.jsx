@@ -22,9 +22,9 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import AppText from '../../components/AppTextComps/AppText';
 import SVGXml from '../../components/SVGXML';
 import { AppIcons } from '../../assets/icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRegisterMutation } from '../../redux/services';
 import PhoneInputScreen from '../../components/PhoneInput';
+import { useSelector } from 'react-redux';
 
 const SignUp = ({ route }) => {
   const [isNameFocused, setIsNameFocused] = useState(false);
@@ -42,6 +42,7 @@ const SignUp = ({ route }) => {
   });
   const [register, { isLoading }] = useRegisterMutation();
   const phoneRef = useRef()
+  const { type } = useSelector(state => state.persistedData);
 
   // const { type } = route?.params;
 
@@ -229,7 +230,6 @@ const SignUp = ({ route }) => {
           btnBackgroundColor={AppColors.appGreen}
           // handlePress={() => onSignupPress()}
           handlePress={async () => {
-            const type = await AsyncStorage.getItem('type');
             if (type === 'Client') {
               nav.navigate('Main');
             } else {

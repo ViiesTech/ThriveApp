@@ -83,7 +83,7 @@ const LocationInformation = () => {
               />
             </TouchableOpacity>
             <AppText
-              title={'Uae address on file'}
+              title={'Use address on file'}
               textColor={AppColors.BLACK}
               textSize={2}
               textwidth={60}

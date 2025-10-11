@@ -66,17 +66,17 @@ const ProviderHome = () => {
                 backgroundColor: AppColors.ThemeBlue,
                 width: responsiveWidth(29),
                 // height: responsiveHeight(14),
-                paddingHorizontal: responsiveWidth(2),
-                paddingVertical: responsiveHeight(1.5),
+                paddingHorizontal: responsiveWidth(1.5),
+                paddingVertical: responsiveHeight(2),
                 borderRadius: 10,
               }}
             >
               <AppText
                 title={item.title}
                 textColor={AppColors.WHITE}
-                textSize={1.8}
+                textSize={1.6}
                 textwidth={item.id == 2 ? 20 : 24}
-                lineHeight={2.5}
+                lineHeight={2.2}
                 textFontWeight
               />
               <LineBreak space={1.5} />

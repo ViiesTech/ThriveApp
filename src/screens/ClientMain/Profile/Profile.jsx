@@ -21,10 +21,11 @@ import LineBreak from '../../../components/LineBreak';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SVGXml from '../../../components/SVGXML';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
   const nav = useNavigation();
-  const [type, setType] = useState('');
+  const { type } = useSelector(state => state.persistedData);
   const [switchStates, setSwitchStates] = useState({
     1: true, // id: initialValue
     2: false,
@@ -34,15 +35,6 @@ const Profile = () => {
   const toggleSwitch = (id, newValue) => {
     setSwitchStates(prev => ({ ...prev, [id]: newValue }));
   };
-
-  const getType = async () => {
-    const userType = await AsyncStorage.getItem('type');
-    setType(userType);
-  };
-
-  useEffect(() => {
-    getType();
-  }, []);
 
   return (
     <Container style={{ marginBottom: responsiveHeight(-6) }}>
@@ -157,15 +149,13 @@ const Profile = () => {
                 gap: 10,
                 marginVertical: item.id == 1 ? 0 : responsiveHeight(0.5),
               }}
-              onPress={() => {
+              onPress={async () => {
                 if (item.navTo) {
                   nav.navigate(item.navTo);
                 } else if (item.id == 4 && type === 'Client') {
                   nav.navigate('Auth');
-                  AsyncStorage.clear();
-                }else if (item.id == 3 && type === 'Provider') {
+                } else if (item.id == 3 && type === 'Provider') {
                   nav.navigate('Auth');
-                  AsyncStorage.clear();
                 }
               }}
             >
@@ -173,7 +163,12 @@ const Profile = () => {
               <SVGXml icon={item.icon} width={25} height={25} />
               <AppText
                 title={item.title}
-                textColor={item.id == 4 && type === 'Client' || item.id == 3 && type === 'Provider' ? AppColors.RED_COLOR : AppColors.BLACK}
+                textColor={
+                  (item.id == 4 && type === 'Client') ||
+                  (item.id == 3 && type === 'Provider')
+                    ? AppColors.RED_COLOR
+                    : AppColors.BLACK
+                }
                 textSize={1.8}
                 textFontWeight={item.id == 1}
               />

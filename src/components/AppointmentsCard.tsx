@@ -213,7 +213,17 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                     title={item.status !== 'In Progress' && providerHome ? "Start Appointment" : "COMPLETE"}
                                     textColor={AppColors.WHITE}
                                     btnBackgroundColor={providerHome ? AppColors.appGreen : AppColors.ThemeBlue}
-                                    handlePress={() => nav.navigate('ServiceFeedback')}
+                                    handlePress={() => {
+                                        if(item.status === 'In Progress'){
+                                            nav.navigate('Main', {screen: 'Appointments'})
+                                        }else if(providerHome){
+                                            nav.navigate('Main', {screen: 'Appointments'})
+                                        }else if(providerHome && item.status === 'Upcoming'){
+                                            nav.navigate('Main', {screen: 'Appointments'})
+                                        }else if(item.status === 'Ongoing'){
+                                            nav.navigate('ServiceFeedback')
+                                        }
+                                    }}
                                     btnWidth={item.status === 'In Progress' || providerHome ? 82 : 32}
                                     btnPadding={item.status === 'In Progress' || providerHome ? 10 : 5}
                                     textSize={1.6}
@@ -229,7 +239,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                         title={"ACCEPT"}
                                         textColor={AppColors.WHITE}
                                         btnBackgroundColor={AppColors.appGreen}
-                                        handlePress={() => { }}
+                                        handlePress={() => nav.navigate('Main', {screen: 'Appointments'})}
                                         btnWidth={38}
                                         btnPadding={7}
                                         textSize={1.6}
@@ -239,7 +249,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                         title={"REJECT"}
                                         textColor={AppColors.WHITE}
                                         btnBackgroundColor={AppColors.theme_red}
-                                        handlePress={() => { }}
+                                        handlePress={() => nav.navigate('Main', {screen: 'ProviderHome'})}
                                         btnWidth={38}
                                         btnPadding={7}
                                         textSize={1.6}
@@ -256,7 +266,7 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                         title={"ON MY WAY"}
                                         textColor={AppColors.WHITE}
                                         btnBackgroundColor={AppColors.ThemeBlue}
-                                        handlePress={() => { }}
+                                        handlePress={() => nav.navigate('Main', {screen: 'ProviderHome'})}
                                         btnWidth={38}
                                         btnPadding={7}
                                         textSize={1.6}

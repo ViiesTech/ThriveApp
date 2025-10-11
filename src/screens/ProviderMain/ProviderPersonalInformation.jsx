@@ -33,7 +33,7 @@ const ProviderPersonalInformation = () => {
       <View style={{ paddingHorizontal: responsiveWidth(5) }}>
         <View style={{ alignItems: 'center' }}>
           <Image
-            source={AppImages.featured1}
+            source={AppImages.profile}
             style={{
               width: 90,
               height: 90,

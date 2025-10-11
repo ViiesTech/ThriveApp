@@ -183,12 +183,12 @@ export const reviews = [
 ]
 
 export const timesItems = [
-    { id: 1, time: '08:00 AM', },
-    { id: 2, time: '09:00 AM', },
-    { id: 3, time: '10:00 AM', },
-    { id: 4, time: '11:00 AM', },
-    { id: 5, time: '12:00 AM', },
-    { id: 6, time: '01:00 AM', },
+    { id: 1, time: '10:00 AM', },
+    { id: 2, time: '10:15 AM', },
+    { id: 3, time: '10:30 AM', },
+    { id: 4, time: '10:45 AM', },
+    { id: 5, time: '11:00 AM', },
+    { id: 6, time: '11:15 AM', },
 ]
 
 export const shopDetail = [

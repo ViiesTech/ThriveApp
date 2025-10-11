@@ -11,20 +11,12 @@ import AppButton from '../../../components/AppButton';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StarRating from 'react-native-star-rating-widget';
+import { useSelector } from 'react-redux';
 
 const ServiceFeedback = () => {
   const nav = useNavigation();
-  const [type, setType] = useState('');
   const [rating, setRating] = useState(0);
-
-  const getType = async () => {
-    const userType = await AsyncStorage.getItem('type');
-    setType(userType);
-  };
-
-  useEffect(() => {
-    getType();
-  }, []);
+  const { type } = useSelector(state => state.persistedData);
 
   return (
     <View

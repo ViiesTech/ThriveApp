@@ -19,7 +19,7 @@ const SessionDuration = ({title, isSelected, onPress, containerWidth, textwidth,
         <TouchableOpacity
             style={{
                 flexDirection: 'row',
-                gap: 15,
+                // gap: 15,
                 backgroundColor: isSelected ? AppColors.ThemeBlue : AppColors.lightestBlue,
                 width: containerWidth ? responsiveWidth(containerWidth) : responsiveWidth(45),
                 height: responsiveHeight(6.5),
@@ -33,8 +33,9 @@ const SessionDuration = ({title, isSelected, onPress, containerWidth, textwidth,
                 title={title}
                 textColor={isSelected ? AppColors.WHITE : AppColors.ThemeBlue}
                 textSize={textSize ? textSize : 2}
-                textwidth={textwidth ? textwidth : 32}
+                textwidth={textwidth ? textwidth : 28}
                 textAlignment={'center'}
+                textAlignVertical={'center'}
             />
         </TouchableOpacity>
     )
