@@ -17,6 +17,8 @@ const fontCalculation = (height: number, width: number, val: number) => {
     const aspectRatioBasedHeight = (16 / 9) * widthDimension;
     return percentageCalculation(Math.sqrt(Math.pow(aspectRatioBasedHeight, 2) + Math.pow(widthDimension, 2)), val);
 };
+
+
 export const responsiveFontSize = (f: number) => {
     const { height, width } = Dimensions.get("window");
     return fontCalculation(height, width, f);
@@ -140,9 +142,9 @@ export const datesItem = [
 ]
 
 export const appointmentsTab = [
-    { id: 1, title: 'Completed Appointments' },
-    { id: 2, title: 'Upcoming Appointments' },
-    { id: 3, title: 'Ongoing Appointments' },
+    { id: 1, title: 'Completed Appointments', value: 'Completed' },
+    { id: 2, title: 'Upcoming Appointments', value: 'Accepted' },
+    { id: 3, title: 'Ongoing Appointments', value: 'Accepted' },
 ]
 
 export const completedAppointments = [
@@ -259,7 +261,7 @@ export const notifications = [
     },
 ]
 
-export const    moreItemClient = [
+export const moreItemClient = [
     { id: 1, title: 'More', },
     {
         id: 2, title: 'Privacy Policy', icon: AppIcons.lock,
@@ -414,8 +416,8 @@ export const todaysAppointments = [
 ]
 
 export const userRequestTab = [
-    { id: 1, title: 'Open Request' },
-    { id: 2, title: 'Direct Request' },
+    { id: 1, title: 'Open Request', value: 'Open' },
+    { id: 2, title: 'Direct Request', value: 'Direct' },
 ]
 
 export const openRequest = [
@@ -431,8 +433,8 @@ export const directRequest = [
 ]
 
 export const ShowToast = (message: string) => {
-  return Toast.show({
-    type: 'success',
-    text1: message
-  })
+    return Toast.show({
+        type: 'success',
+        text1: message
+    })
 }

@@ -1,10 +1,45 @@
-export const BASE_URL = 'https://predemo.site/ithriveBackend/api/user/'
-export const IMAGE_URL = 'https://predemo.site/ithriveBackend/'
+export const BASE_URL = 'https://appsdemo.pro/ithriveBackend/api/user/';
+export const BASE_URL2 = 'https://appsdemo.pro/ithriveBackend/api/';
+export const IMAGE_URL = 'https://appsdemo.pro/ithriveBackend/';
 
 export const endpoints = {
   REGISTER: 'signUp',
   LOGIN: 'login',
   OTP: 'verifyOtp',
   SEND_EMAIL: 'sendOtp',
-  RESET_PASSWORD: 'resetPassword'
-}
+  RESET_PASSWORD: 'resetPassword',
+  createBooking: 'user/createBooking',
+  createNotes: 'user/createNote',
+  deleteNote: 'user/deleteNote',
+  createRatings: 'user/createReview',
+  updateBookingStatus: 'user/updateBookingStatus',
+  getServiceById: id => `admin/getServiceById?serviceId=${id}`,
+  getBookingByReqType: type => `user/getBookingByReqType?reqType=${type}`,
+  getTherapistBookings: ({ therapistId, bookingStatus, therapistStatus }) => {
+    let url = `user/getBooking?therapistId=${therapistId}&bookingStatus=${bookingStatus}`;
+    if (therapistStatus) url += `&therapistStatus=${therapistStatus}`;
+    return url;
+  },
+  getUserBookings: ({ userId, bookingStatus, therapistStatus }) => {
+    let url = `user/getBooking?userId=${userId}&bookingStatus=${bookingStatus}`;
+    if (therapistStatus) {
+      url += `&therapistStatus=${therapistStatus}`;
+    }
+    return url;
+  },
+  getTherapistById: ({ userId, therapistId }) =>
+    `user/getProfile?userId=${userId}&_id=${therapistId}&type=Provider`,
+  searchTherapist: ({ serviceId, addOn, gender }) => {
+    let url = `user/searchTherapist?longitude=73.9855&latitude=40.758&maxDistance=10000`;
+    if (serviceId) url += `&serviceId=${serviceId}`;
+    if (addOn) url += `&addOn=${addOn}`;
+    if (gender) url += `&gender=${gender}`;
+    console.log('url', url);
+    return url;
+  },
+  getTodayBooking: 'user/getTodayBooking',
+  getTherapistNotes: 'user/getNotesByTherapist',
+  getServices: 'admin/getAllService',
+  getAddOns: 'admin/getAllAddOns',
+  updateProfile: 'updateProfile',
+};

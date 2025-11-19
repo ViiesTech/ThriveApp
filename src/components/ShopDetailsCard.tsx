@@ -14,28 +14,31 @@ import Reviews from './Reviews';
 import ServiceGalleryFooter from './ServiceGalleryFooter';
 import { useNavigation } from '@react-navigation/native';
 import Services from './Services';
+import { IMAGE_URL } from '../redux/constant';
 
-const ShopDetailsCard = () => {
+const ShopDetailsCard = ({ data, onBookNowPress }) => {
     const nav = useNavigation();
+    const { about, location, totalViews, totalReviews, avgRating, fullName, workingDays, serviceId, providerReviews, image } = data;
+    console.log('datadfds', data)
     return (
         <>
             <View style={{ backgroundColor: AppColors.WHITE, paddingHorizontal: responsiveWidth(5) }}>
                 <View style={{ position: 'relative', top: responsiveHeight(-2.5) }}>
-                    <Image source={AppImages.service} style={{ width: 50, height: 50, borderRadius: 100 }} />
+                    <Image source={{ uri: `${IMAGE_URL}${image}` }} style={{ width: 50, height: 50, borderRadius: 100 }} />
                 </View>
             </View>
             <ScrollView style={{ flex: 1, backgroundColor: AppColors.WHITE, paddingHorizontal: responsiveWidth(5), marginTop: responsiveHeight(-2) }}>
                 <View>
                     <View>
                         <AppText
-                            title={'Bella'}
+                            title={fullName}
                             textColor={AppColors.BLACK}
                             textSize={2.8}
                             textFontWeight
                         />
                         <LineBreak space={0.5} />
                         <AppText
-                            title={'Palm City, FL 34990'}
+                            title={location?.locationName}
                             textColor={AppColors.GRAY}
                             textSize={1.6}
                         />
@@ -57,13 +60,13 @@ const ShopDetailsCard = () => {
                                         color={AppColors.Yellow}
                                     />
                                     <AppText
-                                        title={'4.7'}
+                                        title={avgRating}
                                         textColor={AppColors.BLACK}
                                         textSize={1.5}
                                         textFontWeight
                                     >{" "}
                                         <AppText
-                                            title={'(2.7k)'}
+                                            title={`(${totalReviews})`}
                                             textColor={AppColors.BLACK}
                                             textSize={1.5}
                                         />
@@ -76,7 +79,7 @@ const ShopDetailsCard = () => {
                                         color={AppColors.GRAY}
                                     />
                                     <AppText
-                                        title={'10k views'}
+                                        title={`${totalViews} views`}
                                         textColor={AppColors.BLACK}
                                         textSize={1.5}
                                     />
@@ -97,47 +100,58 @@ const ShopDetailsCard = () => {
                             <LineBreak space={2} />
 
                             <AppText
-                                title={'At i-thriv we bring spa-quality experiences directly to you. Whether you are relaxing at home, celebrating a special occasion, or hosting a retreat at a vacation rental, our licensed providers deliver premium, personalized care wherever you are. Our services include massage therapy, facials, sound baths, yoga and vibroacoustic therapy—each thoughtfully designed to restore balance, promote relaxation, and support your wellness journey.'}
+                                title={about}
                                 textColor={AppColors.DARKGRAY}
                                 textSize={1.8}
                                 lineHeight={2.3}
                             />
 
-                            <LineBreak space={2} />
-
-                            <AppText
-                                title={'Opening Hours'}
-                                textColor={AppColors.BLACK}
-                                textSize={2}
-                                textFontWeight
-                            />
-                            <LineBreak space={2} />
-
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
-                                    <View
-                                        style={{
-                                            width: 10,
-                                            height: 10,
-                                            backgroundColor: AppColors.ThemeBlue,
-                                            borderRadius: 100,
-                                        }}
+                            {workingDays?.length ? (
+                                <View>
+                                    <LineBreak space={2} />
+                                    <AppText
+                                        title={'Opening Hours'}
+                                        textColor={AppColors.BLACK}
+                                        textSize={2}
+                                        textFontWeight
                                     />
+                                    <LineBreak space={2} />
                                     <View>
-                                        <AppText
-                                            title={'Monday - Friday'}
-                                            textColor={AppColors.GRAY}
-                                            textSize={1.8}
-                                        />
-                                        <LineBreak space={1} />
-                                        <AppText
-                                            title={'08:00 AM - 03:00 PM'}
-                                            textColor={AppColors.BLACK}
-                                            textSize={1.8}
-                                            textFontWeight
-                                        />
+                                        <FlatList contentContainerStyle={{ gap: responsiveHeight(3) }} horizontal showsHorizontalScrollIndicator={false} data={workingDays} renderItem={({ item }) => {
+                                            return (
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
+                                                    <View
+                                                        style={{
+                                                            width: 10,
+                                                            height: 10,
+                                                            backgroundColor: AppColors.ThemeBlue,
+                                                            borderRadius: 100,
+                                                        }}
+                                                    />
+                                                    <View>
+                                                        <AppText
+                                                            title={item?.day}
+                                                            textColor={AppColors.GRAY}
+                                                            textSize={1.8}
+                                                        />
+                                                        <LineBreak space={1} />
+                                                        <AppText
+                                                            title={`${item?.startTime} - ${item?.endTime}`}
+                                                            textColor={AppColors.BLACK}
+                                                            textSize={1.8}
+                                                            textFontWeight
+                                                        />
+                                                    </View>
+                                                </View>
+                                            )
+                                        }} />
                                     </View>
                                 </View>
+                            ) : null}
+
+
+                            {/* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                              
 
                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}>
                                     <View
@@ -163,7 +177,7 @@ const ShopDetailsCard = () => {
                                         />
                                     </View>
                                 </View>
-                            </View>
+                            </View> */}
 
                             <LineBreak space={3} />
                             <View>
@@ -176,7 +190,7 @@ const ShopDetailsCard = () => {
                                     />
                                 </View>
                                 <LineBreak space={2} />
-                                <Services />
+                                <Services disabled data={serviceId} isNavigate={false} />
                                 {/* <MostSearchInterest
                                     data={mostSearchInterestSerivces}
                                     services={'services'}
@@ -240,38 +254,49 @@ const ShopDetailsCard = () => {
                             /> */}
 
                             <LineBreak space={2} />
+                            {data?.providerReviews?.length ? (
+                                <View>
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <AppText
+                                            title={'Reviews'}
+                                            textColor={AppColors.BLACK}
+                                            textSize={2}
+                                            textFontWeight
+                                        />
 
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <AppText
-                                    title={'Reviews'}
-                                    textColor={AppColors.BLACK}
-                                    textSize={2}
-                                    textFontWeight
-                                />
-
-                                <TouchableOpacity>
+                                        {/* <TouchableOpacity>
                                     <AppText
                                         title={'View all'}
                                         textColor={AppColors.ThemeBlue}
                                         textSize={1.8}
                                     />
-                                </TouchableOpacity>
-                            </View>
+                                </TouchableOpacity> */}
+                                    </View>
+                                    <View style={{ marginTop: responsiveHeight(2) }}>
+                                        <FlatList contentContainerStyle={{gap:responsiveHeight(2)}} data={data?.providerReviews} renderItem={({ item, index }) => {
+                                            return (
+                                                <Reviews data={item} paddingHorizontal={-1} />
+                                            )
 
-                            <LineBreak space={2} />
+                                        }} />
+                                    </View>
+                                </View>
+                            ) : null}
+
+                            {/* <LineBreak space={2} />
 
                             <Reviews paddingHorizontal={-1} />
-                            <LineBreak space={1} />
-                            <Reviews paddingHorizontal={-1} />
+                            <LineBreak space={1} /> */}
+                            {/* <Reviews paddingHorizontal={-1} /> */}
                             <LineBreak space={2} />
 
-                            <ServiceGalleryFooter paddingHorizontal={-1} borderWidth={-1} bookNowOnPress={() => nav.navigate('LocationInformation')} />
+                            <ServiceGalleryFooter paddingHorizontal={-1} borderWidth={-1} bookNowOnPress={onBookNowPress} />
 
                             <LineBreak space={3} />
 

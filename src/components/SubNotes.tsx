@@ -8,49 +8,77 @@ import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
+  ShowToast,
 } from "../utils";
 import AppButton from "./AppButton";
 import { useNavigation } from "@react-navigation/native";
 import LineBreak from "./LineBreak";
+import { useDeleteNoteMutation } from "../redux/services/MainIntegration";
 
 type Item = {
   id: string;
   title: string;
   description: string;
+  data?: any[];
   completed: boolean;
+  onRefresh?: () => void;
   type?: "header"; // for section headers
 };
 
-const initialData: Item[] = [
-  { id: "header-active", title: "ACTIVE SUB NOTES", description: "", completed: false, type: "header" },
-  {
-    id: "1",
-    title: "Title Here",
-    description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
-    completed: false,
-  },
-  {
-    id: "2",
-    title: "Another Active",
-    description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
-    completed: false,
-  },
-  { id: "header-completed", title: "COMPLETED SUB NOTES", description: "", completed: true, type: "header" },
-  {
-    id: "3",
-    title: "Completed Note",
-    description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
-    completed: true,
-  },
-];
+// const initialData: Item[] = [
+//   { id: "header-active", title: "ACTIVE SUB NOTES", description: "", completed: false, type: "header" },
+//   {
+//     id: "1",
+//     title: "Title Here",
+//     description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
+//     completed: false,
+//   },
+//   {
+//     id: "2",
+//     title: "Another Active",
+//     description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
+//     completed: false,
+//   },
+//   {
+//     id: "3",
+//     title: "Another Active",
+//     description: "Create a mobile app UI Kit that provide a basic notes functionality but with some improvement...",
+//     completed: false,
+//   },
+// ];
 
-const SubNotesScreen = () => {
+const SubNotesScreen: React.FC<Item> = ({ data, onRefresh }) => {
   const nav = useNavigation();
+  const [deleteNote, { isLoading, isError }] = useDeleteNoteMutation();
 
-  const renderItem = ({ item, drag, isActive }: RenderItemParams<Item>) => {
-    if (item.type === "header") {
-      return <Text style={styles.sectionTitle}>{item.title}</Text>;
-    }
+  const DeleteNoteHandler = async (noteId: string) => {
+    await deleteNote({ noteId })
+      .unwrap()
+      .then(res => {
+        console.log('response of register ===>', res);
+        ShowToast(res.message);
+        if (res.success) {
+          if (onRefresh) onRefresh();
+
+          // nav.navigate('EmailVerification', {
+          //   data: {
+          //     ...res.data,
+          //     token: res.accessToken,
+          //     type: type,
+          //     screenType: 'RegisterUser',
+          //   },
+          // });
+        }
+      })
+      .catch(error => {
+        console.log('error while registering the account ===>', error);
+        ShowToast('Some problem occured');
+      });
+  }
+  const renderItem = ({ item, index }) => {
+    // if (item.type === "header") {
+    //   return <Text style={styles.sectionTitle}>{item.title}</Text>;
+    // }
 
     return (
       <View
@@ -62,11 +90,12 @@ const SubNotesScreen = () => {
         }}
       >
         {/* drag handle */}
-        <TouchableOpacity onLongPress={drag}>
+        {/* <TouchableOpacity onLongPress={drag}> */}
+        <TouchableOpacity >
           <Fontisto
             name="nav-icon-grid-a"
             size={responsiveFontSize(2)}
-            color={isActive ? AppColors.ThemeBlue : AppColors.GRAY}
+            color={AppColors.GRAY}
           />
         </TouchableOpacity>
 
@@ -83,24 +112,24 @@ const SubNotesScreen = () => {
             <Text
               style={[
                 styles.title,
-                item.completed && { textDecorationLine: "line-through" },
+                // item.completed && { textDecorationLine: "line-through" },
               ]}
             >
-              {item.title}
+              {item?.tittleName}
             </Text>
           </View>
 
           <Text
             style={[
               styles.desc,
-              item.completed && { textDecorationLine: "line-through" },
+              // item.completed && { textDecorationLine: "line-through" },
             ]}
             numberOfLines={4}
           >
-            {item.description}
+            {item?.note}
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => DeleteNoteHandler(item?._id)}>
           <Ionicons name="close" size={responsiveFontSize(2.5)} color={AppColors.GRAY} />
         </TouchableOpacity>
       </View>
@@ -110,7 +139,8 @@ const SubNotesScreen = () => {
   return (
     <View style={{ flex: 1, backgroundColor: "#fff", padding: 10 }}>
       <FlatList
-        data={initialData}
+
+        data={data}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
       />

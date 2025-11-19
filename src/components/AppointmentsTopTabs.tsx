@@ -41,11 +41,10 @@ const AppointmentsTopTabs = ({ selectedTab, setSelectedTab, data, textwidth }: P
                 }}
                 renderItem={({ item, index }) => {
                     const isSelected = selectedTab?.id === item.id;
-
                     return (
                         <TouchableOpacity
                             style={{ alignItems: 'center', }}
-                            onPress={() => setSelectedTab({ id: item.id })}
+                            onPress={() => setSelectedTab({ id: item.id, title: item?.title, value: item?.value })}
                             activeOpacity={0.8}
                         >
                             {/* Text */}

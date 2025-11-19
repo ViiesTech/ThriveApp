@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Container from '../../../components/Container';
 import AuthHeader from '../../../components/AuthHeader';
 import {
@@ -11,6 +11,7 @@ import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
+  ShowToast,
   specialistsYouFollow,
 } from '../../../utils';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -24,11 +25,45 @@ import MostSearchInterest from '../../../components/MostSearchInterest';
 import NearbyOffers from '../../../components/NearbyOffers';
 import { useNavigation } from '@react-navigation/native';
 import EnableLocationModal from '../../../components/EnableLocationModal';
+import { useSelector } from 'react-redux';
+import { useGetServicesQuery } from '../../../redux/services/MainIntegration';
 
 const Home = () => {
   const nav = useNavigation();
+  const { fullName } = useSelector(state => state?.persistedData?.user);
+  const { data, isLoading, isError } = useGetServicesQuery(undefined, {
+    refetchOnMountOrArgChange: true, // automatically fetch fresh data
+    refetchOnReconnect: true,
+    refetchOnFocus: true,
+  });
+  const [serviceData, setServiceData] = useState([]);
+  console.log('serviceData', serviceData);
+  useEffect(() => {
+    if (isError) {
+      // error can be a string or an object depending on your API
+      console.log('Error fetching services:', isError);
+
+      // show toast for user
+      ShowToast(
+        isError?.respones?.data?.message ||
+          isError?.isError ||
+          'Failed to fetch services',
+      );
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (data?.success) {
+      const formatted = data.data.map(item => ({
+        label: item.serviceName,
+        serviceImage: item?.serviceImage,
+        id: item._id,
+      }));
+      setServiceData(formatted);
+    }
+  }, [data]);
   return (
-    <Container style={{flex: 1, marginBottom: responsiveHeight(-6)}}>
+    <Container style={{ flex: 1, marginBottom: responsiveHeight(-6) }}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),
@@ -36,7 +71,7 @@ const Home = () => {
         }}
       >
         <AuthHeader
-          heading="Hi, Samantha"
+          heading={`Hi, ${fullName}`}
           subHeading="Find your desired service and treat yourself"
           rightIcon={
             <TouchableOpacity
@@ -48,7 +83,12 @@ const Home = () => {
                 alignItems: 'center',
                 backgroundColor: AppColors.lightestBlue,
               }}
-              onPress={() => nav.navigate('Main', {screen: 'Inbox', params: { isNotification: true },})}
+              onPress={() =>
+                nav.navigate('Main', {
+                  screen: 'Inbox',
+                  params: { isNotification: true },
+                })
+              }
             >
               <Fontisto
                 size={responsiveFontSize(2.6)}
@@ -79,10 +119,22 @@ const Home = () => {
         />
 
         <LineBreak space={3} />
-
-        <View>
-          <Services />
-        </View>
+        {isLoading ? (
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: responsiveHeight(40),
+            }}
+          >
+            <ActivityIndicator size={45} color={AppColors.BLACK} />
+          </View>
+        ) : (
+          <View>
+            <Services data={serviceData} />
+          </View>
+        )}
       </View>
 
       <LineBreak space={2} />

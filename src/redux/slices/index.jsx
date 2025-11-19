@@ -1,10 +1,10 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { Apis } from '../services';
 
 const initialState = {
   token: null,
   user: {},
-  type: ''
+  type: '',
   // profileCreated: false,
 };
 
@@ -16,16 +16,18 @@ export const Slice = createSlice({
       state.user = {};
       state.token = null;
     },
-      setUserType: (state,action) => {
+    setUserType: (state, action) => {
       state.type = action.payload;
     },
   },
   extraReducers: builder => {
     builder
       .addMatcher(Apis.endpoints.verifyOTP.matchFulfilled, (state, action) => {
+        console.log('aaaaa', action);
         if (action.payload?.data) {
+          console.log('accc', action);
           state.user = action.payload.data;
-          state.token = action.payload.token;
+          state.token = action.payload.accessToken;
         }
       })
       .addMatcher(Apis.endpoints.login.matchFulfilled, (state, action) => {
@@ -34,6 +36,14 @@ export const Slice = createSlice({
           state.token = action.payload.token;
         }
       })
+      .addMatcher(
+        Apis.endpoints.updateProfile.matchFulfilled,
+        (state, action) => {
+          if (action.payload?.data) {
+            state.user = action.payload.data;
+          }
+        },
+      );
     // .addMatcher(Apis.endpoints.updateUser.matchFulfilled, (state, action) => {
     //   if (action.payload?.data) {
     //     state.user = {
@@ -53,6 +63,6 @@ export const Slice = createSlice({
   },
 });
 
-export const {logout,setUserType} = Slice.actions;
+export const { logout, setUserType } = Slice.actions;
 
 export default Slice.reducer;

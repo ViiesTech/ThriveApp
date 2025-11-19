@@ -1,11 +1,11 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL, endpoints } from '../constant';
 
 export const Apis = createApi({
   reducerPath: 'authApis',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    prepareHeaders: (headers, {getState}) => {
+    prepareHeaders: (headers, { getState }) => {
       const token = getState().persistedData.token;
       console.log('state ===>', token);
       if (token) {
@@ -36,15 +36,40 @@ export const Apis = createApi({
         body: data,
       }),
     }),
-    // getProfile: builder.query({
-    //   query: () => ({
-    //     url: endpoints.GET_PROFILE,
+    forgotPassword: builder.mutation({
+      query: data => ({
+        url: endpoints.SEND_EMAIL,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    verifyForgotPass: builder.mutation({
+      query: data => ({
+        url: endpoints.OTP,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    resetPassword: builder.mutation({
+      query: data => ({
+        url: endpoints.RESET_PASSWORD,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    updateProfile: builder.mutation({
+      query: data => ({
+        url: endpoints.updateProfile,
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    // getServices: builder.query({
+    //   query: (type, id) => ({
+    //     url: endpoints.getServices({type, id}),
     //     method: 'GET',
     //   }),
     // }),
-
-
-  
   }),
 });
 
@@ -52,4 +77,8 @@ export const {
   useRegisterMutation,
   useVerifyOTPMutation,
   useLoginMutation,
+  useForgotPasswordMutation,
+  useVerifyForgotPassMutation,
+  useResetPasswordMutation,
+  useUpdateProfileMutation,
 } = Apis;

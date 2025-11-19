@@ -1,16 +1,20 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { View, ImageBackground, FlatList } from 'react-native';
+import {
+  View,
+  ImageBackground,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import Container from '../../../components/Container';
 import AppHeader from '../../../components/AppHeader';
 import { AppImages } from '../../../assets/images';
 import {
   AppColors,
-  checkoutPart1,
-  checkoutPart2,
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
+  ShowToast,
 } from '../../../utils';
 import AppText from '../../../components/AppTextComps/AppText';
 import LineBreak from '../../../components/LineBreak';
@@ -20,9 +24,150 @@ import Feather from 'react-native-vector-icons/Feather';
 import AppButton from '../../../components/AppButton';
 import { useNavigation } from '@react-navigation/native';
 import AppTextInput from '../../../components/AppTextInput';
+import moment from 'moment';
+import { useCreateBookingRequestMutation } from '../../../redux/services/MainIntegration';
+import { useSelector } from 'react-redux';
 
-const BookingCheckout = () => {
+const BookingCheckout = ({ route }) => {
   const nav = useNavigation();
+  const {
+    addOn,
+    address,
+    appartment,
+    city,
+    date,
+    fullName,
+    notes,
+    number,
+    serviceId,
+    serviceName,
+    session,
+    state,
+    therapist,
+    therapistName,
+    time,
+    zipCode,
+    groupSize,
+    isDirectRequest,
+  } = route?.params?.data;
+  console.log('first', route?.params);
+  const subtotal =
+    Number(session?.perPersonPrice || 0) +
+    addOn.reduce((sum, item) => sum + Number(item?.perPersonPrice || 0), 0);
+  const groupSuffix = groupSize > 1 ? ` (${groupSize}x)` : '';
+  const [createBookingRequest, { data, isLoading, isError }] =
+    useCreateBookingRequestMutation();
+  const { _id, phoneNumber } = useSelector(state => state?.persistedData?.user);
+  console.log('phoneNumber', phoneNumber);
+  const checkoutPart1 = [
+    {
+      id: 1,
+      title: 'Date',
+      subTitle: moment(date, 'DD-MM-YYYY').format('MMMM, Do YYYY'),
+    },
+    { id: 2, title: 'Start Time', subTitle: time },
+    { id: 3, title: 'Specialist', subTitle: therapistName || 'Any' },
+    { id: 4, title: 'Duration', subTitle: session?.duration },
+    {
+      id: 5,
+      title: 'Per Person Price',
+      subTitle: `$${session?.perPersonPrice}`,
+    },
+  ];
+  const checkoutPart2 = [
+    {
+      id: 1,
+      title: `${serviceName}${groupSuffix}`,
+      subTitle: `$${session?.perPersonPrice * groupSize}`,
+    },
+    ...addOn?.map((item, index) => ({
+      id: `addon-${index}`,
+      title: `${item.name}${groupSuffix}`,
+      subTitle: `$${item.perPersonPrice * groupSize}`,
+    })),
+    {
+      id: 'subtotal',
+      title: 'Sub Total',
+      subTitle: `$${subtotal * groupSize}`,
+    },
+    {
+      id: 'discount',
+      title: 'Discount',
+      subTitle: '0',
+    },
+  ];
+
+  const createBookingHandler = async () => {
+    const requestData = {};
+
+    // Required
+    if (fullName) requestData.fullName = fullName;
+    if (_id) requestData.userId = _id;
+
+    if (therapist) {
+      // therapistKey = therapistId OR allTherapistId dynamically
+      const therapistKey = isDirectRequest ? 'therapistId' : 'allTherapistId';
+      requestData[therapistKey] = therapist;
+    }
+
+    if (serviceId) requestData.serviceId = serviceId;
+    if (date) requestData.date = date;
+    if (time) requestData.time = time;
+
+    if (notes) requestData.notes = notes;
+
+    // Session duration (always required?)
+    if (session?.perPersonPrice && session?.duration) {
+      requestData.sessionDuration = [
+        {
+          perPersonPrice: JSON.stringify(session.perPersonPrice),
+          duration: session.duration,
+        },
+      ];
+    }
+
+    // AddOns only if selected
+    if (addOn?.length > 0) {
+      requestData.addOn = addOn.map(item => item._id);
+    }
+
+    // Address info only if user filled
+    if (address) requestData.address = address;
+    if (appartment) requestData.appartment = appartment;
+    if (city) requestData.city = city;
+    if (state) requestData.state = state;
+    if (zipCode) requestData.zipCode = zipCode;
+
+    // Phone number
+    const finalNumber = number || phoneNumber;
+    if (finalNumber) requestData.phoneNumber = finalNumber;
+
+    // Location (static right now — remove if backend doesn’t need)
+    requestData.latitude = 40.758;
+    requestData.longitude = 73.9855;
+    requestData.locationName = 'Times Square, NYC';
+
+    // groupSize check
+    if (subtotal && groupSize) {
+      requestData.totalAmount = subtotal * groupSize;
+    }
+
+    console.log('Final Request Data:', requestData);
+
+    try {
+      const res = await createBookingRequest(requestData).unwrap();
+
+      ShowToast(res.message);
+
+      if (res.success) {
+        nav.navigate('Main');
+      }
+    } catch (error) {
+      console.log('Booking Error:', error);
+      ShowToast('Some problem occurred');
+    }
+  };
+
   return (
     <Container>
       <AppHeader onBackPress={true} heading={'Booking Checkout'} />
@@ -33,7 +178,7 @@ const BookingCheckout = () => {
           paddingHorizontal: responsiveWidth(6),
           paddingVertical: responsiveHeight(2),
           width: responsiveWidth(90),
-          height: responsiveHeight(65),
+          height: responsiveHeight(60),
           alignSelf: 'center',
         }}
       >
@@ -83,45 +228,53 @@ const BookingCheckout = () => {
         <View>
           <FlatList
             data={checkoutPart2}
-            renderItem={({ item }) => (
-              <>
-                {item.id !== 3 && <LineBreak space={1} />}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <AppText
-                    title={item.title}
-                    textColor={AppColors.BLACK}
-                    textSize={1.8}
-                  />
-                  <AppText
-                    title={item.subTitle}
-                    textColor={AppColors.ThemeBlue}
-                    textSize={1.8}
-                    textFontWeight
-                  />
-                </View>
-                {item.id == 2 && (
+            renderItem={({ item, index }) => {
+              const addonCount = addOn?.length || 0;
+              const isService = item.id === 1; // first item is service
+              const isLastAddon = item.id === `addon-${addonCount - 1}`;
+              const showSeparator =
+                (isService && addonCount === 0) ||
+                (addonCount > 0 && isLastAddon);
+              return (
+                <>
+                  {item.id !== 3 && <LineBreak space={1} />}
                   <View
                     style={{
-                      width: responsiveWidth(78),
-                      height: responsiveHeight(0.2),
-                      backgroundColor: AppColors.LIGHTGRAY,
-                      marginVertical: responsiveHeight(2),
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
                     }}
-                  />
-                )}
-              </>
-            )}
+                  >
+                    <AppText
+                      title={item.title}
+                      textColor={AppColors.BLACK}
+                      textSize={1.8}
+                    />
+                    <AppText
+                      title={item.subTitle}
+                      textColor={AppColors.ThemeBlue}
+                      textSize={1.8}
+                      textFontWeight
+                    />
+                  </View>
+                  {showSeparator && (
+                    <View
+                      style={{
+                        width: responsiveWidth(78),
+                        height: responsiveHeight(0.2),
+                        backgroundColor: AppColors.LIGHTGRAY,
+                        marginVertical: responsiveHeight(2),
+                      }}
+                    />
+                  )}
+                </>
+              );
+            }}
           />
         </View>
 
         <LineBreak space={1} />
 
-        <AppText
+        {/* <AppText
           title={'Promo Code'}
           textColor={AppColors.BLACK}
           textSize={1.8}
@@ -150,7 +303,7 @@ const BookingCheckout = () => {
             textSize={1.5}
             textFontWeight={false}
           />
-        </View>
+        </View> */}
 
         <View
           style={{
@@ -169,7 +322,7 @@ const BookingCheckout = () => {
         >
           <AppText title={'Total'} textColor={AppColors.BLACK} textSize={1.8} />
           <AppText
-            title={'$70'}
+            title={`$${subtotal * groupSize}`}
             textColor={AppColors.ThemeBlue}
             textSize={1.8}
             textFontWeight
@@ -178,7 +331,7 @@ const BookingCheckout = () => {
 
         <LineBreak space={3} />
 
-        <View
+        {/* <View
           style={{
             borderWidth: 1,
             borderColor: AppColors.ThemeBlue,
@@ -211,15 +364,21 @@ const BookingCheckout = () => {
               />
             </View>
           </View>
-        </View>
+        </View> */}
       </ImageBackground>
       <LineBreak space={3} />
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <AppButton
-          title={'Pay Now'}
+          title={
+            isLoading ? (
+              <ActivityIndicator size={'large'} color={AppColors.WHITE} />
+            ) : (
+              'Pay Now'
+            )
+          }
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.appGreen}
-          handlePress={() => nav.navigate('PaymentMethod')}
+          handlePress={createBookingHandler}
           textFontWeight={false}
         />
       </View>

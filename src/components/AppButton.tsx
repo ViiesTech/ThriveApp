@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import AppText from './AppTextComps/AppText';
 import { AppColors, responsiveWidth } from '../utils/index';
 import Loader from './Loader';
@@ -10,6 +10,7 @@ type props = {
   handlePress?: () => void;
   textColor?: any;
   textFontWeight?: boolean;
+  disabled?: boolean;
   textSize?: any;
   btnWidth?: any;
   btnBackgroundColor?: any;
@@ -18,13 +19,14 @@ type props = {
   borderColor?: any;
   borderRadius?: any;
   leftIcon?: any;
-  activeOpacity?:any;
+  activeOpacity?: any;
   indicator?: any;
 };
 const AppButton = ({
   title,
   handlePress,
   leftIcon,
+  disabled,
   borderRadius,
   borderWidth,
   borderColor,
@@ -39,6 +41,7 @@ const AppButton = ({
 }: props) => {
   return (
     <TouchableOpacity
+      disabled={disabled}
       onPress={handlePress}
       activeOpacity={activeOpacity}
       style={{
@@ -55,15 +58,15 @@ const AppButton = ({
         flexDirection: 'row',
       }}>
       {leftIcon}
-     {indicator  ?
-          <Loader size={'small'} />
-      :
-      <AppText
-        textColor={textColor}
-        textSize={textSize}
-        title={title}
-        textFontWeight={textFontWeight}
-      />
+      {indicator ?
+        <Loader size={'small'} />
+        :
+        <AppText
+          textColor={textColor}
+          textSize={textSize}
+          title={title}
+          textFontWeight={textFontWeight}
+        />
       }
     </TouchableOpacity>
   );

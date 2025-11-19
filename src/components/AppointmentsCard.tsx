@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react'
-import { View, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, FlatList, Image, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { AppColors, responsiveFontSize, responsiveHeight, responsiveWidth } from '../utils'
 import AppText from './AppTextComps/AppText'
 import LineBreak from './LineBreak'
@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { IMAGE_URL } from '../redux/constant'
 
 type Prop = {
     data?: [];
@@ -17,97 +18,127 @@ type Prop = {
     userRequest?: any;
     isSpecialist?: any;
     ongoingAppointments?: any;
+    onBookNowPress?: () => void;
+    addOns?: any;
     isUser?: any
+    isLoading?: boolean
 }
 
-const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpecialist, ongoingAppointments, isUser }: Prop) => {
+const AppointmentsCard = ({ data, onBookNowPress, isLoading, addOns, shopDetail, providerHome, userRequest, isSpecialist, ongoingAppointments, isUser }: Prop) => {
     const nav = useNavigation();
+    console.log('data', data)
     return (
-        <View>
-            <FlatList
-                data={data}
-                contentContainerStyle={{ paddingHorizontal: responsiveWidth(4) }}
-                renderItem={({ item }) => (
+        <View
+            style={{
+                backgroundColor: AppColors.WHITE,
+                marginHorizontal: responsiveWidth(4),
+                elevation: 5,
+                borderRadius: 15,
+                // height:responsiveHeight(26.2),
+                minHeight: responsiveHeight(20),
+                marginVertical: responsiveHeight(1),
+                paddingVertical: responsiveHeight(2.5),
+                paddingLeft: responsiveWidth(5),
+            }}
+        >
+            {isLoading ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <ActivityIndicator size={'large'} color={AppColors.BLACK} />
+                </View>
+            ) : (
+                <View>
+
+
                     <View
                         style={{
-                            backgroundColor: AppColors.WHITE,
-                            elevation: 5,
-                            borderRadius: 15,
-                            marginVertical: responsiveHeight(1),
-                            paddingVertical: responsiveHeight(2.5),
-                            paddingLeft: responsiveWidth(5),
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
                         }}
                     >
-                        <View
-                            style={{
-                                flexDirection: 'row',
-                                justifyContent: 'space-between',
-                            }}
-                        >
+
+                        <View style={{ flexDirection: 'row', }}>
                             <AppText
-                                title={item.title}
+                                title={`${shopDetail} `}
                                 textColor={AppColors.ThemeBlue}
                                 textSize={1.6}
                                 textFontWeight
                             />
+                            {/* {
+                                <FlatList horizontal  showsHorizontalScrollIndicator={false} data={addOns} renderItem={({ item }) => {
+                                    return (
+                                        <>
+                                            <AppText
+                                                title={`- ${item?.name}`}
+                                                textColor={AppColors.ThemeBlue}
+                                                textSize={1.6}
+                                                textFontWeight
+                                            />
+                                        </>
+                                    )
+                                }} />
+                            } */}
+                        </View>
 
-                            <View
+                        <View
+                            style={{
+                                // backgroundColor: item.status === 'Available' ? AppColors.lightestBlue : providerHome || isSpecialist || userRequest ? AppColors.ThemeBlue : AppColors.appGreen,
+                                backgroundColor: AppColors.lightestBlue,
+                                paddingHorizontal: responsiveWidth(4),
+                                paddingVertical: responsiveHeight(0.7),
+                                borderTopLeftRadius: 20,
+                                borderBottomLeftRadius: 20,
+                            }}
+                        >
+                            <AppText
+                                // title={item.status}
+                                title="Available"
+                                // textColor={item.status === 'Available' ? AppColors.ThemeBlue : AppColors.WHITE}
+                                textColor={AppColors.ThemeBlue}
+                                textSize={1.6}
+                                textFontWeight={true}
+                            />
+                        </View>
+                    </View>
+
+                    <LineBreak space={1} />
+
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <Image source={{ uri: `${IMAGE_URL}${data?.image}` }} style={{ width: 40, height: 40, borderRadius: 100 }} />
+
+                        <View>
+                            <AppText
+                                title={data?.fullName}
+                                textColor={AppColors.BLACK}
+                                textSize={1.8}
+                                textFontWeight
+                            />
+                            <AppText
+                                title={data?.location?.locationName}
+                                textColor={AppColors.GRAY}
+                                textSize={1.5}
+                            />
+
+                            <LineBreak space={1.5} />
+
+                            {!shopDetail && <View
                                 style={{
-                                    backgroundColor: item.status === 'Available' ? AppColors.lightestBlue : providerHome || isSpecialist || userRequest ? AppColors.ThemeBlue : AppColors.appGreen,
-                                    paddingHorizontal: responsiveWidth(4),
-                                    paddingVertical: responsiveHeight(0.7),
-                                    borderTopLeftRadius: 20,
-                                    borderBottomLeftRadius: 20,
+                                    flexDirection: 'row',
+                                    gap: 20,
+                                    alignItems: 'center',
                                 }}
                             >
                                 <AppText
-                                    title={item.status}
-                                    textColor={item.status === 'Available' ? AppColors.ThemeBlue : AppColors.WHITE}
-                                    textSize={1.6}
-                                    textFontWeight={item.status === 'Available' ? true : false}
-                                />
-                            </View>
-                        </View>
-
-                        <LineBreak space={1} />
-
-                        <View style={{ flexDirection: 'row', gap: 10 }}>
-                            <Image source={item.image} style={{ width: 40, height: 40, borderRadius: 100 }} />
-
-                            <View>
-                                <AppText
-                                    title={item.name}
-                                    textColor={AppColors.BLACK}
-                                    textSize={1.8}
-                                    textFontWeight
-                                />
-                                <AppText
-                                    title={item.location}
-                                    textColor={AppColors.GRAY}
+                                    title={'Service: '}
+                                    textColor={AppColors.ThemeBlue}
                                     textSize={1.5}
-                                />
-
-                                <LineBreak space={1.5} />
-
-                                {!shopDetail && <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        gap: 20,
-                                        alignItems: 'center',
-                                    }}
                                 >
                                     <AppText
-                                        title={'Service: '}
-                                        textColor={AppColors.ThemeBlue}
+                                        title={`(${shopDetail})`}
+                                        textColor={AppColors.GRAY}
                                         textSize={1.5}
-                                    >
-                                        <AppText
-                                            title={`(${item.service})`}
-                                            textColor={AppColors.GRAY}
-                                            textSize={1.5}
-                                        />
-                                    </AppText>
-                                    {item.date && <AppText
+                                    />
+                                </AppText>
+                                {/* {item.date && <AppText
                                         title={'Date: '}
                                         textColor={AppColors.ThemeBlue}
                                         textSize={1.5}
@@ -117,36 +148,36 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                             textColor={AppColors.GRAY}
                                             textSize={1.5}
                                         />
-                                    </AppText>}
-                                </View>}
+                                    </AppText>} */}
+                            </View>}
 
-                                {shopDetail && <View
-                                    style={{
-                                        flexDirection: 'row',
-                                        gap: 20,
-                                        alignItems: 'center',
-                                    }}
-                                >
-                                    <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                                        <AntDesign
-                                            name="star"
-                                            size={responsiveFontSize(1.5)}
-                                            color={AppColors.Yellow}
-                                        />
+                            {shopDetail && <View
+                                style={{
+                                    flexDirection: 'row',
+                                    gap: 20,
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                                    <AntDesign
+                                        name="star"
+                                        size={responsiveFontSize(1.5)}
+                                        color={AppColors.Yellow}
+                                    />
+                                    <AppText
+                                        title={data?.avgRating}
+                                        textColor={AppColors.BLACK}
+                                        textSize={1.5}
+                                        textFontWeight
+                                    >{" "}
                                         <AppText
-                                            title={item.rating}
-                                            textColor={AppColors.BLACK}
+                                            title={`(${data?.totalReviews})`}
+                                            textColor={AppColors.GRAY}
                                             textSize={1.5}
-                                            textFontWeight
-                                        >{" "}
-                                            <AppText
-                                                title={`(${item.number})`}
-                                                textColor={AppColors.GRAY}
-                                                textSize={1.5}
-                                            />
-                                        </AppText>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                                        />
+                                    </AppText>
+                                </View>
+                                {/* <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
                                         <FontAwesome5
                                             name="tag"
                                             size={responsiveFontSize(1.5)}
@@ -164,130 +195,35 @@ const AppointmentsCard = ({ data, shopDetail, providerHome, userRequest, isSpeci
                                                 textSize={1.5}
                                             />
                                         </AppText>
-                                    </View>
-                                </View>}
-                            </View>
+                                    </View> */}
+                            </View>}
                         </View>
-
-                        {shopDetail && <LineBreak space={2} />}
-
-                        {shopDetail &&
-                            <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
-                                <TouchableOpacity style={styles.iconContainer} onPress={() => nav.navigate("PrivateInbox")}>
-                                    <Ionicons
-                                        name="chatbubble-ellipses-sharp"
-                                        size={responsiveFontSize(3)}
-                                        color={AppColors.ThemeBlue}
-                                    />
-                                </TouchableOpacity>
-                                <AppButton
-                                    title="Book Now"
-                                    textColor={AppColors.WHITE}
-                                    btnBackgroundColor={AppColors.ThemeBlue}
-                                    handlePress={() => nav.navigate('LocationInformation')}
-                                    btnWidth={65}
-                                    textFontWeight={false}
-                                />
-                            </View>
-                        }
-
-                        {item.status === 'Ongoing' || userRequest || item.status === 'In Progress' || providerHome ? <LineBreak space={2} /> : null}
-
-                        {item.status === 'Ongoing' && isUser || item.status === 'In Progress' || providerHome ? <View style={item.status === 'Ongoing' || item.status === 'In Progress' || providerHome ? { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' } : null}>
-                            {item.appointmentStatus && <AppText
-                                title={'Status: '}
-                                textColor={AppColors.ThemeBlue}
-                                textSize={1.6}
-                                textFontWeight
-                                textwidth={30}
-                            >
-                                <AppText
-                                    title={item.appointmentStatus}
-                                    textColor={AppColors.BLACK}
-                                    textSize={1.6}
-                                />
-                            </AppText>}
-
-                            <View style={{ paddingRight: responsiveWidth(4) }}>
-                                <AppButton
-                                    title={item.status !== 'In Progress' && providerHome ? "Start Appointment" : "COMPLETE"}
-                                    textColor={AppColors.WHITE}
-                                    btnBackgroundColor={providerHome ? AppColors.appGreen : AppColors.ThemeBlue}
-                                    handlePress={() => {
-                                        if(item.status === 'In Progress'){
-                                            nav.navigate('Main', {screen: 'Appointments'})
-                                        }else if(providerHome){
-                                            nav.navigate('Main', {screen: 'Appointments'})
-                                        }else if(providerHome && item.status === 'Upcoming'){
-                                            nav.navigate('Main', {screen: 'Appointments'})
-                                        }else if(item.status === 'Ongoing'){
-                                            nav.navigate('ServiceFeedback')
-                                        }
-                                    }}
-                                    btnWidth={item.status === 'In Progress' || providerHome ? 82 : 32}
-                                    btnPadding={item.status === 'In Progress' || providerHome ? 10 : 5}
-                                    textSize={1.6}
-                                    textFontWeight={false}
-                                />
-                            </View>
-                        </View> : null}
-
-                        {
-                            userRequest && (
-                                <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <AppButton
-                                        title={"ACCEPT"}
-                                        textColor={AppColors.WHITE}
-                                        btnBackgroundColor={AppColors.appGreen}
-                                        handlePress={() => nav.navigate('Main', {screen: 'Appointments'})}
-                                        btnWidth={38}
-                                        btnPadding={7}
-                                        textSize={1.6}
-                                        textFontWeight={false}
-                                    />
-                                    <AppButton
-                                        title={"REJECT"}
-                                        textColor={AppColors.WHITE}
-                                        btnBackgroundColor={AppColors.theme_red}
-                                        handlePress={() => nav.navigate('Main', {screen: 'ProviderHome'})}
-                                        btnWidth={38}
-                                        btnPadding={7}
-                                        textSize={1.6}
-                                        textFontWeight={false}
-                                    />
-                                </View>
-                            )
-                        }
-
-                        {
-                            isSpecialist && ongoingAppointments ? (
-                                <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <AppButton
-                                        title={"ON MY WAY"}
-                                        textColor={AppColors.WHITE}
-                                        btnBackgroundColor={AppColors.ThemeBlue}
-                                        handlePress={() => nav.navigate('Main', {screen: 'ProviderHome'})}
-                                        btnWidth={38}
-                                        btnPadding={7}
-                                        textSize={1.6}
-                                        textFontWeight={false}
-                                    />
-                                    <AppButton
-                                        title={"COMPLETE"}
-                                        textColor={AppColors.WHITE}
-                                        btnBackgroundColor={AppColors.appGreen}
-                                        handlePress={() => nav.navigate('ServiceFeedback')}
-                                        btnWidth={38}
-                                        btnPadding={7}
-                                        textSize={1.6}
-                                        textFontWeight={false}
-                                    />
-                                </View>
-                            ) : null
-                        }
                     </View>
-                )}
-            />
+
+                    {shopDetail && <LineBreak space={2} />}
+
+                    {shopDetail &&
+                        <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
+                            <TouchableOpacity style={styles.iconContainer} onPress={() => nav.navigate("PrivateInbox")}>
+                                <Ionicons
+                                    name="chatbubble-ellipses-sharp"
+                                    size={responsiveFontSize(3)}
+                                    color={AppColors.ThemeBlue}
+                                />
+                            </TouchableOpacity>
+                            <AppButton
+                                title="Book Now"
+                                textColor={AppColors.WHITE}
+                                btnBackgroundColor={AppColors.ThemeBlue}
+                                handlePress={onBookNowPress}
+                                btnWidth={65}
+                                textFontWeight={false}
+                            />
+                        </View>
+                    }
+
+                </View>
+            )}
         </View>
     )
 }

@@ -4,8 +4,12 @@ import { View, Image } from 'react-native'
 import { AppImages } from '../assets/images'
 import AppText from './AppTextComps/AppText'
 import { AppColors, responsiveWidth } from '../utils'
+import { IMAGE_URL } from '../redux/constant'
+import moment from 'moment'
+import StarRating from 'react-native-star-rating-widget'
 
-const Reviews = ({ paddingHorizontal }: any) => {
+const Reviews = ({ paddingHorizontal, data }: any) => {
+    console.log('dataaa', data)
     return (
         <View
             style={{
@@ -16,7 +20,7 @@ const Reviews = ({ paddingHorizontal }: any) => {
         >
             <View>
                 <Image
-                    source={AppImages.follower1}
+                    source={{ uri: `${IMAGE_URL}${data?.userId?.image}` }}
                     style={{ width: 45, height: 45, borderRadius: 100 }}
                 />
             </View>
@@ -25,19 +29,27 @@ const Reviews = ({ paddingHorizontal }: any) => {
                     style={{ flexDirection: 'row', justifyContent: 'space-between' }}
                 >
                     <AppText
-                        title={'Zhang ha'}
+                        title={data?.userId?.fullName}
                         textColor={AppColors.BLACK}
                         textSize={2}
                     />
                     <AppText
-                        title={'2 days ago'}
+                        title={moment(data?.createdAt).fromNow()}
                         textColor={AppColors.GRAY}
                         textSize={1.5}
                     />
                 </View>
-                <Image source={AppImages.rating} style={{ width: responsiveWidth(20) }} />
+                <StarRating
+                    emptyColor="#D1D5DB"
+                    starSize={20}
+                    enableHalfStar={false}
+                    color='#F08603'
+                    rating={data?.rating}
+                //   onChange={setRating}
+                />
+                {/* <Image source={AppImages.rating} style={{ width: responsiveWidth(20) }} /> */}
                 <AppText
-                    title={'The place was clean, great serivce, stall are friendly. I will certainly recommend to my friends and visit again! ;)'}
+                    title={data?.comment}
                     textColor={AppColors.GRAY}
                     textSize={1.8}
                     lineHeight={2.5}

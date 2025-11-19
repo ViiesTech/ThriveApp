@@ -21,16 +21,20 @@ import LineBreak from '../../../components/LineBreak';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SVGXml from '../../../components/SVGXML';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../redux/slices';
+import { IMAGE_URL } from '../../../redux/constant';
 
 const Profile = () => {
   const nav = useNavigation();
-  const { type } = useSelector(state => state.persistedData);
+  const { type, user } = useSelector(state => state.persistedData);
+  const dispatch = useDispatch();
   const [switchStates, setSwitchStates] = useState({
     1: true, // id: initialValue
     2: false,
     3: true,
   });
+  console.log('user', user);
 
   const toggleSwitch = (id, newValue) => {
     setSwitchStates(prev => ({ ...prev, [id]: newValue }));
@@ -42,18 +46,22 @@ const Profile = () => {
       <View style={{ paddingHorizontal: responsiveWidth(4) }}>
         <View style={{ alignItems: 'center' }}>
           <Image
-            source={AppImages.profile}
+            source={
+              user?.image
+                ? { uri: `${IMAGE_URL}${user?.image}` }
+                : AppImages.profile
+            }
             style={{ width: 80, height: 80, borderRadius: 100 }}
           />
           <LineBreak space={1.2} />
           <AppText
-            title={'Samantha Wilson'}
+            title={user?.fullName}
             textColor={AppColors.BLACK}
             textSize={1.8}
             textFontWeight
           />
           <AppText
-            title={'samanthawilson@gmail.com'}
+            title={user?.email}
             textColor={AppColors.GRAY}
             textSize={1.8}
           />
@@ -153,9 +161,12 @@ const Profile = () => {
                 if (item.navTo) {
                   nav.navigate(item.navTo);
                 } else if (item.id == 4 && type === 'Client') {
-                  nav.navigate('Auth');
+                  dispatch(logout());
+
+                  // nav.navigate('Auth');
                 } else if (item.id == 3 && type === 'Provider') {
-                  nav.navigate('Auth');
+                  // nav.navigate('Auth');
+                  dispatch(logout());
                 }
               }}
             >

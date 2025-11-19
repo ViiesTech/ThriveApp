@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import { AppColors, responsiveWidth } from '../../../utils';
+import { ActivityIndicator, View } from 'react-native';
+import { AppColors, responsiveWidth, ShowToast } from '../../../utils';
 import AppText from '../../../components/AppTextComps/AppText';
 import SVGXml from '../../../components/SVGXML';
 import { AppIcons } from '../../../assets/icons';
@@ -12,12 +12,41 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import StarRating from 'react-native-star-rating-widget';
 import { useSelector } from 'react-redux';
+import { useCreateRatingsMutation } from '../../../redux/services/MainIntegration';
 
-const ServiceFeedback = () => {
+const ServiceFeedback = ({ route }) => {
   const nav = useNavigation();
-  const [rating, setRating] = useState(0);
-  const { type } = useSelector(state => state.persistedData);
+  const [rating, setRating] = useState(1);
+  const [feedBack, setFeedBack] = useState(null);
+  const { type, user } = useSelector(state => state.persistedData);
+  const [createRatings, { isLoading, isError }] = useCreateRatingsMutation();
+  const { therapistId } = route?.params;
+  const createRatingsHandler = async () => {
+    if (!feedBack) {
+      return ShowToast('Feedback Shouldnt Be Empty');
+    }
+    let data = {
+      userId: user?._id,
+      therapistId,
+      comment: feedBack,
+      rating: rating,
+    };
+    await createRatings(data)
+      .unwrap()
+      .then(res => {
+        console.log('response of register ===>', res);
+        ShowToast(res.message);
+        if (res.success) {
+          nav.navigate('Main');
+        }
+      })
+      .catch(error => {
+        console.log('error while registering the account ===>', error);
+        ShowToast('Some problem occured');
+      });
+  };
 
+  console.log('rating', rating);
   return (
     <View
       style={{
@@ -49,6 +78,7 @@ const ServiceFeedback = () => {
         <LineBreak space={1} />
         <AppTextInput
           inputPlaceHolder={'write text here...'}
+          onChangeText={val => setFeedBack(val)}
           containerBg={AppColors.inputGrayBg}
           inputHeight={25}
           textAlignVertical={'top'}
@@ -56,12 +86,16 @@ const ServiceFeedback = () => {
         />
         <LineBreak space={2} />
         <AppButton
-          title="Submit Now"
+          title={
+            isLoading ? (
+              <ActivityIndicator size={'large'} color={AppColors.WHITE} />
+            ) : (
+              'Submit Now'
+            )
+          }
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.appGreen}
-          handlePress={() => {
-            nav.navigate('Main');
-          }}
+          handlePress={createRatingsHandler}
           textFontWeight={false}
         />
 
@@ -87,7 +121,11 @@ const ServiceFeedback = () => {
               alignItems: 'center',
             }}
           >
-            <StarRating rating={rating} onChange={setRating} />
+            <StarRating
+              enableHalfStar={false}
+              rating={rating}
+              onChange={setRating}
+            />
             <AppText
               title={`${rating} Star`}
               textColor={AppColors.ThemeBlue}

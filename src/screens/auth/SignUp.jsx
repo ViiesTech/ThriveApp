@@ -40,57 +40,69 @@ const SignUp = ({ route }) => {
     number: '',
     password: '',
   });
+  console.log('state', state);
   const [register, { isLoading }] = useRegisterMutation();
-  const phoneRef = useRef()
+  const phoneRef = useRef();
+  console.log('phoneRef.current?.getValue()', phoneRef.current?.getValue());
   const { type } = useSelector(state => state.persistedData);
 
   // const { type } = route?.params;
 
   // console.log('type ===>', type);
+  const handleGetPhone = () => {
+    const phoneNumber = phoneRef.current?.getValue(); // 👈 gets full number with country code
+    console.log('Phone number:', phoneNumber);
+  };
 
-  // const onSignupPress = async () => {
-  //   if (!state.name) {
-  //     ShowToast('Please enter your name');
-  //     return;
-  //   }
-  //   if (!state.email) {
-  //     ShowToast('Please enter your email');
-  //     return;
-  //   }
-  //   if (!state.number) {
-  //     ShowToast('Please enter your mobile number');
-  //     return;
-  //   }
-  //   if (!state.password) {
-  //     ShowToast('Please enter your password');
-  //     return;
-  //   }
-  //   if (state.password.length < 8) {
-  //     ShowToast('Password is too weak');
-  //     return;
-  //   }
-  //   let data = {
-  //     email: state.email,
-  //     password: state.password,
-  //     phoneNumber: state.number,
-  //     type: type,
-  //   };
-  //   await register(data)
-  //     .unwrap()
-  //     .then(res => {
-  //       console.log('response of register ===>', res);
-  //       ShowToast(res.message);
-  //       if (res.success) {
-  //         nav.navigate('EmailVerification', {
-  //           data: { ...res.data, type: type },
-  //         });
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.log('error while registering the account ===>', error);
-  //       ShowToast('Some problem occured');
-  //     });
-  // };
+  const onSignupPress = async () => {
+    if (!state.name) {
+      ShowToast('Please enter your name');
+      return;
+    }
+    if (!state.email) {
+      ShowToast('Please enter your email');
+      return;
+    }
+    if (!state.number) {
+      ShowToast('Please enter your mobile number');
+      return;
+    }
+    if (!state.password) {
+      ShowToast('Please enter your password');
+      return;
+    }
+    if (state.password.length < 8) {
+      ShowToast('Password is too weak');
+      return;
+    }
+    let data = {
+      fullName:state?.name,
+      email: state.email,
+      password: state.password,
+      phoneNumber: state.number,
+      type: type,
+    };
+    await register(data)
+      .unwrap()
+      .then(res => {
+        console.log('response of register ===>', res);
+        ShowToast(res.message);
+        if (res.success) {
+          nav.navigate('EmailVerification', {
+            data: {
+              ...res.data,
+              token: res.accessToken,
+              type: type,
+              screenType: 'RegisterUser',
+            },
+          });
+        }
+      })
+      .catch(error => {
+        console.log('error while registering the account ===>', error);
+        ShowToast('Some problem occured');
+      });
+  };
 
   const onChangeText = (state, value) => {
     setState(prevState => ({
@@ -105,7 +117,8 @@ const SignUp = ({ route }) => {
         style={{
           paddingHorizontal: responsiveWidth(4),
           paddingVertical: responsiveHeight(2),
-          flex: 1, justifyContent: 'center',
+          flex: 1,
+          justifyContent: 'center',
         }}
       >
         <AuthHeader
@@ -172,7 +185,12 @@ const SignUp = ({ route }) => {
           onBlur={() => setIsPhoneNumberFocused(false)}
         /> */}
 
-        <PhoneInputScreen phoneRef={phoneRef} />
+        <PhoneInputScreen
+          phoneRef={phoneRef}
+          onChangePhoneNumber={number => {
+            onChangeText('number', number);
+          }}
+        />
 
         <LineBreak space={2} />
 
@@ -228,14 +246,14 @@ const SignUp = ({ route }) => {
           indicator={isLoading}
           textColor={AppColors.WHITE}
           btnBackgroundColor={AppColors.appGreen}
-          // handlePress={() => onSignupPress()}
-          handlePress={async () => {
-            if (type === 'Client') {
-              nav.navigate('Main');
-            } else {
-              nav.navigate('FillTheDetails');
-            }
-          }}
+          handlePress={onSignupPress}
+          // handlePress={async () => {
+          //   if (type === 'Client') {
+          //     nav.navigate('Main');
+          //   } else {
+          //     nav.navigate('FillTheDetails');
+          //   }
+          // }}
           textFontWeight={false}
         />
 

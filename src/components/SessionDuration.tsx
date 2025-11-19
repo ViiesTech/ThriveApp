@@ -5,16 +5,16 @@ import { AppColors, responsiveHeight, responsiveWidth } from '../utils'
 import AppText from './AppTextComps/AppText'
 
 type Props = {
-    title?:any;
-    index?:any;
-    isSelected?:any;
-    onPress?:any;
-    containerWidth?:any;
-    textwidth?:any;
-    textSize?:any;
+    title?: any;
+    index?: any;
+    isSelected?: any;
+    onPress?: any;
+    containerWidth?: any;
+    textwidth?: any;
+    textSize?: any;
 }
 
-const SessionDuration = ({title, isSelected, onPress, containerWidth, textwidth, textSize}: Props) => {
+const SessionDuration = ({ title, isSelected, onPress, containerWidth, textwidth, textSize }: Props) => {
     return (
         <TouchableOpacity
             style={{
@@ -22,7 +22,8 @@ const SessionDuration = ({title, isSelected, onPress, containerWidth, textwidth,
                 // gap: 15,
                 backgroundColor: isSelected ? AppColors.ThemeBlue : AppColors.lightestBlue,
                 width: containerWidth ? responsiveWidth(containerWidth) : responsiveWidth(45),
-                height: responsiveHeight(6.5),
+                // height: responsiveHeight(6.5),
+                paddingVertical: responsiveHeight(0.5),
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderRadius: 100,

@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   TouchableOpacity,
@@ -17,6 +17,7 @@ import { AppIcons } from '../../../assets/icons';
 import SVGXml from '../../../components/SVGXML';
 import AppButton from '../../../components/AppButton';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 
 const selectorData = [
   {
@@ -32,11 +33,61 @@ const selectorData = [
   { id: 3, title: 'I don’t have any pets' },
 ];
 
-const LocationInformation = () => {
+const LocationInformation = ({ route }) => {
+  console.log('rofdsute', route?.params);
+  const { data } = route?.params;
   const phoneRef = useRef();
   const [isSelected, setIsSelected] = useState(0);
+  const { location, address, state, zipCode, city, appartment } = useSelector(
+    state => state?.persistedData?.user,
+  );
+  const { user } = useSelector(state => state?.persistedData);
   const [isUaeAddress, setIsUaeAddress] = useState(false);
+  console.log('location', location);
+  console.log('address', address);
+  const [form, setForm] = useState({
+    fullName: '',
+    number: '',
+    address: '',
+    appartment: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    notes: '',
+  });
+
+  console.log('form', form);
   const nav = useNavigation();
+
+  const onChangeText = (state, value) => {
+    setForm(prevState => ({
+      ...prevState,
+      [state]: value,
+    }));
+  };
+
+  useEffect(() => {
+    if (isUaeAddress) {
+      setForm(prev => ({
+        ...prev,
+        address: location?.locationName,
+        appartment: appartment,
+        city: city,
+        state: state,
+        zipCode: zipCode,
+      }));
+    } else {
+      // Clear fields when unchecked
+      setForm(prev => ({
+        ...prev,
+        address: '',
+        appartment: '',
+        city: '',
+        state: '',
+        zipCode: '',
+      }));
+    }
+  }, [isUaeAddress]);
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
@@ -51,7 +102,12 @@ const LocationInformation = () => {
               textSize={1.8}
             />
             <LineBreak space={0.5} />
-            <AppTextInput inputPlaceHolder={'Name'} />
+            <AppTextInput
+              inputHeight={5}
+              value={form?.fullName}
+              onChangeText={val => onChangeText('fullName', val)}
+              inputPlaceHolder={'Name'}
+            />
           </View>
 
           <LineBreak space={1} />
@@ -63,7 +119,12 @@ const LocationInformation = () => {
               textSize={1.8}
             />
             <LineBreak space={0.5} />
-            <PhoneInputScreen phoneRef={phoneRef} />
+            <PhoneInputScreen
+              onChangePhoneNumber={number => {
+                onChangeText('number', number);
+              }}
+              phoneRef={phoneRef}
+            />
           </View>
 
           <LineBreak space={2} />
@@ -99,7 +160,12 @@ const LocationInformation = () => {
               textSize={1.8}
             />
             <LineBreak space={0.5} />
-            <AppTextInput inputPlaceHolder={''} />
+            <AppTextInput
+              value={form?.address}
+              onChangeText={val => onChangeText('address', val)}
+              inputPlaceHolder={''}
+              inputHeight={5}
+            />
           </View>
           <LineBreak space={1} />
 
@@ -110,14 +176,20 @@ const LocationInformation = () => {
               textSize={1.8}
             />
             <LineBreak space={0.5} />
-            <AppTextInput inputPlaceHolder={''} />
+
+            <AppTextInput value={form?.appartment} inputPlaceHolder={''} />
           </View>
           <LineBreak space={1} />
 
           <View>
             <AppText title={'City'} textColor={AppColors.GRAY} textSize={1.8} />
             <LineBreak space={0.5} />
-            <AppTextInput inputPlaceHolder={''} />
+            <AppTextInput
+              value={form?.city}
+              onChangeText={val => onChangeText('city', val)}
+              inputHeight={5}
+              inputPlaceHolder={''}
+            />
           </View>
           <LineBreak space={1} />
 
@@ -128,7 +200,12 @@ const LocationInformation = () => {
               textSize={1.8}
             />
             <LineBreak space={0.5} />
-            <AppTextInput inputPlaceHolder={''} />
+            <AppTextInput
+              value={form?.state}
+              inputHeight={5}
+              onChangeText={val => onChangeText('state', val)}
+              inputPlaceHolder={''}
+            />
           </View>
           <LineBreak space={1} />
 
@@ -139,7 +216,12 @@ const LocationInformation = () => {
               textSize={1.8}
             />
             <LineBreak space={0.5} />
-            <AppTextInput inputPlaceHolder={''} />
+            <AppTextInput
+              value={form?.zipCode}
+              inputHeight={5}
+              onChangeText={val => onChangeText('zipCode', val)}
+              inputPlaceHolder={''}
+            />
           </View>
           <LineBreak space={1} />
 
@@ -164,6 +246,7 @@ const LocationInformation = () => {
             <LineBreak space={1} />
 
             <AppTextInput
+              onChangeText={val => onChangeText('notes', val)}
               inputPlaceHolder={'Enter text'}
               borderRadius={10}
               inputHeight={15}
@@ -173,7 +256,7 @@ const LocationInformation = () => {
           </View>
 
           <LineBreak space={2} />
-
+          {/* 
           <FlatList
             data={selectorData}
             ItemSeparatorComponent={<LineBreak space={2} />}
@@ -204,13 +287,20 @@ const LocationInformation = () => {
                 />
               </View>
             )}
-          />
+          /> */}
 
           <AppButton
             title="Next"
             textColor={AppColors.WHITE}
             btnBackgroundColor={AppColors.appGreen}
-            handlePress={() => nav.navigate('BookingCheckout')}
+            handlePress={() =>
+              nav.navigate('BookingCheckout', {
+                data: {
+                  ...data,
+                  ...form,
+                },
+              })
+            }
             textFontWeight={false}
           />
 

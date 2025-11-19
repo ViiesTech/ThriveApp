@@ -6,8 +6,7 @@ import { AppColors, responsiveFontSize, responsiveHeight, responsiveWidth } from
 
 const CELL_COUNT = 4;
 
-const FieldCode = () => {
-    const [value, setValue] = useState('');
+const FieldCode = ({value,setValue}) => {
     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
         value,

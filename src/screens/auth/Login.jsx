@@ -31,29 +31,32 @@ const Login = () => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [login, { isLoading }] = useLoginMutation();
   const nav = useNavigation();
-  const {type} = useSelector(state => state.persistedData)
+  const { type } = useSelector(state => state.persistedData);
 
   const onLoginPress = async () => {
-    // if(!email) {
-    //   ShowToast('Please enter your email')
-    //   return
-    // }
-    // if(!password) {
-    //   ShowToast('Please enter your password')
-    //   return
-    // }
-    // let data = {
-    //   email: email,
-    //   password: password
-    // }
-    // await login(data).unwrap().then((res) => {
-    //   console.log('response of login ===>',res)
-    //   ShowToast(res.message)
-    // }).catch((error) => {
-    //   console.log('error while login ===>',error)
-    //   ShowToast('Some problem occured')
-    // })
-    nav.navigate('Main');
+    if (!email) {
+      ShowToast('Please enter your email');
+      return;
+    }
+    if (!password) {
+      ShowToast('Please enter your password');
+      return;
+    }
+    let data = {
+      email: email,
+      password: password,
+    };
+    await login(data)
+      .unwrap()
+      .then(res => {
+        console.log('response of login ===>', res);
+        ShowToast(res.message);
+      })
+      .catch(error => {
+        console.log('error while login ===>', error);
+        ShowToast('Some problem occured');
+      });
+    // nav.navigate('Main');
   };
 
   return (
@@ -135,14 +138,15 @@ const Login = () => {
           indicator={isLoading}
           btnBackgroundColor={AppColors.appGreen}
           // handlePress={() => onLoginPress()}
-          handlePress={() => {
-            // const type = await AsyncStorage.getItem('type');
-            // if (type === 'Client') {
-              nav.navigate('Main');
-            // } else {
-            //   nav.navigate('FillTheDetails');
-            // }
-          }}
+          // handlePress={() => {
+          //   // const type = await AsyncStorage.getItem('type');
+          //   // if (type === 'Client') {
+          //   nav.navigate('Main');
+          //   // } else {
+          //   //   nav.navigate('FillTheDetails');
+          //   // }
+          // }}
+          handlePress={onLoginPress}
           textFontWeight={false}
         />
 

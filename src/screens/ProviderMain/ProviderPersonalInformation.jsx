@@ -23,17 +23,30 @@ import NearbyOffers from '../../components/NearbyOffers';
 import { useNavigation } from '@react-navigation/native';
 import SVGXml from '../../components/SVGXML';
 import Services from '../../components/Services';
+import { useSelector } from 'react-redux';
+import { IMAGE_URL } from '../../redux/constant';
 
 const ProviderPersonalInformation = () => {
   const nav = useNavigation();
+  const { fullName, location, travel, serviceId, image, workingDays } =
+    useSelector(state => state.persistedData?.user);
+
+  console.log(
+    'workingDays',
+    serviceId,
+    location,
+    travel,
+    serviceId,
+    workingDays,
+  );
+
   return (
     <Container>
       <AppHeader onBackPress={true} heading={'Personal Information'} />
-
       <View style={{ paddingHorizontal: responsiveWidth(5) }}>
         <View style={{ alignItems: 'center' }}>
           <Image
-            source={AppImages.profile}
+            source={image ? { uri: `${IMAGE_URL}${image}` } : AppImages.profile}
             style={{
               width: 90,
               height: 90,
@@ -43,7 +56,7 @@ const ProviderPersonalInformation = () => {
           <LineBreak space={1} />
 
           <AppText
-            title={'Ronald'}
+            title={fullName?.split(' ')[0]}
             textColor={AppColors.BLACK}
             textSize={2.5}
             textFontWeight
@@ -76,11 +89,7 @@ const ProviderPersonalInformation = () => {
 
         <LineBreak space={1} />
 
-        <AppText
-          title={'Ronald Edward McDonald'}
-          textColor={AppColors.GRAY}
-          textSize={1.9}
-        />
+        <AppText title={fullName} textColor={AppColors.GRAY} textSize={1.9} />
 
         <LineBreak space={1} />
 
@@ -94,9 +103,7 @@ const ProviderPersonalInformation = () => {
         <LineBreak space={1} />
 
         <AppText
-          title={
-            '112233 Broadway Los Angeles, California 92000 Unites States of America'
-          }
+          title={location?.locationName}
           textColor={AppColors.GRAY}
           textSize={1.9}
           textwidth={45}
@@ -105,7 +112,7 @@ const ProviderPersonalInformation = () => {
 
         <LineBreak space={1} />
 
-        <AppText
+        {/* <AppText
           title={'Payout Information'}
           textColor={AppColors.GRAY}
           textSize={2}
@@ -122,7 +129,7 @@ const ProviderPersonalInformation = () => {
           lineHeight={2.5}
         />
 
-        <LineBreak space={1} />
+        <LineBreak space={1} /> */}
 
         <AppText
           title={'Travel Distance'}
@@ -134,7 +141,7 @@ const ProviderPersonalInformation = () => {
         <LineBreak space={1} />
 
         <AppText
-          title={'20 miles'}
+          title={`${travel} miles`}
           textColor={AppColors.GRAY}
           textSize={1.9}
           textwidth={45}
@@ -202,39 +209,14 @@ const ProviderPersonalInformation = () => {
 
           <LineBreak space={3} />
 
-          <View
+          {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
             }}
           >
-            <View
-              style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}
-            >
-              <View
-                style={{
-                  width: 10,
-                  height: 10,
-                  backgroundColor: AppColors.ThemeBlue,
-                  borderRadius: 100,
-                }}
-              />
-              <View>
-                <AppText
-                  title={'Sunday - Monday'}
-                  textColor={AppColors.GRAY}
-                  textSize={1.8}
-                />
-                <LineBreak space={1} />
-                <AppText
-                  title={'08:00 AM - 03:00 PM'}
-                  textColor={AppColors.BLACK}
-                  textSize={1.8}
-                  textFontWeight
-                />
-              </View>
-            </View>
+           
 
             <View
               style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}
@@ -262,6 +244,74 @@ const ProviderPersonalInformation = () => {
                 />
               </View>
             </View>
+            <View
+              style={{ flexDirection: 'row', alignItems: 'center', gap: 15 }}
+            >
+              <View
+                style={{
+                  width: 10,
+                  height: 10,
+                  backgroundColor: AppColors.ThemeBlue,
+                  borderRadius: 100,
+                }}
+              />
+              <View>
+                <AppText
+                  title={'Sunday - Monday'}
+                  textColor={AppColors.GRAY}
+                  textSize={1.8}
+                />
+                <LineBreak space={1} />
+                <AppText
+                  title={'08:00 AM - 03:00 PM'}
+                  textColor={AppColors.BLACK}
+                  textSize={1.8}
+                  textFontWeight
+                />
+              </View>
+            </View>
+          </View> */}
+          <View>
+            <FlatList
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ gap: responsiveHeight(3) }}
+              data={workingDays}
+              renderItem={({ item, index }) => {
+                return (
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      gap: 15,
+                    }}
+                  >
+                    <View
+                      style={{
+                        width: 10,
+                        height: 10,
+                        backgroundColor: AppColors.ThemeBlue,
+                        borderRadius: 100,
+                      }}
+                    />
+                    <View>
+                      <AppText
+                        title={item?.day}
+                        textColor={AppColors.GRAY}
+                        textSize={1.8}
+                      />
+                      <LineBreak space={1} />
+                      <AppText
+                        title={`${item?.startTime} - ${item?.endTime}`}
+                        textColor={AppColors.BLACK}
+                        textSize={1.8}
+                        textFontWeight
+                      />
+                    </View>
+                  </View>
+                );
+              }}
+            />
           </View>
         </View>
         <LineBreak space={3} />
@@ -278,7 +328,7 @@ const ProviderPersonalInformation = () => {
 
       <View style={{ alignItems: 'center' }}>
         <FlatList
-          data={services}
+          data={serviceId}
           ItemSeparatorComponent={<LineBreak space={2} />}
           ListFooterComponent={<LineBreak space={2} />}
           columnWrapperStyle={{
@@ -290,16 +340,27 @@ const ProviderPersonalInformation = () => {
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
+                height: responsiveHeight(20),
                 backgroundColor: AppColors.lightestBlue,
                 borderWidth: 1,
                 borderColor: AppColors.ThemeBlue,
                 borderRadius: 30,
                 paddingBottom: responsiveHeight(1),
+                paddingHorizontal: responsiveHeight(1),
               }}
             >
-              <SVGXml icon={item.icon} width={105} height={85} />
+              {/* <SVGXml icon={item.icon} width={105} height={85} /> */}
+              <Image
+                style={{
+                  borderRadius: responsiveHeight(1),
+                  height: responsiveHeight(12),
+                  width: responsiveWidth(24),
+                  marginBottom: 5,
+                }}
+                source={{ uri: `${IMAGE_URL}${item?.serviceImage}` }}
+              />
               <AppText
-                title={item.title}
+                title={item?.serviceName}
                 textColor={AppColors.ThemeBlue}
                 textSize={1.6}
                 textwidth={25}
