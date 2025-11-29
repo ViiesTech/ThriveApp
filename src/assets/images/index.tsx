@@ -27,6 +27,7 @@ export const AppImages = {
     visa: require('./visa.png'),
     master_big: require('./master_big.png'),
     profile: require('./profile.png'),
+    userDummy: require('./userDummy.png'),
     solo_massage: require('./solo_massage.png'),
     couples_massage: require('./couples_massage.png'),
     corporate_chair_massage: require('./corporate_chair_massage.png'),

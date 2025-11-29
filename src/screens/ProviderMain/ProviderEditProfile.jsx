@@ -82,8 +82,12 @@ const ProviderEditProfile = () => {
     travel,
     serviceId,
     workingDays,
+    addOn,
   } = useSelector(state => state.persistedData?.user);
 
+  console.log('wroking days', workingDays);
+  console.log('serviceid', serviceId);
+  console.log('åddon', addOn);
   const {
     data: addOnData,
     isLoading: addOnLoading,
@@ -109,7 +113,10 @@ const ProviderEditProfile = () => {
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [activeField, setActiveField] = useState({ index: null, type: null }); // type = "from" or "to"
-
+  const [selectedWorkingDays, setSelectedWorkingDays] = useState(
+    workingDays || [],
+  );
+  console.log('selectedWorkingDays', selectedWorkingDays);
   // state for all inputs
   const [time, setTime] = useState([
     { day: 'Monday', startTime: null, endTime: null, isActive: true },
@@ -130,6 +137,17 @@ const ProviderEditProfile = () => {
       );
     }
   }, [isError]);
+  useEffect(() => {
+    if (serviceId?.length > 0) {
+      const ids = serviceId.map(item => item._id); // extract IDs
+      setValue(ids); // pre-fill the dropdown state with previous selections
+    }
+  }, [serviceId]);
+  useEffect(() => {
+    if (addOn?.length > 0) {
+      setValueAddOn(addOn); // you already receive array of IDs for addons
+    }
+  }, [addOn]);
   const showDatePicker = (index, type) => {
     setActiveField({ index, type });
     setDatePickerVisibility(true);
@@ -139,15 +157,47 @@ const ProviderEditProfile = () => {
     setDatePickerVisibility(false);
   };
 
+  const handleAddWorkingDay = () => {
+    const existingDays = selectedWorkingDays.map(w => w.day);
+    const nextDay = daysOfWeek.find(day => !existingDays.includes(day));
+
+    if (nextDay) {
+      setSelectedWorkingDays(prev => [
+        ...prev,
+        {
+          day: nextDay,
+          startTime: null,
+          endTime: null,
+          isActive: true,
+        },
+      ]);
+    } else {
+      alert('All days have already been added!');
+    }
+  };
+  const updateWorkingDayTime = (index, key, value) => {
+    setSelectedWorkingDays(prev => {
+      const updated = [...prev];
+      updated[index] = { ...updated[index], [key]: value };
+      return updated;
+    });
+  };
+
   const handleConfirm = date => {
     const formatted = date.toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit',
     });
 
-    setTime(prev => {
+    setSelectedWorkingDays(prev => {
       const updated = [...prev];
-      updated[activeField.index][activeField.type] = formatted;
+      const index = activeField.index;
+      if (updated[index]) {
+        updated[index] = {
+          ...updated[index],
+          [activeField.type]: formatted,
+        };
+      }
       return updated;
     });
 
@@ -205,11 +255,18 @@ const ProviderEditProfile = () => {
 
   const onUpdatePress = async () => {
     try {
-      const filteredTimes = time.filter(
-        item => item.startTime !== null && item.endTime !== null,
+      const filteredTimes = selectedWorkingDays.filter(
+        item => item.startTime && item.endTime,
       );
       // console.log('filteredTimes',JSON.stringify(filteredTimes))
       // return
+      // const updatedServiceIds = [
+      //   ...new Set([...(serviceId || []), ...(value || [])]),
+      // ];
+      // const updatedAddOns = [
+      //   ...new Set([...(addOn || []), ...(valueAddOn || [])]),
+      // ];
+
       const formData = new FormData();
 
       formData.append('id', _id);
@@ -263,6 +320,7 @@ const ProviderEditProfile = () => {
       if (valueAddOn?.length > 0) {
         formData.append('addOn', JSON.stringify(valueAddOn));
       }
+      console.log('filetee', filteredTimes);
 
       // ✅ Finally call the API
       const res = await updateProfile(formData).unwrap();
@@ -511,7 +569,7 @@ const ProviderEditProfile = () => {
 
         <View>
           <AppText
-            title={'Hours of availibilty (Typo)'}
+            title={'Hours of availibilty'}
             textColor={AppColors.GRAY}
             textSize={1.8}
           />
@@ -595,9 +653,9 @@ const ProviderEditProfile = () => {
             </View>
           </View> */}
 
-          {time.map((item, index) => (
+          {selectedWorkingDays.map((item, index) => (
             <View
-              key={item.day}
+              key={item.day} // use `day` as unique key
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -610,7 +668,6 @@ const ProviderEditProfile = () => {
                 textColor={AppColors.ThemeBlue}
                 textSize={2}
               />
-
               <View
                 style={{ flexDirection: 'row', gap: 5, alignItems: 'center' }}
               >
@@ -623,13 +680,11 @@ const ProviderEditProfile = () => {
                     editable={false}
                   />
                 </TouchableOpacity>
-
                 <AppText
                   title={'-'}
                   textColor={AppColors.ThemeBlue}
                   textSize={6}
                 />
-
                 <TouchableOpacity
                   onPress={() => showDatePicker(index, 'endTime')}
                 >
@@ -654,12 +709,16 @@ const ProviderEditProfile = () => {
         <LineBreak space={2} />
 
         <AppButton
-          title={'Add Another Interval'}
+          title={
+            selectedWorkingDays?.length
+              ? 'Add Another Interval'
+              : 'Add Interval'
+          }
           textColor={AppColors.ThemeBlue}
           borderWidth={1}
           borderColor={AppColors.ThemeBlue}
           btnBackgroundColor={AppColors.WHITE}
-          handlePress={handleAddAnotherInterval}
+          handlePress={handleAddWorkingDay}
           textFontWeight={false}
         />
 

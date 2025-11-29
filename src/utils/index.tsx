@@ -84,6 +84,16 @@ export const services = [
     { id: 4, icon: AppIcons.service3, title: 'Spa Party' },
 ]
 
+export const serviceIconsMap = {
+    'Solo Massage': AppIcons.service1,
+    'Couple Massage': AppIcons.service2,
+    'Corporate Chair Massage': AppIcons.service4,
+    'Group Yoga': AppIcons.service5,
+    'Sound Bath': AppIcons.service6,
+    'Vibroacoustic Therapy': AppIcons.service7,
+    'Facial': AppIcons.service8,
+    'Spa Party': AppIcons.service3,
+};
 export const specialistsYouFollow = [
     { id: 1, img: AppImages.follower1 },
     { id: 2, img: AppImages.follower2 },
@@ -405,8 +415,8 @@ export const typeItems = [
 
 export const homeStats = [
     { id: 1, title: 'Completed Appointments', num: '89' },
-    { id: 2, title: 'Total Earnings', num: '$4.5K' },
-    { id: 3, title: 'Total Tip Earnings', num: '$1.1K' },
+    { id: 2, title: 'Total Earnings', num: '$0' },
+    { id: 3, title: 'Total Tip Earnings', num: '$0' },
 ]
 
 export const todaysAppointments = [

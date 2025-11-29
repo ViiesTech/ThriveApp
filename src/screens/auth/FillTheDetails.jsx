@@ -338,7 +338,7 @@ const FillTheDetails = () => {
               color: AppColors.ThemeBlue,
               paddingHorizontal: responsiveWidth(4),
             }}
-            placeholder="Select Services"
+            placeholder="Select Your Gender"
             mode="BADGE"
             listMode="MODAL"
             style={styles.dropdown}

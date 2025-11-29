@@ -12,6 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { IMAGE_URL } from '../redux/constant'
 import { useUpdateBookingStatusMutation } from '../redux/services/MainIntegration'
 import { useSelector } from 'react-redux'
+import { AppImages } from '../assets/images'
 
 type Prop = {
   data?: [];
@@ -156,212 +157,230 @@ const BookingsCards = ({ data, isRequest, currentBookingStatus, isLoading, shopD
           <FlatList
             data={data}
             contentContainerStyle={{ paddingHorizontal: responsiveWidth(4) }}
-            renderItem={({ item, index }) => (
-              <View
-                style={{
-                  backgroundColor: AppColors.WHITE,
-                  elevation: 5,
-                  borderRadius: 15,
-                  marginVertical: responsiveHeight(1),
-                  paddingVertical: responsiveHeight(2.5),
-                  paddingLeft: responsiveWidth(5),
-                }}
-              >
+            renderItem={({ item, index }) => {
+              const finalImage =
+                isSpecialist || isRequest
+                  ? item?.userId?.image
+                  : item?.therapistId?.image;
+              return (
                 <View
                   style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    backgroundColor: AppColors.WHITE,
+                    elevation: 5,
+                    borderRadius: 15,
+                    marginVertical: responsiveHeight(1),
+                    paddingVertical: responsiveHeight(2.5),
+                    paddingLeft: responsiveWidth(5),
                   }}
                 >
-                  <AppText
-                    title={`Appointment # ${index + 1}`}
-                    textColor={AppColors.ThemeBlue}
-                    textSize={1.6}
-                    textFontWeight
-                  />
-
                   <View
                     style={{
-                      backgroundColor: item?.bookingStatus === 'Available' ? AppColors.lightestBlue : providerHome || isSpecialist || userRequest ? AppColors.ThemeBlue : AppColors.appGreen,
-                      paddingHorizontal: responsiveWidth(4),
-                      paddingVertical: responsiveHeight(0.7),
-                      borderTopLeftRadius: 20,
-                      borderBottomLeftRadius: 20,
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
                     }}
                   >
                     <AppText
-                      title={
-                        item?.bookingStatus === 'Completed'
-                          ? 'Completed'
-                          : item?.bookingStatus === 'Accepted' && item?.therapistStatus === 'Upcoming'
-                            ? 'Upcoming' : item?.bookingStatus === 'Accepted' && item?.therapistStatus !== 'Upcoming' && providerHome ?
-                              'In Progress' : 'Ongoing'
-                      } textColor={item?.bookingStatus === 'Available' ? AppColors.ThemeBlue : AppColors.WHITE}
+                      title={`Appointment # ${index + 1}`}
+                      textColor={AppColors.ThemeBlue}
                       textSize={1.6}
-                      textFontWeight={item?.bookingStatus === 'Available' ? true : false}
-                    />
-                  </View>
-                </View>
-
-                <LineBreak space={1} />
-
-                <View style={{ flexDirection: 'row', gap: 10 }}>
-                  <Image source={{ uri: `${IMAGE_URL}${isSpecialist || isRequest ? item?.userId?.image : item?.therapistId?.image}` }} style={{ width: 40, height: 40, borderRadius: 100 }} />
-
-                  <View>
-                    <AppText
-                      title={isSpecialist || isRequest ? item?.userId?.fullName : item?.therapistId?.fullName}
-                      textColor={AppColors.BLACK}
-                      textSize={1.8}
                       textFontWeight
                     />
-                    <AppText
-                      title={isSpecialist || isRequest ? item?.address || item?.userId?.location?.locationName : item?.therapistId?.location?.locationName}
-                      textColor={AppColors.GRAY}
-                      textSize={1.5}
-                    />
 
-                    <LineBreak space={1.5} />
-
-                    {!shopDetail && <View
+                    <View
                       style={{
-                        flexDirection: 'row',
-                        gap: 20,
-                        alignItems: 'center',
+                        backgroundColor: item?.bookingStatus === 'Available' ? AppColors.lightestBlue : providerHome || isSpecialist || userRequest ? AppColors.ThemeBlue : AppColors.appGreen,
+                        paddingHorizontal: responsiveWidth(4),
+                        paddingVertical: responsiveHeight(0.7),
+                        borderTopLeftRadius: 20,
+                        borderBottomLeftRadius: 20,
                       }}
                     >
                       <AppText
-                        title={'Service: '}
-                        textColor={AppColors.ThemeBlue}
-                        textSize={1.5}
-                      >
-                        <AppText
-                          title={`(${item?.serviceId?.serviceName})`}
-                          textColor={AppColors.GRAY}
-                          textSize={1.5}
-                        />
-                      </AppText>
-                      {item?.date && <AppText
-                        title={'Date: '}
-                        textColor={AppColors.ThemeBlue}
-                        textSize={1.5}
-                      >
-                        <AppText
-                          title={`(${item?.date})`}
-                          textColor={AppColors.GRAY}
-                          textSize={1.5}
-                        />
-                      </AppText>}
-                    </View>}
+                        title={
+                          item?.bookingStatus === 'Completed'
+                            ? 'Completed'
+                            : item?.bookingStatus === 'Accepted' && item?.therapistStatus === 'Upcoming'
+                              ? 'Upcoming' : item?.bookingStatus === 'Accepted' && item?.therapistStatus !== 'Upcoming' && providerHome ?
+                                'In Progress' : 'Ongoing'
+                        } textColor={item?.bookingStatus === 'Available' ? AppColors.ThemeBlue : AppColors.WHITE}
+                        textSize={1.6}
+                        textFontWeight={item?.bookingStatus === 'Available' ? true : false}
+                      />
+                    </View>
+                  </View>
 
-                    {shopDetail && <View
-                      style={{
-                        flexDirection: 'row',
-                        gap: 20,
-                        alignItems: 'center',
-                      }}
-                    >
-                      <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                        <AntDesign
-                          name="star"
-                          size={responsiveFontSize(1.5)}
-                          color={AppColors.Yellow}
-                        />
+                  <LineBreak space={1} />
+
+                  <View style={{ flexDirection: 'row', gap: 10 }}>
+                    <Image
+                      // source={{ uri: `${IMAGE_URL}${isSpecialist || isRequest ? item?.userId?.image : item?.therapistId?.image}` }} style={{ width: 40, height: 40, borderRadius: 100 }}
+                      // source={
+                      //   item?.userId?.image || item?.therapistId?.image
+                      //     ? { uri: `${IMAGE_URL}${isSpecialist || isRequest ? item?.userId?.image : item?.therapistId?.image}` }
+                      //     : AppImages.userDummy
+                      // }
+                      source={
+                        finalImage
+                          ? { uri: `${IMAGE_URL}${finalImage}` }
+                          : AppImages.userDummy
+                      }
+                      style={{ height: responsiveHeight(6), width: responsiveWidth(13.5), borderRadius: responsiveHeight(4) }}
+                    />
+
+                    <View>
+                      <AppText
+                        title={isSpecialist || isRequest ? item?.userId?.fullName : item?.therapistId?.fullName}
+                        textColor={AppColors.BLACK}
+                        textSize={1.8}
+                        textFontWeight
+                      />
+                      <AppText
+                        title={isSpecialist || isRequest ? item?.address || item?.userId?.location?.locationName : item?.therapistId?.location?.locationName}
+                        textColor={AppColors.GRAY}
+                        textSize={1.5}
+                      />
+
+                      <LineBreak space={1.5} />
+
+                      {!shopDetail && <View
+                        style={{
+                          flexDirection: 'row',
+                          gap: 20,
+                          alignItems: 'center',
+                        }}
+                      >
                         <AppText
-                          title={item.rating}
-                          textColor={AppColors.BLACK}
+                          title={'Service: '}
+                          textColor={AppColors.ThemeBlue}
                           textSize={1.5}
-                          textFontWeight
-                        >{" "}
+                        >
                           <AppText
-                            title={`(${item.number})`}
+                            title={`(${item?.serviceId?.serviceName})`}
                             textColor={AppColors.GRAY}
                             textSize={1.5}
                           />
                         </AppText>
-                      </View>
-                      <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
-                        <FontAwesome5
-                          name="tag"
-                          size={responsiveFontSize(1.5)}
-                          color={AppColors.ThemeBlue}
-                        />
-                        <AppText
-                          title={item.label}
+                        {item?.date && <AppText
+                          title={'Date: '}
                           textColor={AppColors.ThemeBlue}
                           textSize={1.5}
-                          textFontWeight
                         >
                           <AppText
-                            title={item.tex}
-                            textColor={AppColors.BLACK}
+                            title={`(${item?.date})`}
+                            textColor={AppColors.GRAY}
                             textSize={1.5}
                           />
-                        </AppText>
-                      </View>
-                    </View>}
+                        </AppText>}
+                      </View>}
+
+                      {shopDetail && <View
+                        style={{
+                          flexDirection: 'row',
+                          gap: 20,
+                          alignItems: 'center',
+                        }}
+                      >
+                        <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                          <AntDesign
+                            name="star"
+                            size={responsiveFontSize(1.5)}
+                            color={AppColors.Yellow}
+                          />
+                          <AppText
+                            title={item.rating}
+                            textColor={AppColors.BLACK}
+                            textSize={1.5}
+                            textFontWeight
+                          >{" "}
+                            <AppText
+                              title={`(${item.number})`}
+                              textColor={AppColors.GRAY}
+                              textSize={1.5}
+                            />
+                          </AppText>
+                        </View>
+                        <View style={{ flexDirection: 'row', gap: 8, alignItems: 'center' }}>
+                          <FontAwesome5
+                            name="tag"
+                            size={responsiveFontSize(1.5)}
+                            color={AppColors.ThemeBlue}
+                          />
+                          <AppText
+                            title={item.label}
+                            textColor={AppColors.ThemeBlue}
+                            textSize={1.5}
+                            textFontWeight
+                          >
+                            <AppText
+                              title={item.tex}
+                              textColor={AppColors.BLACK}
+                              textSize={1.5}
+                            />
+                          </AppText>
+                        </View>
+                      </View>}
+                    </View>
                   </View>
-                </View>
 
-                {shopDetail && <LineBreak space={2} />}
+                  {shopDetail && <LineBreak space={2} />}
 
-                {shopDetail &&
-                  <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
-                    <TouchableOpacity style={styles.iconContainer} onPress={() => nav.navigate("PrivateInbox")}>
-                      <Ionicons
-                        name="chatbubble-ellipses-sharp"
-                        size={responsiveFontSize(3)}
-                        color={AppColors.ThemeBlue}
-                      />
-                    </TouchableOpacity>
-                    <AppButton
-                      title="Book Now"
-                      textColor={AppColors.WHITE}
-                      btnBackgroundColor={AppColors.ThemeBlue}
-                      handlePress={() => nav.navigate('LocationInformation')}
-                      btnWidth={65}
-                      textFontWeight={false}
-                    />
-                  </View>
-                }
-
-                {item?.bookingStatus === 'Ongoing' || userRequest || item?.bookingStatus === 'In Progress' || providerHome ? <LineBreak space={2} /> : null}
-
-                {/* {item?.therapistStatus && isUser || item?.bookingStatus === 'In Progress' || providerHome ? <View style={item?.bookingStatus === 'Ongoing' || item.status === 'In Progress' || providerHome ? { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' } : null}> */}
-                {item?.therapistStatus && item?.bookingStatus === 'Accepted' && isUser &&
-                  <View style={{ marginTop: responsiveHeight(1.5) }}>
-                    <AppText
-                      title={'Status: '}
-                      textColor={AppColors.ThemeBlue}
-                      textSize={1.6}
-                      textFontWeight
-                      textwidth={30}
-                    >
-                      <AppText
-                        title={item?.therapistStatus}
-                        textColor={AppColors.BLACK}
-                        textSize={1.6}
-                      />
-                    </AppText>
-                  </View>
-                }
-                {
-                  item?.bookingStatus === 'Completed' && isUser ? (
-                    <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), marginTop: responsiveHeight(2), justifyContent: 'space-between', alignItems: 'center' }}>
+                  {shopDetail &&
+                    <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
+                      <TouchableOpacity style={styles.iconContainer} onPress={() => nav.navigate("PrivateInbox")}>
+                        <Ionicons
+                          name="chatbubble-ellipses-sharp"
+                          size={responsiveFontSize(3)}
+                          color={AppColors.ThemeBlue}
+                        />
+                      </TouchableOpacity>
                       <AppButton
-                        title="Give Feedback"
+                        title="Book Now"
                         textColor={AppColors.WHITE}
-                        btnBackgroundColor={AppColors?.ThemeBlue}
-                        handlePress={() => nav.navigate('ServiceFeedback', { therapistId: item?.therapistId?._id })}
-                        btnWidth={82}
-                        btnPadding={8}
-                        textSize={1.6}
+                        btnBackgroundColor={AppColors.ThemeBlue}
+                        handlePress={() => nav.navigate('LocationInformation')}
+                        btnWidth={65}
                         textFontWeight={false}
                       />
                     </View>
-                  ) : null
-                }
-                {/* {item?.bookingStatus === 'Completed' && isUser &&
+                  }
+
+                  {item?.bookingStatus === 'Ongoing' || userRequest || item?.bookingStatus === 'In Progress' || providerHome ? <LineBreak space={2} /> : null}
+
+                  {/* {item?.therapistStatus && isUser || item?.bookingStatus === 'In Progress' || providerHome ? <View style={item?.bookingStatus === 'Ongoing' || item.status === 'In Progress' || providerHome ? { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' } : null}> */}
+                  {item?.therapistStatus && item?.bookingStatus === 'Accepted' && isUser &&
+                    <View style={{ marginTop: responsiveHeight(1.5) }}>
+                      <AppText
+                        title={'Status: '}
+                        textColor={AppColors.ThemeBlue}
+                        textSize={1.6}
+                        textFontWeight
+                        textwidth={30}
+                      >
+                        <AppText
+                          title={item?.therapistStatus}
+                          textColor={AppColors.BLACK}
+                          textSize={1.6}
+                        />
+                      </AppText>
+                    </View>
+                  }
+                  {
+                    item?.bookingStatus === 'Completed' && isUser ? (
+                      <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), marginTop: responsiveHeight(2), justifyContent: 'space-between', alignItems: 'center' }}>
+                        <AppButton
+                          title="Give Feedback"
+                          textColor={AppColors.WHITE}
+                          btnBackgroundColor={AppColors?.ThemeBlue}
+                          handlePress={() => nav.navigate('ServiceFeedback', { therapistId: item?.therapistId?._id })}
+                          btnWidth={82}
+                          btnPadding={8}
+                          textSize={1.6}
+                          textFontWeight={false}
+                        />
+                      </View>
+                    ) : null
+                  }
+                  {/* {item?.bookingStatus === 'Completed' && isUser &&
                   <View style={{ marginTop: responsiveHeight(1.5) }}>
                     <AppText
                       title={'Status: '}
@@ -378,112 +397,113 @@ const BookingsCards = ({ data, isRequest, currentBookingStatus, isLoading, shopD
                     </AppText>
                   </View>
                 } */}
-                {providerHome && item.bookingStatus === "Accepted" && (
-                  <View style={{ paddingRight: responsiveWidth(4) }}>
-                    <AppButton
-                      title={
-                        buttonLoading === `provider-${item._id}`
-                          ? <ActivityIndicator size="small" color={AppColors.WHITE} />
-                          : getButtonTitle(item.bookingStatus, item.therapistStatus)
-                      }
-                      textColor={AppColors.WHITE}
-                      btnBackgroundColor={AppColors.appGreen}
-                      handlePress={() => {
-                        const next = getNextStatus(item.therapistStatus);
-                        UpdateBookingStatusHandler({
-                          id: item._id,
-                          type: next.bookingStatus || null,
-                          therapistStatus: next.therapistStatus || null,
-                          buttonKey: `provider-${item._id}`, // UNIQUE key for this button
-                        });
-                      }}
-                      btnWidth={82}
-                      btnPadding={10}
-                      textSize={1.6}
-                    />
-                  </View>
-                )}
-
-                {/* </View> : null} */}
-
-                {
-                  userRequest && (
-                    <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
+                  {providerHome && item.bookingStatus === "Accepted" && (
+                    <View style={{ paddingRight: responsiveWidth(4) }}>
                       <AppButton
                         title={
-                          buttonLoading === `Accepted-${item?._id}`
-                            ? <ActivityIndicator size={'small'} color={AppColors.WHITE} />
-                            : "ACCEPT"
-                        } textColor={AppColors.WHITE}
-                        btnBackgroundColor={AppColors.appGreen}
-                        // handlePress={() => nav.navigate('Main', { screen: 'Appointments' })}
-                        handlePress={() => AcceptRejectHandler({ id: item?._id, type: 'Accepted' })}
-                        btnWidth={38}
-                        btnPadding={7}
-                        textSize={1.6}
-                        textFontWeight={false}
-                      />
-                      <AppButton
-                        title={
-                          buttonLoading === `Rejected-${item?._id}`
-                            ? <ActivityIndicator size={'small'} color={AppColors.WHITE} />
-                            : "REJECT"
+                          buttonLoading === `provider-${item._id}`
+                            ? <ActivityIndicator size="small" color={AppColors.WHITE} />
+                            : getButtonTitle(item.bookingStatus, item.therapistStatus)
                         }
                         textColor={AppColors.WHITE}
-                        btnBackgroundColor={AppColors.theme_red}
-                        // handlePress={() => nav.navigate('Main', { screen: 'ProviderHome' })}
-                        handlePress={() => AcceptRejectHandler({ id: item?._id, type: 'Rejected' })}
-                        btnWidth={38}
-                        btnPadding={7}
-                        textSize={1.6}
-                        textFontWeight={false}
-                      />
-                    </View>
-                  )
-                }
-
-                {
-                  isSpecialist && ongoingAppointments ? (
-                    <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), marginTop: responsiveHeight(2), justifyContent: 'space-between', alignItems: 'center' }}>
-                      <AppButton
-                        title={
-                          buttonLoading === `Accepted-${item?._id}`
-                            ? <ActivityIndicator size="small" color={AppColors.WHITE} />
-                            : item?.therapistStatus === "Upcoming"
-                              ? "ON MY WAY"
-                              : item?.therapistStatus === "EnRoute"
-                                ? "Arrived"
-                                : null
-                        } textColor={AppColors.WHITE}
-                        btnBackgroundColor={AppColors.ThemeBlue}
-                        // handlePress={() => nav.navigate('Main', { screen: 'ProviderHome' })}
-                        handlePress={() => UpdateBookingStatusHandler({ id: item?._id, type: 'Accepted', therapistStatus: item?.therapistStatus === "Upcoming" ? "EnRoute" : item?.therapistStatus === "EnRoute" ? "Arrive" : null })}
-                        btnWidth={38}
-                        disabled={item?.therapistStatus === 'Arrive'}
-                        btnPadding={7}
-                        textSize={1.6}
-                        textFontWeight={false}
-                      />
-                      <AppButton
-
-                        title={
-                          buttonLoading === `Completed-${item?._id}`
-                            ? <ActivityIndicator size="small" color={AppColors.WHITE} />
-                            : "COMPLETE"
-                        } textColor={AppColors.WHITE}
                         btnBackgroundColor={AppColors.appGreen}
-                        // handlePress={() => nav.navigate('ServiceFeedback')}
-                        handlePress={() => UpdateBookingStatusHandler({ id: item?._id, type: 'Completed', therapistStatus: 'Arrive' })}
-                        btnWidth={38}
-                        btnPadding={7}
+                        handlePress={() => {
+                          const next = getNextStatus(item.therapistStatus);
+                          UpdateBookingStatusHandler({
+                            id: item._id,
+                            type: next.bookingStatus || null,
+                            therapistStatus: next.therapistStatus || null,
+                            buttonKey: `provider-${item._id}`, // UNIQUE key for this button
+                          });
+                        }}
+                        btnWidth={82}
+                        btnPadding={10}
                         textSize={1.6}
-                        textFontWeight={false}
                       />
                     </View>
-                  ) : null
-                }
-              </View>
-            )}
+                  )}
+
+                  {/* </View> : null} */}
+
+                  {
+                    userRequest && (
+                      <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
+                        <AppButton
+                          title={
+                            buttonLoading === `Accepted-${item?._id}`
+                              ? <ActivityIndicator size={'small'} color={AppColors.WHITE} />
+                              : "ACCEPT"
+                          } textColor={AppColors.WHITE}
+                          btnBackgroundColor={AppColors.appGreen}
+                          // handlePress={() => nav.navigate('Main', { screen: 'Appointments' })}
+                          handlePress={() => AcceptRejectHandler({ id: item?._id, type: 'Accepted' })}
+                          btnWidth={38}
+                          btnPadding={7}
+                          textSize={1.6}
+                          textFontWeight={false}
+                        />
+                        <AppButton
+                          title={
+                            buttonLoading === `Rejected-${item?._id}`
+                              ? <ActivityIndicator size={'small'} color={AppColors.WHITE} />
+                              : "REJECT"
+                          }
+                          textColor={AppColors.WHITE}
+                          btnBackgroundColor={AppColors.theme_red}
+                          // handlePress={() => nav.navigate('Main', { screen: 'ProviderHome' })}
+                          handlePress={() => AcceptRejectHandler({ id: item?._id, type: 'Rejected' })}
+                          btnWidth={38}
+                          btnPadding={7}
+                          textSize={1.6}
+                          textFontWeight={false}
+                        />
+                      </View>
+                    )
+                  }
+
+                  {
+                    isSpecialist && ongoingAppointments ? (
+                      <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), marginTop: responsiveHeight(2), justifyContent: 'space-between', alignItems: 'center' }}>
+                        <AppButton
+                          title={
+                            buttonLoading === `Accepted-${item?._id}`
+                              ? <ActivityIndicator size="small" color={AppColors.WHITE} />
+                              : item?.therapistStatus === "Upcoming"
+                                ? "ON MY WAY"
+                                : item?.therapistStatus === "EnRoute"
+                                  ? "Arrived"
+                                  : null
+                          } textColor={AppColors.WHITE}
+                          btnBackgroundColor={AppColors.ThemeBlue}
+                          // handlePress={() => nav.navigate('Main', { screen: 'ProviderHome' })}
+                          handlePress={() => UpdateBookingStatusHandler({ id: item?._id, type: 'Accepted', therapistStatus: item?.therapistStatus === "Upcoming" ? "EnRoute" : item?.therapistStatus === "EnRoute" ? "Arrive" : null })}
+                          btnWidth={38}
+                          disabled={item?.therapistStatus === 'Arrive'}
+                          btnPadding={7}
+                          textSize={1.6}
+                          textFontWeight={false}
+                        />
+                        <AppButton
+
+                          title={
+                            buttonLoading === `Completed-${item?._id}`
+                              ? <ActivityIndicator size="small" color={AppColors.WHITE} />
+                              : "COMPLETE"
+                          } textColor={AppColors.WHITE}
+                          btnBackgroundColor={AppColors.appGreen}
+                          // handlePress={() => nav.navigate('ServiceFeedback')}
+                          handlePress={() => UpdateBookingStatusHandler({ id: item?._id, type: 'Completed', therapistStatus: 'Arrive' })}
+                          btnWidth={38}
+                          btnPadding={7}
+                          textSize={1.6}
+                          textFontWeight={false}
+                        />
+                      </View>
+                    ) : null
+                  }
+                </View>
+              )
+            }}
           />
         </View>
       ) : (

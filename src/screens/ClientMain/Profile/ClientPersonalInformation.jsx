@@ -26,7 +26,7 @@ const ClientPersonalInformation = () => {
     appartment,
     image: savedImage,
   } = useSelector(state => state.persistedData?.user);
-  console.log('address',address)
+  console.log('address', address);
   const data = [
     { id: 1, title: 'Full Name', subTitle: fullName },
     { id: 2, title: 'Email address', subTitle: email },

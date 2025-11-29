@@ -34,7 +34,7 @@ const selectorData = [
 ];
 
 const LocationInformation = ({ route }) => {
-  console.log('rofdsute', route?.params);
+  console.log('rofdsuteddd', route?.params);
   const { data } = route?.params;
   const phoneRef = useRef();
   const [isSelected, setIsSelected] = useState(0);
@@ -42,6 +42,7 @@ const LocationInformation = ({ route }) => {
     state => state?.persistedData?.user,
   );
   const { user } = useSelector(state => state?.persistedData);
+  const [therapistLoading, setTherapistLoading] = useState(false);
   const [isUaeAddress, setIsUaeAddress] = useState(false);
   console.log('location', location);
   console.log('address', address);
@@ -70,7 +71,7 @@ const LocationInformation = ({ route }) => {
     if (isUaeAddress) {
       setForm(prev => ({
         ...prev,
-        address: location?.locationName,
+        address: address,
         appartment: appartment,
         city: city,
         state: state,
@@ -177,7 +178,12 @@ const LocationInformation = ({ route }) => {
             />
             <LineBreak space={0.5} />
 
-            <AppTextInput value={form?.appartment} inputPlaceHolder={''} />
+            <AppTextInput
+              inputHeight={5}
+              onChangeText={val => onChangeText('appartment', val)}
+              value={form?.appartment}
+              inputPlaceHolder={''}
+            />
           </View>
           <LineBreak space={1} />
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "250556430264",
+    "project_id": "ithriv-fb24a",
+    "storage_bucket": "ithriv-fb24a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:250556430264:android:be2ac91b51f469cd70c14d",
+        "android_client_info": {
+          "package_name": "com.thriveapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD7BHRGWqxGm1G3eJKdFJIVu4dVyW803E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

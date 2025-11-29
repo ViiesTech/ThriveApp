@@ -59,8 +59,10 @@ const MassageCategories = ({ route }) => {
   const { heading, id } = route?.params;
   const [getServiceById, { data, isLoading, isError }] =
     useLazyGetServiceByIdQuery();
-  const [searchTherapist, { data: searchedData, searchLoading, searchError }] =
-    useLazySearchTherapistQuery();
+  const [
+    searchTherapist,
+    { data: searchedData, isLoading: searchLoading, isFetching },
+  ] = useLazySearchTherapistQuery();
   console.log('searchedData', searchedData);
   const nav = useNavigation();
   const [selectedGender, setSelectedGender] = useState(0);
@@ -81,6 +83,8 @@ const MassageCategories = ({ route }) => {
   const [selectedSession, setSelectedSession] = useState(0);
   const [selectedAddOns, setSelectedAddOns] = useState([]);
   const [groupSize, setGroupSize] = useState(1);
+  const [disableButton, setDisableButton] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const [daysInMonth, setDaysInMonth] = useState([]);
   const serviceName = data?.data?.serviceName;
@@ -88,6 +92,13 @@ const MassageCategories = ({ route }) => {
   // const endOfMonth = currentMonth.clone().endOf('month');
   console.log('selectedTherapistId', selectedTherapistId);
   console.log('selectedDate', moment(selectedDate));
+  useEffect(() => {
+    if (isFetching) {
+      setDisableButton(true);
+    } else {
+      setDisableButton(false);
+    }
+  }, [isFetching]);
   useEffect(() => {
     const startOfMonth = currentMonth.clone().startOf('month');
     const endOfMonth = currentMonth.clone().endOf('month');
@@ -110,6 +121,8 @@ const MassageCategories = ({ route }) => {
       setGroupSize(2);
     }
   }, [serviceName]);
+
+  console.log('isFetching', isFetching);
   // const [serviceDetails, setServiceDetails] = useState();
   // console.log('serviceDetails', serviceDetails);
 
@@ -155,7 +168,7 @@ const MassageCategories = ({ route }) => {
         console.log('ress', res);
       })
       .catch(error => {
-        console.log('erorr', error);
+        console.log('erorrdsfs service', error);
         ShowToast(
           error?.response?.data?.message ||
             error?.message ||
@@ -176,12 +189,15 @@ const MassageCategories = ({ route }) => {
     if (selectedGender && selectedGender !== 'No Preference') {
       payload.gender = selectedGender; // ✅ conditionally add gender
     }
+    console.log('payload', payload);
 
     searchTherapist(payload)
       .unwrap()
       .then(res => {
         if (!res?.success) {
-          ShowToast(res?.message);
+          setErrorMsg(res?.message);
+        } else {
+          setErrorMsg(null);
         }
         console.log('ress', res);
       })
@@ -562,7 +578,7 @@ const MassageCategories = ({ route }) => {
               />
             )}
 
-            {!isCheckedProvider && <LineBreak space={3} />}
+            {/* {!isCheckedProvider && <LineBreak space={3} />} */}
 
             {/* {heading === 'Corporate Chair Massage' && (
               <>
@@ -597,7 +613,19 @@ const MassageCategories = ({ route }) => {
               </>
             )} */}
 
-            {isCheckedProvider && (
+            {errorMsg ? (
+              <View>
+                <AppText
+                  textSize={2.1}
+                  title={errorMsg}
+                  textAlignment={'center'}
+                  textFontWeight
+                  textColor={AppColors.BLACK}
+                />
+              </View>
+            ) : null}
+            <LineBreak space={errorMsg ? 2 : 0} />
+            {isCheckedProvider && !disableButton && (
               <AppButton
                 title="Next"
                 textColor={AppColors.WHITE}
@@ -609,6 +637,10 @@ const MassageCategories = ({ route }) => {
                     return ShowToast('Plz Choose A Date!');
                   } else if (!selectedTime) {
                     return ShowToast('Plz Choose Appointment Time!');
+                  } else if (!selectedTherapistId?.length) {
+                    return ShowToast(
+                      'No Providers Found Matching Your Criteria!',
+                    );
                   }
                   nav.navigate('LocationInformation', {
                     data: {

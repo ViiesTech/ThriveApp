@@ -24,7 +24,7 @@ const ShopDetailsCard = ({ data, onBookNowPress }) => {
         <>
             <View style={{ backgroundColor: AppColors.WHITE, paddingHorizontal: responsiveWidth(5) }}>
                 <View style={{ position: 'relative', top: responsiveHeight(-2.5) }}>
-                    <Image source={{ uri: `${IMAGE_URL}${image}` }} style={{ width: 50, height: 50, borderRadius: 100 }} />
+                    <Image source={image ? { uri: `${IMAGE_URL}${image}` } : AppImages.userDummy} style={{ width: 50, height: 50, borderRadius: 100 }} />
                 </View>
             </View>
             <ScrollView style={{ flex: 1, backgroundColor: AppColors.WHITE, paddingHorizontal: responsiveWidth(5), marginTop: responsiveHeight(-2) }}>
@@ -190,7 +190,7 @@ const ShopDetailsCard = ({ data, onBookNowPress }) => {
                                     />
                                 </View>
                                 <LineBreak space={2} />
-                                <Services disabled data={serviceId} isNavigate={false} />
+                                <Services providerProfile={true} disabled data={serviceId} isNavigate={false} />
                                 {/* <MostSearchInterest
                                     data={mostSearchInterestSerivces}
                                     services={'services'}
@@ -279,7 +279,7 @@ const ShopDetailsCard = ({ data, onBookNowPress }) => {
                                 </TouchableOpacity> */}
                                     </View>
                                     <View style={{ marginTop: responsiveHeight(2) }}>
-                                        <FlatList contentContainerStyle={{gap:responsiveHeight(2)}} data={data?.providerReviews} renderItem={({ item, index }) => {
+                                        <FlatList contentContainerStyle={{ gap: responsiveHeight(2) }} data={data?.providerReviews} renderItem={({ item, index }) => {
                                             return (
                                                 <Reviews data={item} paddingHorizontal={-1} />
                                             )

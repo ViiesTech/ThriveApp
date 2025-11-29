@@ -6,6 +6,7 @@ import { AppColors, responsiveWidth } from '../utils'
 import AppText from './AppTextComps/AppText'
 import LineBreak from './LineBreak'
 import { IMAGE_URL } from '../redux/constant'
+import { AppImages } from '../assets/images'
 
 type Props = {
     data?: any;
@@ -54,7 +55,7 @@ const YouFollow = ({ data, paddingHorizontal, disabledSelection, selectedTherapi
                             }}
                         >
                             <Image
-                                source={{ uri: `${IMAGE_URL}${item.image}` }}
+                                source={item.image ? { uri: `${IMAGE_URL}${item.image}`} : AppImages.userDummy}
                                 resizeMode="cover" // ✅ fills the circle better
                                 style={{
                                     width: '100%',

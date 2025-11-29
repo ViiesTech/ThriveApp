@@ -5,6 +5,8 @@ import { AppColors, responsiveFontSize, responsiveHeight, responsiveWidth } from
 import LineBreak from './LineBreak'
 import AppText from './AppTextComps/AppText'
 import Feather from 'react-native-vector-icons/Feather';
+import { IMAGE_URL } from '../redux/constant'
+import { AppImages } from '../assets/images'
 
 type props = {
     image?: ImageSourcePropType,
@@ -17,6 +19,7 @@ type props = {
 }
 
 const Thread = ({ image, name, message, newMessage, cardOnPress, onLongPress, selectedChat }: props) => {
+    console.log('image', image)
     return (
         <TouchableOpacity
             style={[
@@ -33,7 +36,7 @@ const Thread = ({ image, name, message, newMessage, cardOnPress, onLongPress, se
         >
             <View style={styles.row}>
                 {/* Left side: profile */}
-                <Image source={image} style={styles.imageStyle} />
+                <Image source={image ? { uri: `${IMAGE_URL}${image}` } : AppImages.userDummy} style={styles.imageStyle} />
 
                 {/* Middle: name and message */}
                 <View style={styles.textContainer}>

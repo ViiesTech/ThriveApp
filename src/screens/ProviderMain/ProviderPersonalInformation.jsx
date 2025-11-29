@@ -11,6 +11,7 @@ import {
   responsiveFontSize,
   responsiveHeight,
   responsiveWidth,
+  serviceIconsMap,
   services,
   SpecialistProfileServices,
 } from '../../utils';
@@ -198,18 +199,18 @@ const ProviderPersonalInformation = () => {
             />
           </View>
         </View> */}
+        {workingDays?.length > 0 ? (
+          <View>
+            <AppText
+              title={'Hours of availability'}
+              textColor={AppColors.BLACK}
+              textSize={2.5}
+              textFontWeight
+            />
 
-        <View>
-          <AppText
-            title={'Hours of availability'}
-            textColor={AppColors.BLACK}
-            textSize={2.5}
-            textFontWeight
-          />
+            <LineBreak space={3} />
 
-          <LineBreak space={3} />
-
-          {/* <View
+            {/* <View
             style={{
               flexDirection: 'row',
               justifyContent: 'space-between',
@@ -271,50 +272,51 @@ const ProviderPersonalInformation = () => {
               </View>
             </View>
           </View> */}
-          <View>
-            <FlatList
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ gap: responsiveHeight(3) }}
-              data={workingDays}
-              renderItem={({ item, index }) => {
-                return (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      gap: 15,
-                    }}
-                  >
+            <View>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ gap: responsiveHeight(3) }}
+                data={workingDays}
+                renderItem={({ item, index }) => {
+                  return (
                     <View
                       style={{
-                        width: 10,
-                        height: 10,
-                        backgroundColor: AppColors.ThemeBlue,
-                        borderRadius: 100,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        gap: 15,
                       }}
-                    />
-                    <View>
-                      <AppText
-                        title={item?.day}
-                        textColor={AppColors.GRAY}
-                        textSize={1.8}
+                    >
+                      <View
+                        style={{
+                          width: 10,
+                          height: 10,
+                          backgroundColor: AppColors.ThemeBlue,
+                          borderRadius: 100,
+                        }}
                       />
-                      <LineBreak space={1} />
-                      <AppText
-                        title={`${item?.startTime} - ${item?.endTime}`}
-                        textColor={AppColors.BLACK}
-                        textSize={1.8}
-                        textFontWeight
-                      />
+                      <View>
+                        <AppText
+                          title={item?.day}
+                          textColor={AppColors.GRAY}
+                          textSize={1.8}
+                        />
+                        <LineBreak space={1} />
+                        <AppText
+                          title={`${item?.startTime} - ${item?.endTime}`}
+                          textColor={AppColors.BLACK}
+                          textSize={1.8}
+                          textFontWeight
+                        />
+                      </View>
                     </View>
-                  </View>
-                );
-              }}
-            />
+                  );
+                }}
+              />
+            </View>
+            <LineBreak space={3} />
           </View>
-        </View>
-        <LineBreak space={3} />
+        ) : null}
 
         <AppText
           title={'Service Offered'}
@@ -335,22 +337,25 @@ const ProviderPersonalInformation = () => {
             gap: responsiveWidth(4),
           }}
           numColumns={3}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: responsiveHeight(20),
-                backgroundColor: AppColors.lightestBlue,
-                borderWidth: 1,
-                borderColor: AppColors.ThemeBlue,
-                borderRadius: 30,
-                paddingBottom: responsiveHeight(1),
-                paddingHorizontal: responsiveHeight(1),
-              }}
-            >
-              {/* <SVGXml icon={item.icon} width={105} height={85} /> */}
-              <Image
+          renderItem={({ item }) => {
+            const serviceIcon = serviceIconsMap[item?.serviceName] || null;
+
+            return (
+              <TouchableOpacity
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: responsiveHeight(17),
+                  backgroundColor: AppColors.lightestBlue,
+                  borderWidth: 1,
+                  borderColor: AppColors.ThemeBlue,
+                  borderRadius: 30,
+                  paddingBottom: responsiveHeight(1),
+                  paddingHorizontal: responsiveHeight(0.5),
+                }}
+              >
+                <SVGXml icon={serviceIcon} width={95} height={85} />
+                {/* <Image
                 style={{
                   borderRadius: responsiveHeight(1),
                   height: responsiveHeight(12),
@@ -358,17 +363,18 @@ const ProviderPersonalInformation = () => {
                   marginBottom: 5,
                 }}
                 source={{ uri: `${IMAGE_URL}${item?.serviceImage}` }}
-              />
-              <AppText
-                title={item?.serviceName}
-                textColor={AppColors.ThemeBlue}
-                textSize={1.6}
-                textwidth={25}
-                textFontWeight
-                textAlignment={'center'}
-              />
-            </TouchableOpacity>
-          )}
+              /> */}
+                <AppText
+                  title={item?.serviceName}
+                  textColor={AppColors.ThemeBlue}
+                  textSize={1.6}
+                  textwidth={25}
+                  textFontWeight
+                  textAlignment={'center'}
+                />
+              </TouchableOpacity>
+            );
+          }}
         />
       </View>
 

@@ -107,9 +107,9 @@ const PersonalInformation = () => {
         formData.append('address', state.address);
       }
       // ✅ Append fixed location fields (since they’re required)
-      // formData.append('latitude', 40.758);
-      // formData.append('longitude', 73.9855);
-      // formData.append('locationName', state?.address);
+      formData.append('latitude', 40.758);
+      formData.append('longitude', 73.9855);
+      formData.append('locationName', 'Times Square,NYC');
       // ✅ Finally call the API
       const res = await updateProfile(formData).unwrap();
       console.log('response of update ===>', res);

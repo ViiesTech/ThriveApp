@@ -2,9 +2,10 @@ import React, { useCallback, useEffect } from 'react';
 import Container from '../../components/Container';
 import AppHeader from '../../components/AppHeader';
 import SubNotesScreen from '../../components/SubNotes';
-import { ShowToast } from '../../utils';
+import { AppColors, responsiveHeight, ShowToast } from '../../utils';
 import { useLazyGetTherapistNotesQuery } from '../../redux/services/MainIntegration';
 import { useFocusEffect } from '@react-navigation/native';
+import { ActivityIndicator, View } from 'react-native';
 
 const InternalNotes = () => {
   const [getTherapistNotes, { isLoading, data, isError }] =
@@ -35,7 +36,22 @@ const InternalNotes = () => {
   return (
     <Container>
       <AppHeader onBackPress={true} heading={'Internal Notes'} />
-      <SubNotesScreen onRefresh={GetTherapistNotesHandler} data={data?.data} />
+      {isLoading ? (
+        <View
+          style={{
+            height: responsiveHeight(20),
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator size={'large'} color={AppColors.BLACK} />
+        </View>
+      ) : (
+        <SubNotesScreen
+          onRefresh={GetTherapistNotesHandler}
+          data={data?.data}
+        />
+      )}
     </Container>
   );
 };

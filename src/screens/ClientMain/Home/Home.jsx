@@ -63,7 +63,7 @@ const Home = () => {
     }
   }, [data]);
   return (
-    <Container style={{ flex: 1, marginBottom: responsiveHeight(-6) }}>
+    <Container style={{ flex: 1, marginBottom: responsiveHeight(-6),paddingBottom:responsiveHeight(6) }}>
       <View
         style={{
           paddingHorizontal: responsiveWidth(4),

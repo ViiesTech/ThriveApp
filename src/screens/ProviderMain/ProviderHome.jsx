@@ -42,7 +42,7 @@ const ProviderHome = () => {
       .unwrap()
       .then(res => {
         if (!res?.success) {
-          ShowToast(res?.message);
+          // ShowToast(res?.message);
         }
         //  return res
         console.log('ress', res);
@@ -72,7 +72,9 @@ const ProviderHome = () => {
         >
           <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
             <Image
-              source={{ uri: `${IMAGE_URL}${image}` }}
+              source={
+                image ? { uri: `${IMAGE_URL}${image}` } : AppImages.userDummy
+              }
               style={{ width: 50, height: 50, borderRadius: 100 }}
             />
             <AppText

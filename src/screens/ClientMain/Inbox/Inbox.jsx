@@ -1,6 +1,5 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/self-closing-comp */
 import React, { useEffect, useState } from 'react';
 import { FlatList, View } from 'react-native';
 import Container from '../../../components/Container';
@@ -8,10 +7,7 @@ import AppointmentsTopTabs from '../../../components/AppointmentsTopTabs';
 import LineBreak from '../../../components/LineBreak';
 import {
   AppColors,
-  ChatThreads,
-  earlyNotification,
   inboxTab,
-  newNotification,
   responsiveHeight,
   responsiveWidth,
 } from '../../../utils';
@@ -20,42 +16,71 @@ import Feather from 'react-native-vector-icons/Feather';
 import Thread from '../../../components/Thread';
 import AppText from '../../../components/AppTextComps/AppText';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import firestore from '@react-native-firebase/firestore';
 
 const Inbox = ({ route }) => {
   const [selectedTab, setSelectedTab] = useState({ id: 1 });
   const nav = useNavigation();
   const isNotification = route?.params?.isNotification;
+
+  const { _id: currentUserId } = useSelector(
+    state => state?.persistedData?.user,
+  );
   const [selectedChat, setSelectedChat] = useState({ id: 0 });
+  const [chats, setChats] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const renderThreads = () => {
-    return (
-      <FlatList
-        data={ChatThreads}
-        renderItem={({ item }) => {
-          return (
-            <Thread
-              newMessage={item.newMessage}
-              name={item.name}
-              image={item.image}
-              message={item.message}
-              cardOnPress={() => nav.navigate('PrivateInbox')}
-              onLongPress={() => setSelectedChat({ id: item.id })}
-              selectedChat={selectedChat.id === item.id}
-            />
-          );
-        }}
-      />
-    );
-  };
+  // Firestore listener for userChats
+  useEffect(() => {
+    if (!currentUserId) return;
 
+    const unsubscribe = firestore()
+      .collection('userChats')
+      .doc(currentUserId)
+      .onSnapshot(doc => {
+        if (!doc.exists) {
+          setChats([]);
+          setLoading(false);
+          return;
+        }
+
+        const data = doc.data();
+        const chatsArray = Object.entries(data).map(([id, chat]) => ({
+          id,
+          ...chat,
+        }));
+
+        // Sort chats by timestamp descending (latest first)
+        chatsArray.sort(
+          (a, b) =>
+            b.timestamp?.toDate()?.getTime() - a.timestamp?.toDate()?.getTime(),
+        );
+
+        setChats(chatsArray);
+        setLoading(false);
+      });
+
+    return () => unsubscribe();
+  }, [currentUserId]);
+
+  // Handle tab switch if coming from notification
   useEffect(() => {
     if (isNotification) {
       setSelectedTab({ id: 2 });
     }
   }, [isNotification]);
 
+  // Format timestamp for display
+  const formatTime = timestamp => {
+    if (!timestamp) return '';
+    const date = timestamp.toDate ? timestamp.toDate() : timestamp;
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
   return (
-    <Container style={{marginBottom: responsiveHeight(-6)}}>
+    <Container style={{ marginBottom: responsiveHeight(-6) }}>
+      {/* Top Tabs */}
       <AppointmentsTopTabs
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
@@ -63,19 +88,46 @@ const Inbox = ({ route }) => {
       />
       <LineBreak space={2} />
 
+      {/* Inbox Tab */}
       {selectedTab.id == 1 && (
         <View>
           <View style={{ marginHorizontal: responsiveWidth(4) }}>
-          <AppTextInput
-            logo={<Feather name="search" size={22} color="#0ea5e9" />}
-            inputPlaceHolder={'Search messages or salon'}
-            placeholderTextColor={AppColors.DARKGRAY}
+            <AppTextInput
+              logo={<Feather name="search" size={22} color="#0ea5e9" />}
+              inputPlaceHolder={'Search messages or salon'}
+              placeholderTextColor={AppColors.DARKGRAY}
             />
-            </View>
+          </View>
 
           <LineBreak space={2} />
 
-          {renderThreads()}
+          <FlatList
+            data={chats}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => {
+              console.log('item', item);
+              return (
+                <Thread
+                  name={item.userName}
+                  message={item.lastMessage}
+                  image={item.userImage}
+                  newMessage={item.unreadCount}
+                  cardOnPress={() =>
+                    nav.navigate('PrivateInbox', {
+                      data: {
+                        receiverId: item?.userId,
+                        receiverName: item?.userName,
+                        receiverImage: item?.userImage,
+                      },
+                    })
+                  }
+                  onLongPress={() => setSelectedChat({ id: item.id })}
+                  selectedChat={selectedChat.id === item.id}
+                  time={formatTime(item.timestamp)}
+                />
+              );
+            }}
+          />
         </View>
       )}
 

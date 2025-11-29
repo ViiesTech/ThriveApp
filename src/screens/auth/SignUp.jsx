@@ -85,7 +85,7 @@ const SignUp = ({ route }) => {
     await register(data)
       .unwrap()
       .then(res => {
-        console.log('response of register ===>', res);
+        console.log('response of register ===>s===', res);
         ShowToast(res.message);
         if (res.success) {
           nav.navigate('EmailVerification', {

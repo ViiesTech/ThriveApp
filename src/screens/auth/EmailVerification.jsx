@@ -25,7 +25,7 @@ const EmailVerification = ({ navigation, route }) => {
   const [value, setValue] = useState('');
   const { type } = useSelector(state => state.persistedData);
   const { token, email, screenType } = route?.params?.data;
-  console.log('route', route.params.data);
+  console.log('route====', route.params.data);
   const [verifyOTP, { isLoading }] = useVerifyOTPMutation();
   const [verifyForgotPass, { isLoading: forgotPassLoading }] =
     useVerifyForgotPassMutation();

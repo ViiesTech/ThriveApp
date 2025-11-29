@@ -20,7 +20,7 @@ const Reviews = ({ paddingHorizontal, data }: any) => {
         >
             <View>
                 <Image
-                    source={{ uri: `${IMAGE_URL}${data?.userId?.image}` }}
+                    source={data?.userId?.image ? { uri: `${IMAGE_URL}${data?.userId?.image}` } : AppImages.userDummy}
                     style={{ width: 45, height: 45, borderRadius: 100 }}
                 />
             </View>

@@ -1,6 +1,6 @@
-export const BASE_URL = 'https://appsdemo.pro/ithriveBackend/api/user/';
-export const BASE_URL2 = 'https://appsdemo.pro/ithriveBackend/api/';
-export const IMAGE_URL = 'https://appsdemo.pro/ithriveBackend/';
+export const BASE_URL = 'https://apiforapp.link/ithriv/api/user/';
+export const BASE_URL2 = 'https://apiforapp.link/ithriv/api/';
+export const IMAGE_URL = 'https://apiforapp.link/ithriv/';
 
 export const endpoints = {
   REGISTER: 'signUp',
@@ -30,7 +30,8 @@ export const endpoints = {
   getTherapistById: ({ userId, therapistId }) =>
     `user/getProfile?userId=${userId}&_id=${therapistId}&type=Provider`,
   searchTherapist: ({ serviceId, addOn, gender }) => {
-    let url = `user/searchTherapist?longitude=73.9855&latitude=40.758&maxDistance=10000`;
+    // let url = `user/searchTherapist?longitude=73.9855&latitude=40.758&maxDistance=10000`;
+    let url = `user/searchTherapist?maxDistance=10000`;
     if (serviceId) url += `&serviceId=${serviceId}`;
     if (addOn) url += `&addOn=${addOn}`;
     if (gender) url += `&gender=${gender}`;

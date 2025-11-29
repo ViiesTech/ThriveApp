@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import { AppImages } from '../../../assets/images';
 import {
@@ -61,107 +62,117 @@ const ShopDetails = ({ route }) => {
     <ImageBackground source={AppImages.shop_bg} style={{ flex: 1 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <LineBreak space={2} />
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: responsiveWidth(4),
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <TouchableOpacity onPress={() => nav.goBack()}>
-            <FontAwesome
-              name="angle-left"
-              size={responsiveFontSize(4)}
-              color={AppColors.ThemeBlue}
-            />
-          </TouchableOpacity>
+        {isLoading ? (
+          <View
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <ActivityIndicator size={'large'} color={AppColors.LIGHTESTGRAY} />
+          </View>
+        ) : (
+          <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingHorizontal: responsiveWidth(4),
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              }}
+            >
+              <TouchableOpacity onPress={() => nav.goBack()}>
+                <FontAwesome
+                  name="angle-left"
+                  size={responsiveFontSize(4)}
+                  color={AppColors.ThemeBlue}
+                />
+              </TouchableOpacity>
 
-          <AppText
-            title={'Provider'}
-            textColor={AppColors.BLACK}
-            textSize={2}
-            textFontWeight
-          />
+              <AppText
+                title={'Provider'}
+                textColor={AppColors.BLACK}
+                textSize={2}
+                textFontWeight
+              />
 
-          <View />
+              <View />
 
-          {/* <TouchableOpacity style={styles.iconContainer} onPress={() => {}}>
+              {/* <TouchableOpacity style={styles.iconContainer} onPress={() => {}}>
             <FontAwesome
               name="map"
               size={responsiveFontSize(2.5)}
               color={AppColors.ThemeBlue}
             />
           </TouchableOpacity> */}
-        </View>
-
-        {isShowFullDetails || isLoading ? null : (
-          <View
-            style={{
-              flex: 0.96,
-              justifyContent: 'flex-end',
-              paddingVertical: responsiveWidth(5),
-            }}
-          >
-            <AppointmentsCard
-              isLoading={isLoading}
-              onBookNowPress={() =>
-                nav.navigate('LocationInformation', {
-                  data: {
-                    ...data,
-                    therapistName: therapistDetails?.data?.fullName,
-                  },
-                })
-              }
-              data={therapistDetails?.data}
-              addOns={addOn}
-              shopDetail={serviceName}
-            />
-
-            <LineBreak space={2} />
-
-            <View
-              style={{
-                alignItems: 'center',
-              }}
-            >
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  gap: 10,
-                }}
-                onPress={() => setIsShowFullDetails(true)}
-              >
-                <AppText
-                  title={'View More Details'}
-                  textColor={AppColors.BLACK}
-                  textSize={1.8}
-                />
-                <Entypo
-                  name="chevron-down"
-                  size={responsiveFontSize(2.5)}
-                  color={AppColors.BLACK}
-                />
-              </TouchableOpacity>
             </View>
+
+            {isShowFullDetails || isLoading ? null : (
+              <View
+                style={{
+                  flex: 0.96,
+                  justifyContent: 'flex-end',
+                  paddingVertical: responsiveWidth(5),
+                }}
+              >
+                <AppointmentsCard
+                  isLoading={isLoading}
+                  onBookNowPress={() =>
+                    nav.navigate('LocationInformation', {
+                      data: {
+                        ...data,
+                        therapistName: therapistDetails?.data?.fullName,
+                      },
+                    })
+                  }
+                  data={therapistDetails?.data}
+                  addOns={addOn}
+                  shopDetail={serviceName}
+                />
+
+                <LineBreak space={2} />
+
+                <View
+                  style={{
+                    alignItems: 'center',
+                  }}
+                >
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      gap: 10,
+                    }}
+                    onPress={() => setIsShowFullDetails(true)}
+                  >
+                    <AppText
+                      title={'View More Details'}
+                      textColor={AppColors.BLACK}
+                      textSize={1.8}
+                    />
+                    <Entypo
+                      name="chevron-down"
+                      size={responsiveFontSize(2.5)}
+                      color={AppColors.BLACK}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
+            {isShowFullDetails && (
+              <>
+                <LineBreak space={5} />
+                <ShopDetailsCard
+                  onBookNowPress={() => {
+                    nav.navigate('LocationInformation', {
+                      data: {
+                        ...data,
+                        therapistName: therapistDetails?.data?.fullName,
+                      },
+                    });
+                  }}
+                  data={therapistDetails?.data}
+                />
+              </>
+            )}
           </View>
-        )}
-        {isShowFullDetails && (
-          <>
-            <LineBreak space={5} />
-            <ShopDetailsCard
-              onBookNowPress={() => {
-                nav.navigate('LocationInformation', {
-                  data: {
-                    ...data,
-                    therapistName: therapistDetails?.data?.fullName,
-                  },
-                });
-              }}
-              data={therapistDetails?.data}
-            />
-          </>
         )}
       </SafeAreaView>
     </ImageBackground>

@@ -10,6 +10,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { IMAGE_URL } from '../redux/constant'
+import { AppImages } from '../assets/images'
 
 type Prop = {
     data?: [];
@@ -103,7 +104,7 @@ const AppointmentsCard = ({ data, onBookNowPress, isLoading, addOns, shopDetail,
                     <LineBreak space={1} />
 
                     <View style={{ flexDirection: 'row', gap: 10 }}>
-                        <Image source={{ uri: `${IMAGE_URL}${data?.image}` }} style={{ width: 40, height: 40, borderRadius: 100 }} />
+                        <Image source={data?.image ? { uri: `${IMAGE_URL}${data?.image}` } : AppImages.userDummy} style={{ width: 40, height: 40, borderRadius: 100 }} />
 
                         <View>
                             <AppText
@@ -204,7 +205,7 @@ const AppointmentsCard = ({ data, onBookNowPress, isLoading, addOns, shopDetail,
 
                     {shopDetail &&
                         <View style={{ flexDirection: 'row', paddingRight: responsiveWidth(4), justifyContent: 'space-between', alignItems: 'center' }}>
-                            <TouchableOpacity style={styles.iconContainer} onPress={() => nav.navigate("PrivateInbox")}>
+                            <TouchableOpacity style={styles.iconContainer} onPress={() => nav.navigate("PrivateInbox",{data:{receiverId:data?._id,receiverName:data?.fullName,receiverImage:data?.image}})}>
                                 <Ionicons
                                     name="chatbubble-ellipses-sharp"
                                     size={responsiveFontSize(3)}
