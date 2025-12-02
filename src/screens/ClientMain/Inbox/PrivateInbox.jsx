@@ -367,8 +367,7 @@
 // });
 
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -395,11 +394,14 @@ import {
   setDoc,
   onSnapshot,
   serverTimestamp,
+  updateDoc,
   increment,
   query,
   orderBy,
+  getDoc,
 } from 'firebase/firestore';
 import { db } from '../../../assets/Utils/firebase';
+import LineBreak from '../../../components/LineBreak';
 
 const PrivateInbox = ({ route }) => {
   const nav = useNavigation();
@@ -412,17 +414,79 @@ const PrivateInbox = ({ route }) => {
   const { receiverId, receiverName, receiverImage } = route.params.data;
 
   const uniqueDocId = [currentUserId, receiverId].sort().join('_');
-
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
+  const [hasMarkedAsRead, setHasMarkedAsRead] = useState(false);
+  const flatListRef = useRef(null);
+
+  // Mark messages as read when chat screen opens
+  useEffect(() => {
+    if (!currentUserId || !receiverId || hasMarkedAsRead) return;
+
+    const markMessagesAsRead = async () => {
+      try {
+        // 1. Reset unreadCount to 0 for current user in userChats
+        const currentUserChatRef = doc(db, 'userChats', currentUserId);
+        const currentUserChatDoc = await getDoc(currentUserChatRef);
+
+        if (currentUserChatDoc.exists()) {
+          const userChatsData = currentUserChatDoc.data();
+          if (userChatsData[uniqueDocId]) {
+            await updateDoc(currentUserChatRef, {
+              [`${uniqueDocId}.unreadCount`]: 0,
+              [`${uniqueDocId}.seen`]: true,
+            });
+          }
+        }
+
+        // 2. Mark all unread messages as seen in messages collection
+        const messagesRef = collection(db, 'chats', uniqueDocId, 'messages');
+        const q = query(messagesRef, orderBy('createdAt', 'desc'));
+
+        const unsubscribe = onSnapshot(q, async snapshot => {
+          const batchUpdates = [];
+
+          snapshot.docs.forEach(docSnap => {
+            const data = docSnap.data();
+            // Only mark messages sent by the other user as seen
+            if (data.senderId !== currentUserId && !data.seen) {
+              const messageRef = doc(
+                db,
+                'chats',
+                uniqueDocId,
+                'messages',
+                docSnap.id,
+              );
+              batchUpdates.push(updateDoc(messageRef, { seen: true }));
+            }
+          });
+
+          // Execute all updates
+          if (batchUpdates.length > 0) {
+            await Promise.all(batchUpdates);
+          }
+
+          // Set flag to prevent repeated marking
+          setHasMarkedAsRead(true);
+        });
+
+        return () => unsubscribe();
+      } catch (error) {
+        console.error('Error marking messages as read:', error);
+      }
+    };
+
+    markMessagesAsRead();
+  }, [currentUserId, receiverId, uniqueDocId, hasMarkedAsRead]);
 
   // Real-time message listener
   useEffect(() => {
     if (!currentUserId || !receiverId) return;
 
     const messagesRef = collection(db, 'chats', uniqueDocId, 'messages');
-    const q = query(messagesRef, orderBy('createdAt', 'desc'));
-    onSnapshot(q, snapshot => {
+    const q = query(messagesRef, orderBy('createdAt', 'asc')); // Changed to 'asc' for correct ordering
+
+    const unsubscribe = onSnapshot(q, snapshot => {
       const allMessages = snapshot.docs.map(docSnap => {
         const data = docSnap.data();
         return {
@@ -430,10 +494,20 @@ const PrivateInbox = ({ route }) => {
           text: data.text || null,
           createdAt: data.createdAt?.toDate() || new Date(),
           sender: data.senderId === currentUserId ? 'me' : 'other',
+          seen: data.seen || false,
         };
       });
-      setMessages(allMessages); // keep newest first
+      setMessages(allMessages);
+
+      // Scroll to bottom when new messages arrive
+      if (flatListRef.current && allMessages.length > 0) {
+        setTimeout(() => {
+          flatListRef.current?.scrollToEnd({ animated: true });
+        }, 100);
+      }
     });
+
+    return () => unsubscribe();
   }, [currentUserId, receiverId]);
 
   // Send message
@@ -467,64 +541,115 @@ const PrivateInbox = ({ route }) => {
       { merge: true },
     );
 
-    // 3️⃣ Update userChats for receiver
-    await setDoc(
-      doc(db, 'userChats', receiverId),
-      {
-        [uniqueDocId]: {
-          userId: currentUserId,
-          userName: currentUserName,
-          userImage: currentUserImage || null,
-          lastMessage: inputText,
-          timestamp: serverTimestamp(),
-          seen: false,
-          unreadCount: increment(1),
+    // 3️⃣ Update userChats for receiver - increment unreadCount
+    const receiverChatRef = doc(db, 'userChats', receiverId);
+    const receiverChatDoc = await getDoc(receiverChatRef);
+
+    if (receiverChatDoc.exists()) {
+      const receiverData = receiverChatDoc.data();
+      const currentUnreadCount = receiverData[uniqueDocId]?.unreadCount || 0;
+
+      await setDoc(
+        receiverChatRef,
+        {
+          [uniqueDocId]: {
+            userId: currentUserId,
+            userName: currentUserName,
+            userImage: currentUserImage || null,
+            lastMessage: inputText,
+            timestamp: serverTimestamp(),
+            seen: false,
+            unreadCount: currentUnreadCount + 1,
+          },
         },
-      },
-      { merge: true },
-    );
+        { merge: true },
+      );
+    } else {
+      await setDoc(
+        receiverChatRef,
+        {
+          [uniqueDocId]: {
+            userId: currentUserId,
+            userName: currentUserName,
+            userImage: currentUserImage || null,
+            lastMessage: inputText,
+            timestamp: serverTimestamp(),
+            seen: false,
+            unreadCount: 1,
+          },
+        },
+        { merge: true },
+      );
+    }
 
     setInputText('');
   };
 
   const renderMessage = ({ item }) => (
     <View
-      style={[
-        styles.messageRow,
-        item.sender === 'me' ? styles.myRow : styles.otherRow,
-        {
-          flexDirection: item.sender === 'me' ? 'row-reverse' : 'row',
-          alignItems: 'flex-end',
-        },
-      ]}
+      style={{
+        paddingHorizontal: responsiveHeight(2),
+      }}
     >
-      {/* Avatar for "other" */}
-      {item.sender === 'other' && (
-        <Image
-          source={
-            receiverImage
-              ? { uri: `${IMAGE_URL}${receiverImage}` }
-              : require('../../../assets/images/userDummy.png')
-          }
-          style={styles.messageAvatar}
-        />
-      )}
-
-      {/* Message bubble */}
       <View
         style={[
-          styles.bubble,
-          item.sender === 'me' ? styles.myBubble : styles.otherBubble,
+          styles.messageRow,
+          item.sender === 'me' ? styles.myRow : styles.otherRow,
         ]}
       >
-        {item.text && (
-          <Text style={{ color: item.sender === 'me' ? '#000' : '#fff' }}>
-            {item.text}
-          </Text>
+        {/* Avatar for "other" - always on left side */}
+        {item.sender === 'other' && (
+          <Image
+            source={
+              receiverImage
+                ? { uri: `${IMAGE_URL}${receiverImage}` }
+                : require('../../../assets/images/userDummy.png')
+            }
+            style={styles.messageAvatar}
+          />
         )}
-        {item.image && (
-          <Image source={{ uri: item.image }} style={styles.image} />
-        )}
+
+        {/* Message container with bubble and time aligned properly */}
+        <View
+          style={[
+            styles.messageContainer,
+            item.sender === 'me' ? styles.myContainer : styles.otherContainer,
+          ]}
+        >
+          {/* Message bubble with proper corner styling */}
+          <View
+            style={[
+              styles.bubble,
+              item.sender === 'me' ? styles.myBubble : styles.otherBubble,
+            ]}
+          >
+            {item.text && (
+              <Text
+                style={item.sender === 'me' ? styles.myText : styles.otherText}
+              >
+                {item.text}
+              </Text>
+            )}
+            {item.image && (
+              <Image source={{ uri: item.image }} style={styles.image} />
+            )}
+          </View>
+
+          {/* Time and status row below bubble */}
+          <View style={styles.timeStatusRow}>
+            <Text style={styles.time}>
+              {item.createdAt.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </Text>
+
+            {/* Seen indicator for my messages */}
+            {item.sender === 'me' && (
+              <Text style={styles.seenIndicator}>{item.seen ? '✓✓' : '✓'}</Text>
+            )}
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -534,6 +659,7 @@ const PrivateInbox = ({ route }) => {
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
         {/* Header */}
         <View style={styles.header}>
@@ -564,46 +690,58 @@ const PrivateInbox = ({ route }) => {
         </View>
 
         {/* Messages */}
-        <FlatList
-          data={messages}
-          keyExtractor={item => item._id}
-          renderItem={renderMessage}
-          contentContainerStyle={{ padding: 15 }}
-          inverted
-        />
-
-        {type === 'Client' && (
+        <LineBreak space={3} />
+        <View style={{ flex: 1 }}>
+          <FlatList
+            ref={flatListRef}
+            data={messages}
+            keyExtractor={item => item._id}
+            renderItem={renderMessage}
+            contentContainerStyle={styles.messageContainer}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+        {/* {type === 'Client' && (
           <View style={{ paddingHorizontal: responsiveWidth(4) }}>
             <Text style={[styles.online, { color: AppColors.GRAY }]}>
               Chat locked until booking is accepted.
             </Text>
           </View>
-        )}
+        )} */}
 
         {/* Input */}
         <View style={styles.inputRow}>
-          <TouchableOpacity>
+          {/* <TouchableOpacity>
             <Entypo name="attachment" size={22} color={AppColors.DARKGRAY} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <AppTextInput
             inputPlaceHolder={'Type a message'}
             value={inputText}
             onChangeText={setInputText}
             placeholderTextColor={AppColors.DARKGRAY}
-            inputWidth={52}
-            rightIcon={
-              <TouchableOpacity>
-                <Entypo
-                  name="emoji-happy"
-                  size={22}
-                  color={AppColors.DARKGRAY}
-                />
-              </TouchableOpacity>
-            }
+            inputWidth={70}
+            inputHeight={5.5}
+            onSubmitEditing={onSend}
+            // rightIcon={
+            //   <TouchableOpacity>
+            //     <Entypo
+            //       name="emoji-happy"
+            //       size={22}
+            //       color={AppColors.DARKGRAY}
+            //     />
+            //   </TouchableOpacity>
+            // }
           />
 
-          <TouchableOpacity style={styles.sendButton} onPress={onSend}>
+          <TouchableOpacity
+            style={[
+              styles.sendButton,
+              !inputText.trim() && styles.sendButtonDisabled,
+            ]}
+            onPress={onSend}
+            disabled={!inputText.trim()}
+          >
             <Icon name="send" size={22} color="#fff" />
           </TouchableOpacity>
         </View>
@@ -623,16 +761,87 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderColor: '#ccc',
   },
+  messageRow: {
+    flexDirection: 'row',
+    marginVertical: 4,
+    alignItems: 'flex-end',
+  },
+  myRow: {
+    justifyContent: 'flex-end',
+  },
+  otherRow: {
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  messageAvatar: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    marginRight: 8,
+  },
+  messageContainer: {
+    // :responsiveHeight(2)
+    flexGrow:1,
+    gap:responsiveHeight(1)
+  },
+  myContainer: {
+    alignItems: 'flex-end',
+    flex: 1,
+    marginRight: 8,
+  },
+  otherContainer: {
+    alignItems: 'flex-start',
+    marginLeft: 8,
+  },
+  bubble: {
+    padding: 12,
+    borderRadius: 20,
+    marginBottom: 2,
+  },
+  myBubble: {
+    backgroundColor: '#E1F5FA',
+    borderTopRightRadius: 4,
+  },
+  otherBubble: {
+    backgroundColor: '#459CBD',
+    borderTopLeftRadius: 4,
+    paddingHorizontal: responsiveHeight(2),
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+  },
+  myText: {
+    color: '#000000',
+    fontSize: 16,
+  },
+  otherText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  timeStatusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 4,
+  },
+  time: {
+    fontSize: 12,
+    color: '#999999',
+  },
+  seenIndicator: {
+    fontSize: 12,
+    color: '#60C14C',
+    fontWeight: 'bold',
+  },
+  image: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+    marginTop: 8,
+  },
   avatar: { width: 40, height: 40, borderRadius: 20, marginRight: 10 },
   name: { fontWeight: 'bold', fontSize: 16 },
   online: { fontSize: 12, color: AppColors.ThemeBlue },
-  messageRow: { marginBottom: 10 },
-  myRow: { alignItems: 'flex-end' },
-  otherRow: { alignItems: 'flex-start' },
-  bubble: { padding: 10, borderRadius: 15, maxWidth: '75%' },
-  myBubble: { backgroundColor: '#E7F3FF', borderTopRightRadius: 0 },
-  otherBubble: { backgroundColor: AppColors.ThemeBlue, borderTopLeftRadius: 0 },
-  image: { width: 150, height: 150, borderRadius: 10, marginTop: 5 },
+
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -644,17 +853,13 @@ const styles = StyleSheet.create({
   },
   sendButton: {
     backgroundColor: AppColors.ThemeBlue,
-    marginLeft: 8,
     borderRadius: 20,
     width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  messageAvatar: {
-  width: 30,
-  height: 30,
-  borderRadius: 15,
-  marginRight: responsiveWidth(2),
-},
+  sendButtonDisabled: {
+    backgroundColor: AppColors.LIGHTGRAY,
+  },
 });

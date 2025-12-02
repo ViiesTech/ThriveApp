@@ -37,6 +37,7 @@ import {
 import { useUpdateProfileMutation } from '../../redux/services';
 import { useSelector } from 'react-redux';
 import { IMAGE_URL } from '../../redux/constant';
+import { updateUserInfoInAllChats } from '../../assets/Utils/firebaseChatUtils';
 
 const ProviderEditProfile = () => {
   const nav = useNavigation();
@@ -324,6 +325,23 @@ const ProviderEditProfile = () => {
 
       // ✅ Finally call the API
       const res = await updateProfile(formData).unwrap();
+      if (res.success && res.data) {
+        const updatedData = {};
+
+        // Use the response data from API
+        if (res.data.fullName && res.data.fullName !== fullName) {
+          updatedData.fullName = res.data.fullName;
+        }
+
+        if (res.data.image && res.data.image !== userImage) {
+          updatedData.image = res.data.image;
+        }
+
+        // Only call update if there's something to update
+        if (Object.keys(updatedData).length > 0) {
+          await updateUserInfoInAllChats(_id, updatedData);
+        }
+      }
       console.log('response of update ===>', res);
       ShowToast(res.message);
     } catch (error) {

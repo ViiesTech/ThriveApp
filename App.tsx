@@ -11,7 +11,7 @@ import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-   useEffect(() => {
+  useEffect(() => {
     // hide nav bar when app loads
     SystemNavigationBar.stickyImmersive();
   }, []);

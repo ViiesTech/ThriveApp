@@ -21,6 +21,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useSelector } from 'react-redux';
 import { IMAGE_URL } from '../../../redux/constant';
 import { useUpdateProfileMutation } from '../../../redux/services';
+import { updateUserInfoInAllChats } from '../../../assets/Utils/firebaseChatUtils';
 
 const PersonalInformation = () => {
   const nav = useNavigation();
@@ -113,6 +114,25 @@ const PersonalInformation = () => {
       // ✅ Finally call the API
       const res = await updateProfile(formData).unwrap();
       console.log('response of update ===>', res);
+      if (res.success) {
+        const updatedData = {};
+
+        // Use the actual response data from API, not local state
+        if (res.data?.fullName && res.data.fullName !== fullName) {
+          updatedData.fullName = res.data.fullName;
+        }
+
+        // Use the image URL returned by the API
+        if (res.data?.image) {
+          updatedData.image = res.data.image;
+        }
+
+        // Only call update if there's something to update
+        if (Object.keys(updatedData).length > 0) {
+          await updateUserInfoInAllChats(_id, updatedData);
+        }
+      }
+
       ShowToast(res.message);
     } catch (error) {
       console.log('error while update ===>', error);

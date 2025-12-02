@@ -12,13 +12,14 @@ type props = {
     image?: ImageSourcePropType,
     name?: string,
     message?: string,
+    time?: string,
     newMessage?: number,
     cardOnPress?: any,
     onLongPress?: any,
     selectedChat?: any,
 }
 
-const Thread = ({ image, name, message, newMessage, cardOnPress, onLongPress, selectedChat }: props) => {
+const Thread = ({ image, name, message, time, newMessage, cardOnPress, onLongPress, selectedChat }: props) => {
     console.log('image', image)
     return (
         <TouchableOpacity
@@ -57,7 +58,7 @@ const Thread = ({ image, name, message, newMessage, cardOnPress, onLongPress, se
                 {/* Right side: time + badge */}
                 <View style={styles.rightContainer}>
                     <AppText
-                        title={'11.32 PM'}
+                        title={time}
                         textColor={'#ADB3BC'}
                         textSize={1.5}
                     />

@@ -7,6 +7,8 @@ import AppointmentsTopTabs from '../../../components/AppointmentsTopTabs';
 import LineBreak from '../../../components/LineBreak';
 import {
   AppColors,
+  earlyNotification,
+  newNotification,
   inboxTab,
   responsiveHeight,
   responsiveWidth,
