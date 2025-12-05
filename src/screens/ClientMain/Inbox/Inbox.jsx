@@ -47,10 +47,21 @@ const Inbox = ({ route }) => {
           return;
         }
 
-        const data = doc.data();
+        // const data = doc.data();
+        // const chatsArray = Object.entries(data).map(([id, chat]) => ({
+        //   id,
+        //   ...chat,
+        // }));
+
+        const data = doc.data() || {};
         const chatsArray = Object.entries(data).map(([id, chat]) => ({
           id,
-          ...chat,
+          userName: chat?.userName || 'Unknown',
+          userId: chat?.userId || '',
+          userImage: chat?.userImage || null,
+          lastMessage: chat?.lastMessage || '',
+          unreadCount: chat?.unreadCount || 0,
+          timestamp: chat?.timestamp || null,
         }));
 
         // Sort chats by timestamp descending (latest first)
@@ -75,8 +86,8 @@ const Inbox = ({ route }) => {
 
   // Format timestamp for display
   const formatTime = timestamp => {
-    if (!timestamp) return '';
-    const date = timestamp.toDate ? timestamp.toDate() : timestamp;
+    if (!timestamp) return ''; // no timestamp
+    const date = timestamp.toDate?.() || new Date(timestamp);
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
@@ -102,34 +113,45 @@ const Inbox = ({ route }) => {
           </View>
 
           <LineBreak space={2} />
-
-          <FlatList
-            data={chats}
-            keyExtractor={item => item.id}
-            renderItem={({ item }) => {
-              console.log('item', item);
-              return (
-                <Thread
-                  name={item.userName}
-                  message={item.lastMessage}
-                  image={item.userImage}
-                  newMessage={item.unreadCount}
-                  cardOnPress={() =>
-                    nav.navigate('PrivateInbox', {
-                      data: {
-                        receiverId: item?.userId,
-                        receiverName: item?.userName,
-                        receiverImage: item?.userImage,
-                      },
-                    })
-                  }
-                  onLongPress={() => setSelectedChat({ id: item.id })}
-                  selectedChat={selectedChat.id === item.id}
-                  time={formatTime(item.timestamp)}
-                />
-              );
-            }}
-          />
+          {chats?.length > 0 ? (
+            <FlatList
+              data={chats}
+              keyExtractor={item => item.id}
+              renderItem={({ item }) => {
+                console.log('item', item);
+                return (
+                  <Thread
+                    name={item.userName}
+                    message={item.lastMessage}
+                    image={item.userImage}
+                    newMessage={item.unreadCount}
+                    cardOnPress={() =>
+                      nav.navigate('PrivateInbox', {
+                        data: {
+                          receiverId: item?.userId,
+                          receiverName: item?.userName,
+                          receiverImage: item?.userImage,
+                        },
+                      })
+                    }
+                    onLongPress={() => setSelectedChat({ id: item.id })}
+                    selectedChat={selectedChat.id === item.id}
+                    time={formatTime(item.timestamp)}
+                  />
+                );
+              }}
+            />
+          ) : (
+            <View
+              style={{
+                height: responsiveHeight(20),
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <AppText textSize={2.5} textFontWeight title="No Chats Found" />
+            </View>
+          )}
         </View>
       )}
 
@@ -267,3 +289,4 @@ const Inbox = ({ route }) => {
 };
 
 export default Inbox;
+// //
